@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addItem();
+                //addItem();
+                openDialog();
             }
         });
     }
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter.swapCursor(getAllItems());
         itemEditText.getText().clear();
         amountEditText.getText().clear();
-
     }
 
     private Cursor getAllItems() {
@@ -73,5 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 DatabaseContract.DatabaseEntry.COLUMN_TIMESTAMP + " DESC"
         );
+    }
+
+    private void openDialog() {
+        InputDialog inputDialog = new InputDialog();
+        inputDialog.show(getSupportFragmentManager(), "Input Dialog");
     }
 }
