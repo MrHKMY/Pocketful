@@ -2,6 +2,7 @@ package com.mindscape.budgetwiser;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -70,4 +71,6 @@ public class InputDialog extends AppCompatDialogFragment {
         priceEditText.getText().clear();
 
     }
+
+
 }

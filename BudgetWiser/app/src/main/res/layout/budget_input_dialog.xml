@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/circular_box">
+
+    <TextView
+        android:id="@+id/newBudgetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/darkGreen"
+        android:text="Enter New Budget"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/newBudgetEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="0"
+        android:layout_below="@id/newBudgetTitle"
+        android:inputType="number"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/newBudgetEditText"
+        android:layout_alignParentEnd="true"
+        android:layoutDirection="rtl">
+
+        <ImageButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tick_icon"
+            android:background="@color/white"
+            android:padding="5dp"
+            />
+
+        <ImageButton
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cross_icon"
+            android:background="@color/white"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
