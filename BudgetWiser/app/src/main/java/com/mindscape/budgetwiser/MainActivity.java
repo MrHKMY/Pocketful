@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -30,14 +31,19 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
     private MainAdapter mainAdapter;
-    private TextView budgetTextView;
+    private TextView budgetValue, wishListValue, savingValue;
+    public int newBudget = 0;
+    EditText budgetEditText;
+    int total;
+    int total2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
+
         mDatabase = dbHelper.getWritableDatabase();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -45,15 +51,28 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new MainAdapter(this, getAllItems());
         recyclerView.setAdapter(mainAdapter);
 
-        budgetTextView = findViewById(R.id.budgetAmountTextView);
+        budgetValue = findViewById(R.id.budgetAmountTextView);
+        wishListValue = findViewById(R.id.wishlistAmountTextView);
+        savingValue = findViewById(R.id.savingTextView);
         Button submitButton = findViewById(R.id.submitButton);
 
+        /*Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseContract.DatabaseEntry.COLUMN_AMOUNT + ") as Total FROM " + DatabaseContract.DatabaseEntry.TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+
+         */
+
+        //wishListValue.setText(String.valueOf(total));
+        //savingValue.setText(String.valueOf(newBudget-total));
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //addItem();
                 openDialog();
-                mainAdapter.notifyDataSetChanged();
+                //mainAdapter.notifyDataSetChanged();
+                //Toast.makeText(MainActivity.this, String.valueOf(total), Toast.LENGTH_SHORT).show();
+                //openNewWishlist();
 
             }
         });
@@ -63,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu,menu);
+        menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -74,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 openBudgetDialog();
                 return true;
             case R.id.reset_budget_menu:
-                budgetTextView.setText("0");
+                budgetValue.setText("0");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -101,16 +120,17 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private Cursor getAllItems() {
-        return  mDatabase.query(
-                DatabaseContract.DatabaseEntry.TABLE_NAME,
+        return mDatabase.query(
+                DatabaseHelper.WISHLIST_TABLE,
                 null,
                 null,
                 null,
                 null,
                 null,
-                DatabaseContract.DatabaseEntry.COLUMN_TIMESTAMP + " DESC"
+                DatabaseHelper.WISHLIST_TIMESTAMP + " DESC"
         );
     }
+
 
     private void openDialog() {
         InputDialog inputDialog = new InputDialog();
@@ -119,25 +139,80 @@ public class MainActivity extends AppCompatActivity {
 
     private void openBudgetDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View view = layoutInflater.inflate(R.layout.budget_input_dialog,null);
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        View view = layoutInflater.inflate(R.layout.budget_input_dialog, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText budgetEditText = view.findViewById(R.id.newBudgetEditText);
-        TextView textView = view.findViewById(R.id.newBudgetTitle);
-        ImageButton button = view.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        budgetEditText = view.findViewById(R.id.newBudgetEditText);
+        final ImageButton checkButton = view.findViewById(R.id.newBudgetCheckButton);
+        ImageButton crossButton = view.findViewById(R.id.newBudgetCrossButton);
+
+        checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "button tapped", Toast.LENGTH_SHORT).show();
+                if (budgetEditText.getText().toString().length() > 0) {
+                    newBudget = Integer.parseInt(budgetEditText.getText().toString());
+
+                    DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+                    long result = dbHelper.createBudget(newBudget);
+                    if (result == -1) {
+                        Toast.makeText(MainActivity.this, "Nope", Toast.LENGTH_SHORT).show();
+                    }
+
+                    String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
+                    Cursor cursor = mDatabase.rawQuery(selectQuery, null);
+                    cursor.moveToLast();
+                    int theData = cursor.getInt(cursor.getColumnIndex("budget"));
+
+                    budgetValue.setText(String.valueOf(theData));
+                    alertDialog.cancel();
+                    //mDatabase = dbHelper.getWritableDatabase();
+                    //ContentValues cvalue = new ContentValues();
+
+
+                    //cvalue.put(DatabaseContract.DatabaseEntry.COLUMN_BUDGET, newBudget);
+                    //long result = mDatabase.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, cvalue);
+
+                    /*@SuppressLint("Recycle") Cursor cur = mDatabase.rawQuery("SELECT " + DatabaseContract.DatabaseEntry.COLUMN_BUDGET +" FROM "+ DatabaseContract.DatabaseEntry.TABLE_NAME + " WHERE " + DatabaseContract.DatabaseEntry.COLUMN_BUDGET + " IS NOT NULL", null);
+                    if (cur.moveToFirst()) {
+                        total2 = cur.getInt(cur.getColumnIndex("Total"));
+                    }
+
+                    budgetValue.setText(String.valueOf(newBudget));
+                    if (result == -1) {
+                        Toast.makeText(MainActivity.this, "Nope", Toast.LENGTH_SHORT).show();
+                    }
+                    alertDialog.cancel();
+                    savingValue.setText(String.valueOf(newBudget-total));
+
+                     */
+                } else {
+                    Toast.makeText(MainActivity.this, "Value cannot be empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-
-
+        crossButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
         alertDialog.setView(view);
         alertDialog.show();
 
+
+        //Todo retrieve newBudget from db then apply into budgetValue;
+
+        /*String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
+        Cursor cursor = mDatabase.rawQuery(selectQuery, null);
+        cursor.moveToLast();
+        int theData = cursor.getInt(cursor.getColumnIndex("budget"));
+
+        budgetValue.setText(String.valueOf(theData));
+
+         */
     }
+
 
 }

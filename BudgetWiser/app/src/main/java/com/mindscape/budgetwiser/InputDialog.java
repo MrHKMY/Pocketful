@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class InputDialog extends AppCompatDialogFragment {
     public EditText itemEditText, priceEditText;
     private SQLiteDatabase mDatabase;
+    DatabaseHelper db;
 
     @NonNull
     @Override
@@ -46,7 +47,7 @@ public class InputDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addItem();
-                        Toast.makeText(getActivity(), "Item added.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), price, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -62,13 +63,25 @@ public class InputDialog extends AppCompatDialogFragment {
 
         String name = itemEditText.getText().toString();
         String price = priceEditText.getText().toString();
-        ContentValues cv = new ContentValues();
-        cv.put(DatabaseContract.DatabaseEntry.COLUMN_NAME, name);
-        cv.put(DatabaseContract.DatabaseEntry.COLUMN_AMOUNT, price);
 
-        mDatabase.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, cv);
+        DatabaseHelper db = new DatabaseHelper(getContext());
+        long result = db.createWishList(name,price);
+
+
+
+
+        //ContentValues cv = new ContentValues();
+        //cv.put(DatabaseContract.DatabaseEntry.COLUMN_NAME, name);
+        //cv.put(DatabaseContract.DatabaseEntry.COLUMN_AMOUNT, price);
+
+        //long result = mDatabase.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, cv);
         itemEditText.getText().clear();
         priceEditText.getText().clear();
+
+        if (result == -1){
+            Toast.makeText(getActivity(), "Incorrect", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
 
     }
 
