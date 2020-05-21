@@ -50,7 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
         sqLiteDatabase.execSQL(createWishTable);
         sqLiteDatabase.execSQL(createBudgetTable);
-
+        String sql = "INSERT INTO " + BUDGET_TABLE + "(" + _ID + ", " + BUDGET_AMOUNT + ", " + BUDGET_TIMESTAMP + ") VALUES('1', '0', CURRENT_TIMESTAMP)";
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override
