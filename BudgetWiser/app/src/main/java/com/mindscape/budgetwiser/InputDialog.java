@@ -23,6 +23,7 @@ public class InputDialog extends AppCompatDialogFragment {
     public EditText itemEditText, priceEditText;
     private SQLiteDatabase mDatabase;
     DatabaseHelper db;
+    private InputDialogListener listener;
 
     @NonNull
     @Override
@@ -66,15 +67,6 @@ public class InputDialog extends AppCompatDialogFragment {
 
         DatabaseHelper db = new DatabaseHelper(getContext());
         long result = db.createWishList(name,price);
-
-
-
-
-        //ContentValues cv = new ContentValues();
-        //cv.put(DatabaseContract.DatabaseEntry.COLUMN_NAME, name);
-        //cv.put(DatabaseContract.DatabaseEntry.COLUMN_AMOUNT, price);
-
-        //long result = mDatabase.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, cv);
         itemEditText.getText().clear();
         priceEditText.getText().clear();
 
@@ -83,6 +75,21 @@ public class InputDialog extends AppCompatDialogFragment {
         }
         db.close();
 
+    }
+
+    public interface InputDialogListener {
+        void applyTexts(String name, String price);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (InputDialogListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement ExampleDialogListener");
+        }
     }
 
 
