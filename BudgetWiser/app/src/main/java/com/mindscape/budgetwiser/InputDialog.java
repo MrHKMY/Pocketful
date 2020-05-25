@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +25,7 @@ public class InputDialog extends AppCompatDialogFragment {
     public EditText itemEditText, priceEditText;
     private SQLiteDatabase mDatabase;
     DatabaseHelper db;
-    private InputDialogListener listener;
+    private MainAdapter mainAdapter;
 
     @NonNull
     @Override
@@ -35,6 +37,7 @@ public class InputDialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_layout, null);
+        mainAdapter = new MainAdapter(getContext(), getAllItems());
 
         builder.setView(view)
                 .setTitle("Input new item")
@@ -48,7 +51,7 @@ public class InputDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addItem();
-                        //Toast.makeText(getActivity(), price, Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -67,30 +70,28 @@ public class InputDialog extends AppCompatDialogFragment {
 
         DatabaseHelper db = new DatabaseHelper(getContext());
         long result = db.createWishList(name,price);
+
+        mainAdapter.swapCursor(getAllItems());
+
         itemEditText.getText().clear();
         priceEditText.getText().clear();
 
         if (result == -1){
-            Toast.makeText(getActivity(), "Incorrect", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Failed storing new item.", Toast.LENGTH_SHORT).show();
         }
-        db.close();
-
+        //db.close();
     }
 
-    public interface InputDialogListener {
-        void applyTexts(String name, String price);
+    private Cursor getAllItems() {
+        return mDatabase.query(
+                DatabaseHelper.WISHLIST_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DatabaseHelper.WISHLIST_TIMESTAMP + " DESC"
+        );
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            listener = (InputDialogListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() +
-                    "must implement ExampleDialogListener");
-        }
-    }
-
 
 }

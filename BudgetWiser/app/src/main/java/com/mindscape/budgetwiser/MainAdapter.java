@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Hakimi on 16/5/2020.
  */
@@ -17,9 +19,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     private Context mContext;
     private Cursor mCursor;
+
     public MainAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
+        notifyDataSetChanged();
     }
 
     @NonNull
