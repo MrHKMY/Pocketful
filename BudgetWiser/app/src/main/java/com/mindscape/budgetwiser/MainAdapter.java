@@ -40,11 +40,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             return;
         }
 
-        String item = mCursor.getString(mCursor.getColumnIndex(DatabaseContract.DatabaseEntry.COLUMN_NAME));
-        String price = mCursor.getString(mCursor.getColumnIndex(DatabaseContract.DatabaseEntry.COLUMN_AMOUNT));
+        String item = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_NAME));
+        String price = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_AMOUNT));
+        long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
 
         holder.itemText.setText(item);
         holder.priceText.setText(price);
+        holder.itemView.setTag(id);
 
     }
 
