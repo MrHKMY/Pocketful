@@ -2,6 +2,7 @@ package com.mindscape.budgetwiser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new MainAdapter(this, getAllItems());
         recyclerView.setAdapter(mainAdapter);
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeItem((long) viewHolder.itemView.getTag());
+            }
+        }).attachToRecyclerView(recyclerView);
+
         budgetValue = findViewById(R.id.budgetAmountTextView);
         wishListValue = findViewById(R.id.wishlistAmountTextView);
         savingValue = findViewById(R.id.savingTextView);
@@ -58,12 +70,9 @@ public class MainActivity extends AppCompatActivity {
         createStartUp();
 
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
-
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-
-
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
 
@@ -107,6 +116,17 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void removeItem(long id){
+        mDatabase.delete(DatabaseHelper.WISHLIST_TABLE, DatabaseHelper._ID + "=" + id, null);
+        mainAdapter.swapCursor(getAllItems());
+        Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        wishListValue.setText(String.valueOf(total));
+        savingValue.setText(String.valueOf(newBudget-total));
     }
 
     private Cursor getAllItems() {
