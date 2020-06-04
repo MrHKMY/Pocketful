@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     private Context mContext;
     private Cursor mCursor;
+    private OnItemClickListener  mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public MainAdapter(Context context, Cursor cursor) {
         mContext = context;
@@ -31,11 +41,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.row_content,parent,false);
-        return new MainViewHolder(view);
+        return new MainViewHolder(view, mListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainViewHolder holder, final int position) {
         if (!mCursor.moveToPosition(position)) {
             return;
         }
@@ -47,6 +57,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.itemText.setText(item);
         holder.priceText.setText(price);
         holder.itemView.setTag(id);
+        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "Clicked : " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+         */
 
     }
 
@@ -55,15 +72,25 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         return mCursor.getCount();
     }
 
-    public class MainViewHolder extends RecyclerView.ViewHolder {
+    public static class MainViewHolder extends RecyclerView.ViewHolder {
         public TextView itemText;
         public TextView priceText;
 
-        public MainViewHolder(@NonNull View itemView) {
+        public MainViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-
             itemText = itemView.findViewById(R.id.itemAdapter);
             priceText = itemView.findViewById(R.id.priceAdapter);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

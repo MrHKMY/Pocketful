@@ -94,11 +94,18 @@
         android:text="Submit"
         android:layout_below="@id/savingLinearLayout" />
 
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go!"
+        android:layout_below="@id/submitButton"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/submitButton"/>
+        android:layout_below="@id/goButton"/>
 
 
 </RelativeLayout>
