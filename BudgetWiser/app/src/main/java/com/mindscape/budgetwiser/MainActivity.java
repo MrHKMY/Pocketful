@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
-    private MainAdapter mainAdapter;
+    private MainAdapter mainAdapter, mainAdapter2;
     private TextView budgetValue, wishListValue, savingValue;
     public int newBudget;
     EditText budgetEditText, wishlistEditText, priceEditText;
@@ -51,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new MainAdapter(this, getAllItems());
         recyclerView.setAdapter(mainAdapter);
 
+        mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this, "Open the destination/website.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT ) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         wishListValue = findViewById(R.id.wishlistAmountTextView);
         savingValue = findViewById(R.id.savingTextView);
         Button submitButton = findViewById(R.id.submitButton);
+        Button goButton = findViewById(R.id.goButton);
 
         createStartUp();
 
@@ -80,9 +88,14 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                addWishlistDialog();
+            }
+        });
 
-
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startQuestion();
             }
         });
 
@@ -108,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_budget_menu:
-                openBudgetDialog();
+                addBudgetDialog();
                 return true;
             case R.id.reset_budget_menu:
-                budgetValue.setText("0");
+                resetBudget();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -141,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-
-    private void openDialog() {
+    private void addWishlistDialog() {
         /*InputDialog inputDialog = new InputDialog();
         inputDialog.show(getSupportFragmentManager(), "Input Dialog");
          */
@@ -189,15 +201,22 @@ public class MainActivity extends AppCompatActivity {
 
                     alertDialog.cancel();
                 } else {
-                    Toast.makeText(MainActivity.this, "Value cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Cannot save empty value.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        wishlistcrossButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
             }
         });
         alertDialog.setView(view);
         alertDialog.show();
     }
 
-    private void openBudgetDialog() {
+    private void addBudgetDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.budget_input_dialog, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -243,6 +262,59 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setView(view);
         alertDialog.show();
 
+    }
+
+    private void resetBudget() {
+        DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+        newBudget = 0;
+        long result = dbHelper.createBudget(newBudget);
+        if (result == -1) {
+            Toast.makeText(MainActivity.this, "Nope", Toast.LENGTH_SHORT).show();
+        }
+
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
+        Cursor cursor = mDatabase.rawQuery(selectQuery, null);
+        cursor.moveToLast();
+        int theData = cursor.getInt(cursor.getColumnIndex("budget"));
+
+        budgetValue.setText(String.valueOf(theData));
+        savingValue.setText(String.valueOf(newBudget - total));
+    }
+
+    private void startQuestion() {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.question_layout, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        RecyclerView newRecyclerView;
+        newRecyclerView = view.findViewById(R.id.newrecyclerview);
+        newRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mainAdapter2 = new MainAdapter(this, getAllItems());
+        newRecyclerView.setAdapter(mainAdapter2);
+
+        mainAdapter2.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this, "Open the destination", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeItem((long) viewHolder.itemView.getTag());
+                mainAdapter2.swapCursor(getAllItems());
+            }
+        }).attachToRecyclerView(newRecyclerView);
+
+        alertDialog.setView(view);
+        alertDialog.show();
     }
 
 
