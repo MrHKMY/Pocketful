@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Map;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     EditText budgetEditText, wishlistEditText, priceEditText;
     int total;
     RecyclerView recyclerView;
+    private String[] theQuestionString;
+    String q;
+    int randomIndex;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         mDatabase = dbHelper.getWritableDatabase();
+
+        theQuestionString = getResources().getStringArray(R.array.theQuestions);
+        randomIndex = new Random().nextInt(theQuestionString.length);
+        q = theQuestionString[randomIndex];
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -297,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter2.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "Open the destination", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "delete or do something ", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -313,8 +322,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(newRecyclerView);
 
+
+
         alertDialog.setView(view);
         alertDialog.show();
+
+        final TextView questions = alertDialog.findViewById(R.id.questionsTextView);
+        questions.setText(q);
+
+        ImageButton check = view.findViewById(R.id.checkButton);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                randomIndex = new Random().nextInt(theQuestionString.length);
+                q = theQuestionString[randomIndex];
+                questions.setText(q);
+            }
+        });
     }
 
 
