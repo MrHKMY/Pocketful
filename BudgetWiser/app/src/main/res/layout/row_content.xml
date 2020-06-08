@@ -4,19 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="15dp">
+    android:layout_margin="5dp">
 
     <TextView android:id="@+id/itemAdapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="THE ITEM HERE"
-        android:layout_margin="10dp"/>
+        android:layout_margin="5dp"/>
 
     <TextView android:id="@+id/priceAdapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="THE PRICE HERE"
-        android:layout_margin="10dp"/>
+        android:layout_margin="5dp"/>
 
 
 
