@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,10 +54,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         String item = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_NAME));
         String price = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_AMOUNT));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
+        int abc = mCursor.getInt(position);
+
 
         holder.itemText.setText(item);
         holder.priceText.setText(price);
         holder.itemView.setTag(id);
+        //holder.checkBox.setChecked(abc);
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,11 +79,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public static class MainViewHolder extends RecyclerView.ViewHolder {
         public TextView itemText;
         public TextView priceText;
+        public CheckBox checkBox;
 
         public MainViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             itemText = itemView.findViewById(R.id.itemAdapter);
             priceText = itemView.findViewById(R.id.priceAdapter);
+            checkBox = itemView.findViewById(R.id.checkbox);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

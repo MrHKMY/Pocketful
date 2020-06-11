@@ -24,8 +24,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.Map;
 import java.util.Random;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] theQuestionString;
     String q;
     int randomIndex;
+    LinearLayout savingLayout;
 
 
     @Override
@@ -81,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
         budgetValue = findViewById(R.id.budgetAmountTextView);
         wishListValue = findViewById(R.id.wishlistAmountTextView);
         savingValue = findViewById(R.id.savingTextView);
-        Button submitButton = findViewById(R.id.submitButton);
+        savingLayout = findViewById(R.id.savingLinearLayout);
+        FloatingActionButton addWishlistFAB = findViewById(R.id.floatButton);
         Button goButton = findViewById(R.id.goButton);
 
         createStartUp();
@@ -92,9 +97,13 @@ public class MainActivity extends AppCompatActivity {
         }
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
+        if (newBudget-total > 0 ){
+            savingLayout.setBackgroundResource(R.color.darkGreen);
+        } else if (newBudget - total < 0){
+            savingLayout.setBackgroundResource(R.color.red);
+        }
 
-
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        addWishlistFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addWishlistDialog();
@@ -149,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
         }
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
+        if (newBudget-total > 0 ){
+            savingLayout.setBackgroundResource(R.color.darkGreen);
+        } else if (newBudget - total < 0){
+            savingLayout.setBackgroundResource(R.color.red);
+        }
     }
 
     private Cursor getAllItems() {
@@ -207,6 +221,11 @@ public class MainActivity extends AppCompatActivity {
 
                     wishListValue.setText(String.valueOf(total));
                     savingValue.setText(String.valueOf(newBudget-total));
+                    if (newBudget-total > 0 ){
+                        savingLayout.setBackgroundResource(R.color.darkGreen);
+                    } else if (newBudget - total < 0){
+                        savingLayout.setBackgroundResource(R.color.red);
+                    }
 
                     alertDialog.cancel();
                 } else {
@@ -254,6 +273,11 @@ public class MainActivity extends AppCompatActivity {
 
                     budgetValue.setText(String.valueOf(theData));
                     savingValue.setText(String.valueOf(newBudget-total));
+                    if (newBudget-total > 0 ){
+                        savingLayout.setBackgroundResource(R.color.darkGreen);
+                    } else if (newBudget - total < 0){
+                        savingLayout.setBackgroundResource(R.color.red);
+                    }
                     alertDialog.cancel();
 
                 } else {
@@ -288,6 +312,11 @@ public class MainActivity extends AppCompatActivity {
 
         budgetValue.setText(String.valueOf(theData));
         savingValue.setText(String.valueOf(newBudget - total));
+        if (newBudget-total > 0 ){
+            savingLayout.setBackgroundResource(R.color.darkGreen);
+        } else if (newBudget - total < 0){
+            savingLayout.setBackgroundResource(R.color.red);
+        }
     }
 
     private void startQuestion() {

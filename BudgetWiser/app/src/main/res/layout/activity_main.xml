@@ -88,24 +88,31 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_below="@id/savingLinearLayout" />
-
-    <Button
         android:id="@+id/goButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go!"
-        android:layout_below="@id/submitButton"/>
+        android:layout_below="@id/savingLinearLayout"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/goButton"/>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/floatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="25dp"
+        android:foregroundGravity="bottom"
+        android:src="@drawable/fab_add"
+        app:fab_colorNormal="@color/colorPrimaryDark"
+        app:fab_colorPressed="@color/colorAccent"
+        />
 
 
 </RelativeLayout>
