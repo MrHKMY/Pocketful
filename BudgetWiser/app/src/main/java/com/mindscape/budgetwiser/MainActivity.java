@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,11 +37,12 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
     private MainAdapter mainAdapter, mainAdapter2;
+    private LaterAdapter laterAdapter;
     private TextView budgetValue, wishListValue, savingValue;
     public int newBudget;
     EditText budgetEditText, wishlistEditText, priceEditText;
     int total;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, laterRecyclerView;
     private String[] theQuestionString;
     String q;
     int randomIndex;
@@ -61,13 +63,20 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        laterRecyclerView = findViewById(R.id.laterRecyclerview);
+        laterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        laterAdapter = new LaterAdapter(this, getLaterItems());
+        laterRecyclerView.setAdapter(laterAdapter);
+
         mainAdapter = new MainAdapter(this, getAllItems());
         recyclerView.setAdapter(mainAdapter);
+        //laterRecyclerView.setAdapter(mainAdapter);
 
         mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this, "Open the destination/website.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Position : " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -78,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                addtoLater((long) viewHolder.itemView.getTag());
                 removeItem((long) viewHolder.itemView.getTag());
+                laterAdapter.swapCursor(getLaterItems());
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -174,6 +185,18 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null,
                 DatabaseHelper.WISHLIST_TIMESTAMP + " DESC"
+        );
+    }
+
+    private Cursor getLaterItems() {
+        return mDatabase.query(
+                DatabaseHelper.LATER_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DatabaseHelper.LATER_TIMESTAMP + " DESC"
         );
     }
 
@@ -346,12 +369,15 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                removeItem((long) viewHolder.itemView.getTag());
+
                 mainAdapter2.swapCursor(getAllItems());
+                addtoLater((long) viewHolder.itemView.getTag());
+                removeItem((long) viewHolder.itemView.getTag());
+
+                laterAdapter = new LaterAdapter(getApplicationContext(), getLaterItems());
+                laterRecyclerView.setAdapter(laterAdapter);
             }
         }).attachToRecyclerView(newRecyclerView);
-
-
 
         alertDialog.setView(view);
         alertDialog.show();
@@ -368,6 +394,24 @@ public class MainActivity extends AppCompatActivity {
                 questions.setText(q);
             }
         });
+    }
+
+    private void addtoLater(long id) {
+        String[] coloumns = new String[] { DatabaseHelper._ID, DatabaseHelper.WISHLIST_NAME, DatabaseHelper.WISHLIST_AMOUNT, DatabaseHelper.WISHLIST_TIMESTAMP };
+        String name;
+        String price;
+        Cursor c = mDatabase.query(DatabaseHelper.WISHLIST_TABLE, coloumns, DatabaseHelper._ID + "=" + id, null, null, null, null);
+
+        if (c != null) {
+            c.moveToFirst();
+            name = c.getString(1);
+            price = c.getString(2);
+            DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+            long result = dbHelper.createLater(name, price);
+            if (result == -1) {
+                Toast.makeText(MainActivity.this, "Failed storing new item.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 

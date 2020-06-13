@@ -7,21 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 /**
- * Created by Hakimi on 16/5/2020.
+ * Created by Hakimi on 12/6/2020.
  */
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
+class LaterAdapter extends RecyclerView.Adapter<LaterAdapter.LaterViewHolder> {
 
     private Context mContext;
     private Cursor mCursor;
-    private OnItemClickListener  mListener;
+    private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -31,7 +28,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         mListener = listener;
     }
 
-    public MainAdapter(Context context, Cursor cursor) {
+    public LaterAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
         notifyDataSetChanged();
@@ -39,20 +36,20 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     @NonNull
     @Override
-    public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.row_content,parent,false);
-        return new MainViewHolder(view, mListener);
+        return new LaterViewHolder(view, mListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull LaterViewHolder holder, final int position) {
         if (!mCursor.moveToPosition(position)) {
             return;
         }
 
-        String item = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_NAME));
-        String price = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_AMOUNT));
+        String item = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LATER_NAME));
+        String price = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LATER_AMOUNT));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
         //int abc = mCursor.getInt(position);
 
@@ -76,12 +73,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         return mCursor.getCount();
     }
 
-    public static class MainViewHolder extends RecyclerView.ViewHolder {
+    public static class LaterViewHolder extends RecyclerView.ViewHolder {
         public TextView itemText;
         public TextView priceText;
         public CheckBox checkBox;
 
-        public MainViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public LaterViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             itemText = itemView.findViewById(R.id.itemAdapter);
             priceText = itemView.findViewById(R.id.priceAdapter);
