@@ -26,9 +26,10 @@
         android:id="@+id/newPriceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Price"
         android:layout_below="@id/newWishlistEditText"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="15dp"
+        android:hint="Price"
+        android:inputType="number" />
 
     <LinearLayout
         android:layout_width="match_parent"

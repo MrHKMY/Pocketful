@@ -94,11 +94,35 @@
         android:text="Go!"
         android:layout_below="@id/savingLinearLayout"/>
 
+    <TextView
+        android:id="@+id/wishlistText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-------- My Wishlist --------"
+        android:layout_below="@id/goButton"
+        android:gravity="center_horizontal"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/goButton"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wishlistText"/>
+    
+    <TextView
+        android:id="@+id/laterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-------- Maybe later list --------"
+        android:layout_below="@id/recyclerview"
+        android:gravity="center_horizontal"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/laterRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/laterText"/>
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/floatButton"
@@ -113,6 +137,5 @@
         app:fab_colorNormal="@color/colorPrimaryDark"
         app:fab_colorPressed="@color/colorAccent"
         />
-
 
 </RelativeLayout>
