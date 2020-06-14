@@ -101,28 +101,45 @@
         android:text="-------- My Wishlist --------"
         android:layout_below="@id/goButton"
         android:gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
         />
+
+    <LinearLayout
+        android:id="@+id/recyclerviewLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/wishlistText"
+        android:layout_marginBottom="2dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/wishlistText"/>
-    
-    <TextView
-        android:id="@+id/laterText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="-------- Maybe later list --------"
-        android:layout_below="@id/recyclerview"
-        android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
+
+        <TextView
+            android:id="@+id/laterText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="-------- Maybe later list --------"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_margin="10dp"
+            />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/laterRecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/laterText"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    </LinearLayout>
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/floatButton"

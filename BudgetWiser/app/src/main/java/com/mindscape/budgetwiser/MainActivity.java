@@ -6,16 +6,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,7 +26,6 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
-import java.util.Map;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -88,10 +82,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 addtoLater((long) viewHolder.itemView.getTag());
-                removeItem((long) viewHolder.itemView.getTag());
+                removeWishItem((long) viewHolder.itemView.getTag());
                 laterAdapter.swapCursor(getLaterItems());
             }
         }).attachToRecyclerView(recyclerView);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeLaterItem((long) viewHolder.itemView.getTag());
+            }
+        }).attachToRecyclerView(laterRecyclerView);
 
         budgetValue = findViewById(R.id.budgetAmountTextView);
         wishListValue = findViewById(R.id.wishlistAmountTextView);
@@ -160,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void removeItem(long id){
+    private void removeWishItem(long id){
         mDatabase.delete(DatabaseHelper.WISHLIST_TABLE, DatabaseHelper._ID + "=" + id, null);
         mainAdapter.swapCursor(getAllItems());
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
@@ -174,6 +179,24 @@ public class MainActivity extends AppCompatActivity {
         } else if (newBudget - total < 0){
             savingLayout.setBackgroundResource(R.color.red);
         }
+    }
+
+    private void removeLaterItem(long id){
+        mDatabase.delete(DatabaseHelper.LATER_TABLE, DatabaseHelper._ID + "=" + id, null);
+        laterAdapter.swapCursor(getLaterItems());
+        /*Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        wishListValue.setText(String.valueOf(total));
+        savingValue.setText(String.valueOf(newBudget-total));
+        if (newBudget-total > 0 ){
+            savingLayout.setBackgroundResource(R.color.darkGreen);
+        } else if (newBudget - total < 0){
+            savingLayout.setBackgroundResource(R.color.red);
+        }
+
+         */
     }
 
     private Cursor getAllItems() {
@@ -372,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mainAdapter2.swapCursor(getAllItems());
                 addtoLater((long) viewHolder.itemView.getTag());
-                removeItem((long) viewHolder.itemView.getTag());
+                removeWishItem((long) viewHolder.itemView.getTag());
 
                 laterAdapter = new LaterAdapter(getApplicationContext(), getLaterItems());
                 laterRecyclerView.setAdapter(laterAdapter);
