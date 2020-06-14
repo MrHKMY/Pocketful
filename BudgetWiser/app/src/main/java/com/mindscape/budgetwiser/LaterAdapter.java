@@ -38,7 +38,7 @@ class LaterAdapter extends RecyclerView.Adapter<LaterAdapter.LaterViewHolder> {
     @Override
     public LaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.row_content,parent,false);
+        View view = inflater.inflate(R.layout.later_content,parent,false);
         return new LaterViewHolder(view, mListener);
     }
 
