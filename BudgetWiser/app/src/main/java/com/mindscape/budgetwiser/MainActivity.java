@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     String q;
     int randomIndex;
     LinearLayout savingLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 removeLaterItem((long) viewHolder.itemView.getTag());
             }
         }).attachToRecyclerView(laterRecyclerView);
+
 
         budgetValue = findViewById(R.id.budgetAmountTextView);
         wishListValue = findViewById(R.id.wishlistAmountTextView);
