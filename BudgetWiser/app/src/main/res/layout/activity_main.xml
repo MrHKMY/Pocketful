@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,22 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
         android:background="@drawable/circular_box"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Budget"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:text="Budget" />
+
             <TextView
                 android:id="@+id/budgetAmountTextView"
                 android:layout_width="wrap_content"
@@ -41,14 +41,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wishlist"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:text="Wishlist" />
+
             <TextView
                 android:id="@+id/wishlistAmountTextView"
                 android:layout_width="wrap_content"
@@ -65,12 +66,13 @@
         android:id="@+id/savingLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/topLinearLayout"
         android:layout_marginHorizontal="10dp"
-        android:orientation="vertical"
-        android:padding="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/circular_box"
         android:gravity="center"
-        android:layout_below="@id/topLinearLayout">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,72 +89,87 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/goButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go!"
-        android:layout_below="@id/savingLinearLayout"/>
-
-    <TextView
-        android:id="@+id/wishlistText"
+    <LinearLayout
+        android:id="@+id/buttonLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="-------- My Wishlist --------"
-        android:layout_below="@id/goButton"
-        android:gravity="center_horizontal"
-        android:background="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:layout_margin="10dp"
-        />
+        android:layout_below="@id/savingLinearLayout"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/circular_box"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Put some analysis words here"
+            android:gravity="center"
+            />
+
+        <Button
+            android:id="@+id/goButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go!"
+            />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/recyclerviewLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/wishlistText"
-        android:layout_marginBottom="2dp">
+        android:layout_below="@id/buttonLinearLayout"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        <TextView
+            android:id="@+id/wishlistText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="-------- My Wishlist --------"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/laterText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@color/colorPrimary"
             android:gravity="center_horizontal"
             android:text="-------- Maybe later list --------"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:layout_margin="10dp"
-            />
+            android:textSize="18sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/laterRecyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/laterRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/floatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="25dp"
         android:foregroundGravity="bottom"
         android:src="@drawable/fab_add"
         app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_colorPressed="@color/colorAccent"
-        />
+        app:fab_colorPressed="@color/colorAccent" />
 
 </RelativeLayout>
