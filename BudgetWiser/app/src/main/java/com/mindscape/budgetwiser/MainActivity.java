@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -26,7 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Random;
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
     private MainAdapter mainAdapter, mainAdapter2;
     private LaterAdapter laterAdapter;
-    private TextView budgetValue, wishListValue, savingValue;
+    private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle;
     public int newBudget;
     EditText budgetEditText, wishlistEditText, priceEditText;
     int total;
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomAppBar bar = findViewById(R.id.bottomBar);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        setSupportActionBar(bar);
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         mDatabase = dbHelper.getWritableDatabase();
@@ -99,13 +105,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(laterRecyclerView);
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                moveToWishlist((long) viewHolder.itemView.getTag());
+                removeLaterItem((long) viewHolder.itemView.getTag());
+                mainAdapter.swapCursor(getAllItems());
+            }
+        }).attachToRecyclerView(laterRecyclerView);
+
 
         budgetValue = findViewById(R.id.budgetAmountTextView);
         wishListValue = findViewById(R.id.wishlistAmountTextView);
         savingValue = findViewById(R.id.savingTextView);
         savingLayout = findViewById(R.id.savingLinearLayout);
-        FloatingActionButton addWishlistFAB = findViewById(R.id.floatButton);
+        wishlistTitle = findViewById(R.id.wishlistText);
+        laterTitle = findViewById(R.id.laterText);
+        //FloatingActionButton addWishlistFAB = findViewById(R.id.floatButton);
         Button goButton = findViewById(R.id.goButton);
+        laterRecyclerView.setVisibility(View.GONE);
 
         createStartUp();
 
@@ -121,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             savingLayout.setBackgroundResource(R.color.red);
         }
 
-        addWishlistFAB.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addWishlistDialog();
@@ -132,6 +154,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startQuestion();
+            }
+        });
+
+        wishlistTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                laterRecyclerView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                wishlistTitle.setBackgroundResource(R.color.colorAccent);
+                laterTitle.setBackgroundResource(R.color.colorPrimaryDark);
+            }
+        });
+        laterTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.GONE);
+                laterRecyclerView.setVisibility(View.VISIBLE);
+                laterTitle.setBackgroundResource(R.color.colorAccent);
+                wishlistTitle.setBackgroundResource(R.color.colorPrimaryDark);
             }
         });
 
@@ -161,6 +202,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.reset_budget_menu:
                 resetBudget();
+                return true;
+            case R.id.grocery_menu:
+                Toast.makeText(this, "Start intent grocery", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, GroceriesActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.expense_menu:
+                Toast.makeText(this, "Start intent expenses", Toast.LENGTH_SHORT).show();
+                Intent a = new Intent(this, ExpensesActivity.class);
+                startActivity(a);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -433,6 +484,24 @@ public class MainActivity extends AppCompatActivity {
             price = c.getString(2);
             DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
             long result = dbHelper.createLater(name, price);
+            if (result == -1) {
+                Toast.makeText(MainActivity.this, "Failed storing new item.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void moveToWishlist(long id) {
+        String[] coloumns = new String[] { DatabaseHelper._ID, DatabaseHelper.LATER_NAME, DatabaseHelper.LATER_AMOUNT, DatabaseHelper.LATER_TIMESTAMP };
+        String name;
+        String price;
+        Cursor c = mDatabase.query(DatabaseHelper.LATER_TABLE, coloumns, DatabaseHelper._ID + "=" + id, null, null, null, null);
+
+        if (c != null) {
+            c.moveToFirst();
+            name = c.getString(1);
+            price = c.getString(2);
+            DatabaseHelper dbHelper = new DatabaseHelper(MainActivity.this);
+            long result = dbHelper.createWishList(name, price);
             if (result == -1) {
                 Toast.makeText(MainActivity.this, "Failed storing new item.", Toast.LENGTH_SHORT).show();
             }

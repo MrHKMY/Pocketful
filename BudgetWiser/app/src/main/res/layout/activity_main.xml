@@ -1,175 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/topLinearLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circular_box"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Budget" />
-
-            <TextView
-                android:id="@+id/budgetAmountTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Wishlist" />
-
-            <TextView
-                android:id="@+id/wishlistAmountTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/savingLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topLinearLayout"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/circular_box"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total savings" />
-
-        <TextView
-            android:id="@+id/savingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/buttonLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/savingLinearLayout"
-        android:layout_marginHorizontal="10dp"
-        android:background="@drawable/circular_box"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Put some analysis words here"
-            android:gravity="center"
-            />
-
-        <Button
-            android:id="@+id/goButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go!"
-            />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/recyclerviewLinearLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/buttonLinearLayout"
-        android:layout_marginBottom="2dp"
-        android:orientation="vertical">
+        >
 
-        <TextView
-            android:id="@+id/wishlistText"
+        <LinearLayout
+            android:id="@+id/topLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_horizontal"
-            android:text="-------- My Wishlist --------"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:background="@drawable/circular_box"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/laterText"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Budget" />
+
+                <TextView
+                    android:id="@+id/budgetAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Wishlist" />
+
+                <TextView
+                    android:id="@+id/wishlistAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/savingLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_horizontal"
-            android:text="-------- Maybe later list --------"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:layout_below="@id/topLinearLayout"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/circular_box"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/laterRecyclerview"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total savings" />
+
+            <TextView
+                android:id="@+id/savingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/savingLinearLayout"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/circular_box"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/floatButton"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Lets get wiser!" />
+
+            <Button
+                android:id="@+id/goButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go!" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/recyclerviewLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/buttonLinearLayout"
+            android:background="@drawable/circular_box"
+            android:layout_marginBottom="2dp"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/wishlistText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorAccent"
+                android:gravity="center_horizontal"
+                android:text="My Wishlist"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/laterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal"
+                android:text="Maybe list"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circular_box"
+            android:layout_below="@id/recyclerviewLinearLayout"
+            android:layout_marginHorizontal="10dp"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/laterRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </RelativeLayout>
+
+
+        <!--<com.github.clans.fab.FloatingActionButton
+            android:id="@+id/floatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="25dp"
+            android:foregroundGravity="bottom"
+            android:src="@drawable/fab_add"
+            app:fab_colorNormal="@color/colorPrimaryDark"
+            app:fab_colorPressed="@color/colorAccent" />
+            -->
+    </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/colorPrimary"
+        app:navigationIcon="@drawable/nav_menu_icon"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:theme="@style/AppTheme"
+        app:fabAlignmentMode="center"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="25dp"
-        android:foregroundGravity="bottom"
+        android:layout_margin="15dp"
         android:src="@drawable/fab_add"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_colorPressed="@color/colorAccent" />
+        app:fabSize="auto"
+        app:layout_anchor="@id/bottomBar"
+        app:layout_anchorGravity="center"/>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
