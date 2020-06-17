@@ -12,4 +12,19 @@
         app:showAsAction="never"
         android:title="Reset">
     </item>
+
+    <item
+        android:id="@+id/grocery_menu"
+        app:showAsAction="always"
+        android:title="grocery"
+        android:icon="@mipmap/ic_launcher_round">
+    </item>
+
+    <item
+        android:id="@+id/expense_menu"
+        app:showAsAction="always"
+        android:title="grocery"
+        android:icon="@mipmap/ic_launcher_round">
+    </item>
+
 </menu>
