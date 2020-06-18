@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * Created by Hakimi on 17/6/2020.
  */
-class ExpensesActivity extends AppCompatActivity {
+public class ExpensesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

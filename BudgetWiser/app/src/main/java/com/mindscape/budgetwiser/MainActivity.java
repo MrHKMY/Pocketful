@@ -45,13 +45,15 @@ public class MainActivity extends AppCompatActivity {
     String q;
     int randomIndex;
     LinearLayout savingLayout;
+    private boolean isFabTapped = false;
+    private BottomAppBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomAppBar bar = findViewById(R.id.bottomBar);
+        bar = findViewById(R.id.bottomBar);
         FloatingActionButton fab = findViewById(R.id.fab);
         setSupportActionBar(bar);
 
@@ -125,9 +127,16 @@ public class MainActivity extends AppCompatActivity {
         savingLayout = findViewById(R.id.savingLinearLayout);
         wishlistTitle = findViewById(R.id.wishlistText);
         laterTitle = findViewById(R.id.laterText);
-        //FloatingActionButton addWishlistFAB = findViewById(R.id.floatButton);
         Button goButton = findViewById(R.id.goButton);
         laterRecyclerView.setVisibility(View.GONE);
+
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomNavigationDrawerFragment bottomNavigationDrawerFragment = new BottomNavigationDrawerFragment();
+                bottomNavigationDrawerFragment.show(getSupportFragmentManager(), bottomNavigationDrawerFragment.getTag());
+            }
+        });
 
         createStartUp();
 
@@ -147,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addWishlistDialog();
+                isFabTapped = !isFabTapped;
+                if (isFabTapped) {
+                    bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+                } else {
+                    bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+                }
             }
         });
 
@@ -204,18 +219,16 @@ public class MainActivity extends AppCompatActivity {
                 resetBudget();
                 return true;
             case R.id.grocery_menu:
-                Toast.makeText(this, "Start intent grocery", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(this, GroceriesActivity.class);
+                Intent i = new Intent(MainActivity.this, GroceriesActivity.class);
+                //bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                 startActivity(i);
                 return true;
             case R.id.expense_menu:
-                Toast.makeText(this, "Start intent expenses", Toast.LENGTH_SHORT).show();
-                Intent a = new Intent(this, ExpensesActivity.class);
+                Intent a = new Intent(MainActivity.this, ExpensesActivity.class);
                 startActivity(a);
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void removeWishItem(long id){
@@ -506,7 +519,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed storing new item.", Toast.LENGTH_SHORT).show();
             }
         }
+
+        Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        wishListValue.setText(String.valueOf(total));
+        savingValue.setText(String.valueOf(newBudget-total));
     }
-
-
 }
