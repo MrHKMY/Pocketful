@@ -2,6 +2,7 @@ package com.mindscape.budgetwiser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +29,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout savingLayout;
     private boolean isFabTapped = false;
     private BottomAppBar bar;
+    PieChart pieChart;
+    public ArrayList<PieEntry> dataValue = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         laterTitle = findViewById(R.id.laterText);
         Button goButton = findViewById(R.id.goButton);
         laterRecyclerView.setVisibility(View.GONE);
+        pieChart = findViewById(R.id.pieChartID);
 
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         createStartUp();
+        createPieChart();
 
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
         if (cursor.moveToFirst()) {
@@ -147,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
         if (newBudget-total > 0 ){
-            savingLayout.setBackgroundResource(R.color.darkGreen);
+            savingLayout.setBackgroundResource(R.color.colorPrimary);
         } else if (newBudget - total < 0){
             savingLayout.setBackgroundResource(R.color.red);
         }
@@ -156,12 +172,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addWishlistDialog();
-                isFabTapped = !isFabTapped;
+                /*isFabTapped = !isFabTapped;
                 if (isFabTapped) {
                     bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                 } else {
                     bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 }
+
+                 */
             }
         });
 
@@ -241,10 +259,11 @@ public class MainActivity extends AppCompatActivity {
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
         if (newBudget-total > 0 ){
-            savingLayout.setBackgroundResource(R.color.darkGreen);
+            savingLayout.setBackgroundResource(R.color.colorPrimary);
         } else if (newBudget - total < 0){
             savingLayout.setBackgroundResource(R.color.red);
         }
+        createPieChart();
     }
 
     private void removeLaterItem(long id){
@@ -334,10 +353,11 @@ public class MainActivity extends AppCompatActivity {
                     wishListValue.setText(String.valueOf(total));
                     savingValue.setText(String.valueOf(newBudget-total));
                     if (newBudget-total > 0 ){
-                        savingLayout.setBackgroundResource(R.color.darkGreen);
+                        savingLayout.setBackgroundResource(R.color.colorPrimary);
                     } else if (newBudget - total < 0){
                         savingLayout.setBackgroundResource(R.color.red);
                     }
+                    createPieChart();
 
                     alertDialog.cancel();
                 } else {
@@ -386,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     budgetValue.setText(String.valueOf(theData));
                     savingValue.setText(String.valueOf(newBudget-total));
                     if (newBudget-total > 0 ){
-                        savingLayout.setBackgroundResource(R.color.darkGreen);
+                        savingLayout.setBackgroundResource(R.color.colorPrimary);
                     } else if (newBudget - total < 0){
                         savingLayout.setBackgroundResource(R.color.red);
                     }
@@ -425,7 +445,7 @@ public class MainActivity extends AppCompatActivity {
         budgetValue.setText(String.valueOf(theData));
         savingValue.setText(String.valueOf(newBudget - total));
         if (newBudget-total > 0 ){
-            savingLayout.setBackgroundResource(R.color.darkGreen);
+            savingLayout.setBackgroundResource(R.color.colorPrimary);
         } else if (newBudget - total < 0){
             savingLayout.setBackgroundResource(R.color.red);
         }
@@ -481,6 +501,7 @@ public class MainActivity extends AppCompatActivity {
                 randomIndex = new Random().nextInt(theQuestionString.length);
                 q = theQuestionString[randomIndex];
                 questions.setText(q);
+                createPieChart();
             }
         });
     }
@@ -526,5 +547,55 @@ public class MainActivity extends AppCompatActivity {
         }
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.valueOf(newBudget-total));
+        createPieChart();
+    }
+
+    private void createPieChart() {
+        pieChart.setUsePercentValues(false);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setExtraOffsets(5,10,5,5);
+
+        pieChart.setDragDecelerationFrictionCoef(0.75f);
+
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(getColor(R.color.white));
+        pieChart.setTransparentCircleRadius(60f);
+        pieChart.setNoDataText("At least one data are required");
+
+        pieChart.animateY(1000, Easing.EaseInOutCubic);
+
+        PieDataSet dataSet = new PieDataSet(getDataValue(), "Labels");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(15f);
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        PieData data = new PieData((dataSet));
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.BLUE);
+
+        pieChart.setData(data);
+    }
+
+    private ArrayList<PieEntry> getDataValue() {
+        dataValue.clear();
+
+        String[] columns = {"amount"};
+        Cursor cursor = mDatabase.query(DatabaseHelper.WISHLIST_TABLE, columns, null,null,null,null,null);
+
+        for (int i = 0; i<cursor.getCount(); i++){
+            cursor.moveToNext();
+            dataValue.add(new PieEntry(cursor.getFloat(0)));
+        }
+
+        Cursor cursor2 = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
+        if (cursor2.moveToFirst()) {
+            total = cursor2.getInt(cursor2.getColumnIndex("Total"));
+        }
+        if (total == 0){
+            pieChart.setNoDataText("No Data");
+            pieChart.setBackgroundResource(R.color.colorPrimaryDark);
+        } else
+            pieChart.setBackgroundResource(R.color.white);
+        return dataValue;
     }
 }
