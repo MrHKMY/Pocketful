@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="GroceriesActivity"
+        <activity android:name=".GroceriesFragment"
             android:theme="@style/AppTheme">
         </activity>
 

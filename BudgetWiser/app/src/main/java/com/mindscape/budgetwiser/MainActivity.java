@@ -3,6 +3,7 @@ package com.mindscape.budgetwiser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -38,7 +40,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     int randomIndex;
     LinearLayout savingLayout;
     private boolean isFabTapped = false;
-    private BottomAppBar bar;
     PieChart pieChart;
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
 
@@ -67,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bar = findViewById(R.id.bottomBar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        setSupportActionBar(bar);
+        FloatingActionButton fab = findViewById(R.id.floatButton);
 
         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         mDatabase = dbHelper.getWritableDatabase();
@@ -144,14 +143,8 @@ public class MainActivity extends AppCompatActivity {
         Button goButton = findViewById(R.id.goButton);
         laterRecyclerView.setVisibility(View.GONE);
         pieChart = findViewById(R.id.pieChartID);
-
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomNavigationDrawerFragment bottomNavigationDrawerFragment = new BottomNavigationDrawerFragment();
-                bottomNavigationDrawerFragment.show(getSupportFragmentManager(), bottomNavigationDrawerFragment.getTag());
-            }
-        });
+        BottomNavigationView bottomView = findViewById(R.id.bottom_navigation);
+        bottomView.setOnNavigationItemSelectedListener(navListener);
 
         createStartUp();
         createPieChart();
@@ -218,35 +211,6 @@ public class MainActivity extends AppCompatActivity {
         int theData = cursor.getInt(cursor.getColumnIndex("budget"));
         budgetValue.setText(String.valueOf(theData));
         newBudget = theData;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.new_budget_menu:
-                addBudgetDialog();
-                return true;
-            case R.id.reset_budget_menu:
-                resetBudget();
-                return true;
-            case R.id.grocery_menu:
-                Intent i = new Intent(MainActivity.this, GroceriesActivity.class);
-                //bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-                startActivity(i);
-                return true;
-            case R.id.expense_menu:
-                Intent a = new Intent(MainActivity.this, ExpensesActivity.class);
-                startActivity(a);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void removeWishItem(long id){
@@ -598,4 +562,31 @@ public class MainActivity extends AppCompatActivity {
             pieChart.setBackgroundResource(R.color.white);
         return dataValue;
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()) {
+                        case R.id.nav_home:
+                            selectedFragment = new HomeFragment();
+                            break;
+                        case R.id.nav_groceries:
+                            Intent intent = new Intent(getApplicationContext(), GroceriesFragment.class);
+                            startActivity(intent);
+                            break;
+                        case R.id.nav_expenses:
+                            selectedFragment = new ExpensesFragment();
+                            break;
+                        case R.id.nav_setting:
+                            selectedFragment = new SettingFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, selectedFragment).commit();
+
+                    return true;
+                }
+            };
 }
