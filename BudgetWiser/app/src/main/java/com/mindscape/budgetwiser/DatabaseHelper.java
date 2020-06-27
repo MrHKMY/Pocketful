@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String WISHLIST_TABLE = "wishlistable";
     public static final String WISHLIST_NAME = "items";
     public static final String WISHLIST_AMOUNT = "amount";
+    public static final String WISHLIST_CATEGORY = "category";
     public static final String WISHLIST_TIMESTAMP = "Wishlisttimestamp";
 
     public static final String BUDGET_TABLE = "budgetTable";
@@ -27,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String LATER_TABLE = "latertable";
     public static final String LATER_NAME = "lateritems";
     public static final String LATER_AMOUNT = "lateramount";
+    public static final String LATER_CATEGORY = "latercategory";
     public static final String LATER_TIMESTAMP = "latertimestamp";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -42,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + WISHLIST_NAME + " TEXT, "
                 + WISHLIST_AMOUNT + " TEXT, "
+                + WISHLIST_CATEGORY + " TEXT, "
                 + WISHLIST_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
 
@@ -59,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + LATER_NAME + " TEXT, "
                 + LATER_AMOUNT + " TEXT, "
+                + LATER_CATEGORY + " TEXT, "
                 + LATER_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
 
@@ -79,11 +83,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
-    public long createWishList(String item, String price) {
+    public long createWishList(String item, String price, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(WISHLIST_NAME, item);
         cv.put(WISHLIST_AMOUNT, price);
+        cv.put(WISHLIST_CATEGORY, category);
 
         long result = db.insert(WISHLIST_TABLE, null, cv);
 
@@ -100,11 +105,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
-    public long createLater(String item, String price) {
+    public long createLater(String item, String price, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LATER_NAME, item);
         cv.put(LATER_AMOUNT, price);
+        cv.put(LATER_CATEGORY, category);
 
         long result = db.insert(LATER_TABLE, null, cv);
         return result;

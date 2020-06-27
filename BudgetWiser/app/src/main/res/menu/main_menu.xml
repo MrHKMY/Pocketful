@@ -16,14 +16,6 @@
     </item>
 
     <item
-        android:id="@+id/empty_menu"
-        android:title="Empty"
-        android:enabled="false"
-        android:checkable="false"
-        android:checked="false">
-    </item>
-
-    <item
         android:id="@+id/nav_expenses"
         android:title="Expenses"
         android:icon="@mipmap/ic_launcher_round">
