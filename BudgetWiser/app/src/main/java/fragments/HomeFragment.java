@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     private SQLiteDatabase mDatabase;
     private MainAdapter mainAdapter, mainAdapter2;
     private LaterAdapter laterAdapter;
-    private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle;
+    private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis;
     public int newBudget;
     EditText budgetEditText, wishlistEditText, priceEditText;
     int total;
@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
     PieChart pieChart;
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
     ArrayAdapter<CharSequence> spinnerAdapter;
+    private  Button goButton;
 
     @Nullable
     @Override
@@ -150,10 +151,11 @@ public class HomeFragment extends Fragment {
         savingLayout = view.findViewById(R.id.savingLinearLayout);
         wishlistTitle = view.findViewById(R.id.wishlistText);
         laterTitle = view.findViewById(R.id.laterText);
-        Button goButton = view.findViewById(R.id.goButton);
+        goButton = view.findViewById(R.id.goButton);
         laterRecyclerView.setVisibility(View.GONE);
         pieChart = view.findViewById(R.id.pieChartID);
         budgetBox = view.findViewById(R.id.budget_box);
+        wishlistAnalysis = view.findViewById(R.id.wishlistAnalysis);
 
         budgetBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,13 +171,7 @@ public class HomeFragment extends Fragment {
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-        wishListValue.setText(String.valueOf(total));
-        savingValue.setText(String.valueOf(newBudget - total));
-        if (newBudget - total > 0) {
-            savingLayout.setBackgroundResource(R.color.colorPrimary);
-        } else if (newBudget - total < 0) {
-            savingLayout.setBackgroundResource(R.color.red);
-        }
+        updateSavingLayout();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +217,20 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void updateSavingLayout() {
+        wishListValue.setText(String.valueOf(total));
+        savingValue.setText(String.valueOf(newBudget - total));
+        if (newBudget - total > 0) {
+            savingLayout.setBackgroundResource(R.color.green);
+            wishlistAnalysis.setText("Your got some saving. Great job!");
+            goButton.setVisibility(View.GONE);
+        } else if (newBudget - total < 0) {
+            savingLayout.setBackgroundResource(R.color.red);
+            wishlistAnalysis.setText("Need a help to decide what really matter?");
+            goButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     private Cursor getAllItems() {
         return mDatabase.query(
                 DatabaseHelper.WISHLIST_TABLE,
@@ -261,13 +271,7 @@ public class HomeFragment extends Fragment {
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-        wishListValue.setText(String.valueOf(total));
-        savingValue.setText(String.valueOf(newBudget - total));
-        if (newBudget - total > 0) {
-            savingLayout.setBackgroundResource(R.color.colorPrimary);
-        } else if (newBudget - total < 0) {
-            savingLayout.setBackgroundResource(R.color.red);
-        }
+        updateSavingLayout();
         createPieChart();
     }
 
@@ -335,15 +339,7 @@ public class HomeFragment extends Fragment {
                     if (cursor.moveToFirst()) {
                         total = cursor.getInt(cursor.getColumnIndex("Total"));
                     }
-
-
-                    wishListValue.setText(String.valueOf(total));
-                    savingValue.setText(String.valueOf(newBudget - total));
-                    if (newBudget - total > 0) {
-                        savingLayout.setBackgroundResource(R.color.colorPrimary);
-                    } else if (newBudget - total < 0) {
-                        savingLayout.setBackgroundResource(R.color.red);
-                    }
+                    updateSavingLayout();
                     createPieChart();
 
                     alertDialog.cancel();
@@ -391,12 +387,7 @@ public class HomeFragment extends Fragment {
                     int theData = cursor.getInt(cursor.getColumnIndex("budget"));
 
                     budgetValue.setText(String.valueOf(theData));
-                    savingValue.setText(String.valueOf(newBudget - total));
-                    if (newBudget - total > 0) {
-                        savingLayout.setBackgroundResource(R.color.colorPrimary);
-                    } else if (newBudget - total < 0) {
-                        savingLayout.setBackgroundResource(R.color.red);
-                    }
+                    updateSavingLayout();
                     alertDialog.cancel();
 
                 } else {
@@ -432,7 +423,7 @@ public class HomeFragment extends Fragment {
         budgetValue.setText(String.valueOf(theData));
         savingValue.setText(String.valueOf(newBudget - total));
         if (newBudget - total > 0) {
-            savingLayout.setBackgroundResource(R.color.colorPrimary);
+            savingLayout.setBackgroundResource(R.color.green);
         } else if (newBudget - total < 0) {
             savingLayout.setBackgroundResource(R.color.red);
         }
@@ -473,6 +464,7 @@ public class HomeFragment extends Fragment {
 
                 laterAdapter = new LaterAdapter(getContext(), getLaterItems());
                 laterRecyclerView.setAdapter(laterAdapter);
+                updateSavingLayout();
             }
         }).attachToRecyclerView(newRecyclerView);
 
@@ -512,6 +504,8 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed storing new item.", Toast.LENGTH_SHORT).show();
             }
         }
+
+        updateSavingLayout();
     }
 
     private void moveToWishlist(long id) {
@@ -537,8 +531,7 @@ public class HomeFragment extends Fragment {
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-        wishListValue.setText(String.valueOf(total));
-        savingValue.setText(String.valueOf(newBudget - total));
+        updateSavingLayout();
         createPieChart();
     }
 
