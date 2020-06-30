@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="theQuestions">
-        <item>Question 1</item>
-        <item>Question 2</item>
-        <item>Question 3</item>
-        <item>Question 4</item>
+        <item>Need vs Want. Swipe out items you think that does not belong to your NEED list item.</item>
+        <item>Swipe out items that you thought you wont get a lot of use out of it</item>
+        <item>Do you really need it? For a long term use? Swipe items that arent</item>
+        <item>If someone offered you the cash exact value instead of the item, which item will it be?</item>
+        <item>Which item you think you CAN live even without it? Swipe it out</item>
+        <item>Does  your daily routine need it? If not, swipe it out</item>
+        <item>Promotional sales? If you think cant afford it at full price, maybe its time to swipe it out.</item>
     </string-array>
 </resources>

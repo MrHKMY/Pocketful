@@ -1,7 +1,6 @@
 package fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,11 +37,9 @@ import com.mindscape.budgetwiser.DatabaseHelper;
 import adapters.LaterAdapter;
 import adapters.MainAdapter;
 
-import com.mindscape.budgetwiser.MainActivity;
 import com.mindscape.budgetwiser.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -59,17 +55,16 @@ public class HomeFragment extends Fragment {
     private LaterAdapter laterAdapter;
     private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis;
     public int newBudget;
-    EditText budgetEditText, wishlistEditText, priceEditText;
+    private EditText budgetEditText, wishlistEditText, priceEditText;
     int total;
-    RecyclerView recyclerView, laterRecyclerView;
+    private RecyclerView recyclerView, laterRecyclerView;
     private String[] theQuestionString;
-    String q;
+    private String q;
     int randomIndex;
-    LinearLayout savingLayout, budgetBox;
-    private boolean isFabTapped = false;
-    PieChart pieChart;
+    private LinearLayout savingLayout, budgetBox;
+    private PieChart pieChart;
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
-    ArrayAdapter<CharSequence> spinnerAdapter;
+    private ArrayAdapter<CharSequence> spinnerAdapter;
     private  Button goButton;
 
     @Nullable
@@ -177,14 +172,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addWishlistDialog();
-                /*isFabTapped = !isFabTapped;
-                if (isFabTapped) {
-                    bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-                } else {
-                    bar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-                }
-
-                 */
             }
         });
 
@@ -555,7 +542,7 @@ public class HomeFragment extends Fragment {
         PieDataSet dataSet = new PieDataSet(getDataValue(), "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setValueLinePart1OffsetPercentage(100f); /** When valuePosition is OutsideSlice, indicates offset as percentage out of the slice size */
