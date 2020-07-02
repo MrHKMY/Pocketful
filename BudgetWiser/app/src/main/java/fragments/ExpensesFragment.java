@@ -1,8 +1,5 @@
 package fragments;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,83 +8,62 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.mindscape.budgetwiser.DatabaseHelper;
+import com.google.android.material.tabs.TabLayout;
 import com.mindscape.budgetwiser.R;
 
-import java.util.ArrayList;
+import adapters.PageAdapter;
 
 /**
  * Created by Hakimi on 25/6/2020.
  */
-public class ExpensesFragment extends Fragment {
-
-    PieChart pieChart;
-    DatabaseHelper dbHelper;
-    SQLiteDatabase sqLiteDatabase;
-    public ArrayList<PieEntry> dataValue = new ArrayList<>();
+public class ExpensesFragment extends Fragment {    ViewPager viewPager;
+    TabLayout tabLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_expenses, container,false);
+        View view = inflater.inflate(R.layout.fragment_expense, container,false);
 
-        pieChart = view.findViewById(R.id.expensesPieChart);
-        dbHelper = new DatabaseHelper(getContext());
-        sqLiteDatabase = dbHelper.getWritableDatabase();
-
-        createPieChart();
+        viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
 
         return view;
     }
 
-    private void createPieChart() {
-        pieChart.setUsePercentValues(false);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        pieChart.setDragDecelerationFrictionCoef(0.75f);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
-        pieChart.setDrawHoleEnabled(false);
-        //pieChart.setHoleColor(getColor(R.color.white));
-        pieChart.setTransparentCircleRadius(60f);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
 
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(30f, "Item1"));
-        yValues.add(new PieEntry(20f, "Item2"));
-        yValues.add(new PieEntry(15f, "Item3"));
-        yValues.add(new PieEntry(18f, "Item4"));
-        yValues.add(new PieEntry(17f, "Item5"));
+            }
 
-        pieChart.animateY(1000, Easing.EaseInOutCubic);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        PieDataSet dataSet = new PieDataSet(yValues, "Labels");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(15f);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+            }
 
-        PieData data = new PieData((dataSet));
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.BLUE);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        pieChart.setData(data);
+            }
+        });
     }
 
-    private ArrayList<PieEntry> getDataValue() {
+    private void setupViewPager(ViewPager viewPager) {
+        PageAdapter adapter = new PageAdapter(getChildFragmentManager());
 
-        String[] columns = {"amount"};
-        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.WISHLIST_TABLE, columns, null,null,null,null,null);
+        adapter.addFragment(new ExpenseDisplayFragment(), "Quick display");
+        adapter.addFragment(new ExpenseHistoryFragment(), "History");
 
-        for (int i = 0; i<cursor.getCount(); i++){
-            cursor.moveToNext();
-            dataValue.add(new PieEntry(cursor.getFloat(0)));
-        }
-        return dataValue;
+        viewPager.setAdapter(adapter);
+
     }
 }
