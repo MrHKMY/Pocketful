@@ -8,20 +8,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.mindscape.budgetwiser.R;
 
 /**
- * Created by Hakimi on 25/6/2020.
+ * Created by Hakimi on 2/7/2020.
  */
-public class GroceriesFragment extends Fragment {
+public class ExpenseHistoryFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_groceries, container,false);
+        View view = inflater.inflate(R.layout.fragment_history_expense, container,false);
+
+        return view;
     }
 }
-
