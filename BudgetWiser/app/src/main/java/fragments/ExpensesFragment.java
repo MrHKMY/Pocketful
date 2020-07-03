@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +19,11 @@ import adapters.PageAdapter;
 /**
  * Created by Hakimi on 25/6/2020.
  */
-public class ExpensesFragment extends Fragment {    ViewPager viewPager;
+public class ExpensesFragment extends Fragment {
+    ViewPager viewPager;
     TabLayout tabLayout;
+    View mIndicator;
+    private int indicatorWidth;
 
     @Nullable
     @Override
@@ -28,6 +32,7 @@ public class ExpensesFragment extends Fragment {    ViewPager viewPager;
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
+        //mIndicator = view.findViewById(R.id.indicator);
 
         return view;
     }
@@ -53,6 +58,17 @@ public class ExpensesFragment extends Fragment {    ViewPager viewPager;
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                indicatorWidth = tabLayout.getWidth() / tabLayout.getTabCount();
+
+                //FrameLayout.LayoutParams indicatorParams = mIndicator.getLayoutParams();
+                //indicatorParams.width = indicatorWidth;
+                //mIndicator.setLayoutParams(indicatorParams);
             }
         });
     }

@@ -31,6 +31,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String LATER_CATEGORY = "latercategory";
     public static final String LATER_TIMESTAMP = "latertimestamp";
 
+    public static final String EXPENSE_TABLE = "ExpenseTable";
+    public static final String EXPENSE_CATEGORY = "Category";
+    public static final String EXPENSE_VALUE = "Value";
+    public static final String EXPENSE_STATUS = "Status";
+    public static final String EXPENSE_TIMESTAMP = "Date";
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
@@ -66,9 +72,20 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + LATER_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
 
+        String createExpenseTable = "CREATE TABLE "
+                + EXPENSE_TABLE
+                + " ("
+                + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + EXPENSE_CATEGORY + " TEXT, "
+                + EXPENSE_VALUE + " TEXT, "
+                + EXPENSE_STATUS + " TEXT, "
+                + EXPENSE_TIMESTAMP + "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+                + ");";
+
         sqLiteDatabase.execSQL(createWishTable);
         sqLiteDatabase.execSQL(createBudgetTable);
         sqLiteDatabase.execSQL(createLaterTable);
+        sqLiteDatabase.execSQL(createExpenseTable);
         String sql = "INSERT INTO " + BUDGET_TABLE + "(" + _ID + ", " + BUDGET_AMOUNT + ", " + BUDGET_TIMESTAMP + ") VALUES('1', '0', CURRENT_TIMESTAMP)";
         sqLiteDatabase.execSQL(sql);
     }
@@ -78,6 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + WISHLIST_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BUDGET_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LATER_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EXPENSE_TABLE);
 
         onCreate(sqLiteDatabase);
 
@@ -116,15 +134,4 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long getBudget(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "SELECT * FROM " + BUDGET_TABLE + " ORDER BY " + BUDGET_TIMESTAMP + " DESC LIMIT 1" ;
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor != null)
-            cursor.moveToFirst();
-        long result = cursor.getColumnIndex("New Budget");
-
-        return result;
-    }
 }
