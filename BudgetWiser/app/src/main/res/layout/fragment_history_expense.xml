@@ -2,12 +2,42 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/design_default_color_secondary_variant">
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/chartLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/circular_box"
+        android:layout_margin="10dp">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/historyLineChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewExpense"
+        android:layout_width="match_parent"
+        android:layout_height="485dp"
+        android:layout_below="@id/chartLayout"
+        android:background="@drawable/circular_box"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
         android:layout_centerInParent="true"
-        android:text="Expense History"/>
+        android:textAlignment="center"
+        android:id="@+id/monthSelectorID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular_box"
+        android:text="Months"
+        android:layout_below="@id/recyclerviewExpense"
+        android:layout_marginHorizontal="10dp"
+        />
 
 </RelativeLayout>
