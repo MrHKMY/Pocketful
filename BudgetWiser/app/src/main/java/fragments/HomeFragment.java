@@ -295,7 +295,7 @@ public class HomeFragment extends Fragment {
         priceEditText = view.findViewById(R.id.newPriceEditText);
 
         final Spinner spinner = view.findViewById(R.id.spinner_cats);
-        spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.category_array, android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.wishlist_category, android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
 
         final ImageButton wishlistcheckButton = view.findViewById(R.id.newWishlistCheckButton);

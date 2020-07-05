@@ -5,6 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     private List<String> titleList = new ArrayList<>();
 
     public PageAdapter(@NonNull FragmentManager fm) {
-        super (fm);
+        super (fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
@@ -44,5 +47,10 @@ public class PageAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment, String title){
         fragmentList.add(fragment);
         titleList.add(title);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 }

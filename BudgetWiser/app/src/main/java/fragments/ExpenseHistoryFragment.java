@@ -1,5 +1,8 @@
 package fragments;
 
+import android.app.FragmentTransaction;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.mindscape.budgetwiser.DatabaseHelper;
 import com.mindscape.budgetwiser.R;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import adapters.MainAdapter;
  */
 public class ExpenseHistoryFragment extends Fragment {
 
+    private SQLiteDatabase mDatabase;
     LineChart lineChart;
     private RecyclerView recyclerView;
     private ExpenseHistoryAdapter expenseHistoryAdapter;
@@ -39,16 +44,41 @@ public class ExpenseHistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_expense, container, false);
 
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        mDatabase = dbHelper.getWritableDatabase();
+
         lineChart = view.findViewById(R.id.historyLineChart);
         recyclerView = view.findViewById(R.id.recyclerviewExpense);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getAllItems());
+        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getAllItems());
         recyclerView.setAdapter(expenseHistoryAdapter);
+
+        expenseHistoryAdapter.notifyDataSetChanged();
+        expenseHistoryAdapter.swapCursor(getAllItems());
 
         createLineChart();
 
         return view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        expenseHistoryAdapter.swapCursor(getAllItems());
+    }
+
+    private Cursor getAllItems() {
+        return mDatabase.query(
+                DatabaseHelper.EXPENSE_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DatabaseHelper.EXPENSE_TIMESTAMP + " DESC"
+        );
     }
 
     private void createLineChart() {

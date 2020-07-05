@@ -80,6 +80,7 @@ public class ExpensesFragment extends Fragment {
         adapter.addFragment(new ExpenseHistoryFragment(), "History");
 
         viewPager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 }
