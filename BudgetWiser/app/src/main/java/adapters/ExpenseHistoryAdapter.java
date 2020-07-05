@@ -49,9 +49,9 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
         if (!mCursor.moveToPosition(position)) {
             return;
         }
-        String date = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_AMOUNT));
-        String category = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_NAME));
-        String value = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.WISHLIST_AMOUNT));
+        String date = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_TIMESTAMP));
+        String category = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_CATEGORY));
+        String value = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_VALUE));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
 
         holder.categoryText.setText(category);
@@ -99,6 +99,4 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
             notifyDataSetChanged();
         }
     }
-
-
 }
