@@ -21,11 +21,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewExpense"
         android:layout_width="match_parent"
-        android:layout_height="485dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/chartLayout"
         android:background="@drawable/circular_box"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/monthSelectorID"
         />
 
     <TextView
@@ -36,8 +37,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/circular_box"
         android:text="Months"
-        android:layout_below="@id/recyclerviewExpense"
         android:layout_marginHorizontal="10dp"
+        android:layout_alignParentBottom="true"
         />
 
 </RelativeLayout>

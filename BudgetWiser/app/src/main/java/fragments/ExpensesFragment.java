@@ -32,7 +32,6 @@ public class ExpensesFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
-        //mIndicator = view.findViewById(R.id.indicator);
 
         return view;
     }
