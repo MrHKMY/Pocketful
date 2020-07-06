@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class ExpenseDisplayFragment extends Fragment {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue;
+    private TextView titleTextView;
 
 
     @Nullable
@@ -70,14 +72,14 @@ public class ExpenseDisplayFragment extends Fragment {
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expenseDialog("OUT");
+                expenseDialog("OUT", "Money OUT");
             }
         });
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expenseDialog("IN");
+                expenseDialog("IN", "Money IN");
             }
         });
 
@@ -104,7 +106,7 @@ public class ExpenseDisplayFragment extends Fragment {
 
         pieChart.animateY(1000, Easing.EaseInOutCubic);
 
-        PieDataSet dataSet = new PieDataSet(yValues, "Labels");
+        PieDataSet dataSet = new PieDataSet(getDataValue(), "Labels");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -118,8 +120,10 @@ public class ExpenseDisplayFragment extends Fragment {
 
     private ArrayList<PieEntry> getDataValue() {
 
-        String[] columns = {"amount"};
-        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.WISHLIST_TABLE, columns, null,null,null,null,null);
+        dataValue.clear();
+
+        String[] columns = {DatabaseHelper.EXPENSE_VALUE};
+        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, null,null,null,null,null);
 
         for (int i = 0; i<cursor.getCount(); i++){
             cursor.moveToNext();
@@ -128,7 +132,7 @@ public class ExpenseDisplayFragment extends Fragment {
         return dataValue;
     }
 
-    private void expenseDialog(final String status) {
+    private void expenseDialog(final String status, String title) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View view = layoutInflater.inflate(R.layout.expense_input_doalog, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
@@ -138,8 +142,10 @@ public class ExpenseDisplayFragment extends Fragment {
         noteEditText = view.findViewById(R.id.newExpenseNoteEditText);
         checkButton = view.findViewById(R.id.newExpenseCheckButton);
         crossButton = view.findViewById(R.id.newExpenseCrossButton);
-
+        titleTextView = view.findViewById(R.id.newExpenseTitle);
         spinner = view.findViewById(R.id.expense_spinner);
+
+        titleTextView.setText(title);
         spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.expense_category, android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
 
@@ -163,34 +169,19 @@ public class ExpenseDisplayFragment extends Fragment {
                         spinnerValue = spinner.getSelectedItem().toString();
                         //store new budget into database
                         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-                        long result = dbHelper.createExpense(newExpense, spinnerValue, noteExpense,"OUT");
+                        long result = dbHelper.createExpense(newExpense, spinnerValue, noteExpense,status);
                         if (result == -1) {
                             Toast.makeText(getContext(), "Nope", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    /*String selectQuery = "SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE;
-                    Cursor cursor = mDatabase.rawQuery(selectQuery, null);
-                    cursor.moveToLast();
-                    int theValue = cursor.getInt(cursor.getColumnIndex("Value"));
-                    String theCategory = cursor.getString(cursor.getColumnIndex("Category"));
-                    String theDate = cursor.getString(cursor.getColumnIndex("Date"));
-                    String theStatus = cursor.getString(cursor.getColumnIndex("Status"));
-
-                    //budgetValue.setText(String.valueOf(theData));
-                    //updateSavingLayout();
-                    Toast.makeText(getContext(), theValue + theCategory + theDate + theStatus, Toast.LENGTH_SHORT).show();
-                     */
-
+                    Toast.makeText(getContext(), "Data saved.", Toast.LENGTH_SHORT).show();
                     alertDialog.cancel();
 
                 } else {
                     Toast.makeText(getContext(), "Value cannot be empty", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
         crossButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

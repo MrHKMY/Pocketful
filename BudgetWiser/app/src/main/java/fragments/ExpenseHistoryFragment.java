@@ -58,7 +58,6 @@ public class ExpenseHistoryFragment extends Fragment {
         expenseHistoryAdapter.swapCursor(getAllItems());
 
         createLineChart();
-
         return view;
 
     }
@@ -67,6 +66,7 @@ public class ExpenseHistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         expenseHistoryAdapter.swapCursor(getAllItems());
+        createLineChart();
     }
 
     private Cursor getAllItems() {
@@ -83,8 +83,8 @@ public class ExpenseHistoryFragment extends Fragment {
 
     private void createLineChart() {
 
-        LineDataSet lineDataSet1 = new LineDataSet(dataValuesIN(), "IN");
-        LineDataSet lineDataSet2 = new LineDataSet(dataValuesOUT(), "OUT");
+        LineDataSet lineDataSet1 = new LineDataSet(getDataValueIN(), "IN");
+        LineDataSet lineDataSet2 = new LineDataSet(getDataValueOUT(), "OUT");
 
         lineDataSet1.setColor(getResources().getColor(R.color.green));
         lineDataSet1.setCircleColor(getResources().getColor(R.color.green));
@@ -109,25 +109,35 @@ public class ExpenseHistoryFragment extends Fragment {
         lineChart.setData(data);
     }
 
-    private ArrayList<Entry> dataValuesIN() {
+    private ArrayList<Entry> getDataValueIN() {
         ArrayList<Entry> dataValues = new ArrayList<Entry>();
-        dataValues.add(new Entry(0, 10));
-        dataValues.add(new Entry(1, 25));
-        dataValues.add(new Entry(2, 15));
-        dataValues.add(new Entry(3, 40));
-        dataValues.add(new Entry(4, 33));
+        dataValues.clear();
 
+        String where = "IN";
+        Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
+        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
+        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, where,null,null,null,null);
+
+        for (int i = 0; i<cursor.getCount(); i++){
+            cursor.moveToNext();
+            dataValues.add(new Entry(i+1,cursor.getFloat(0)));
+        }
         return dataValues;
     }
 
-    private ArrayList<Entry> dataValuesOUT() {
+    private ArrayList<Entry> getDataValueOUT() {
         ArrayList<Entry> dataValues = new ArrayList<Entry>();
-        dataValues.add(new Entry(0, 50));
-        dataValues.add(new Entry(1, 11));
-        dataValues.add(new Entry(2, 15));
-        dataValues.add(new Entry(3, 7));
-        dataValues.add(new Entry(4, 30));
+        dataValues.clear();
 
+        String where = "OUT";
+        Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
+        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
+        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, null,null,null,null,null);
+
+        for (int i = 0; i<cursor.getCount(); i++){
+            cursor.moveToNext();
+            dataValues.add(new Entry(i+1,cursor.getFloat(0)));
+        }
         return dataValues;
     }
 

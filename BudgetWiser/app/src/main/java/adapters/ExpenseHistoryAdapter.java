@@ -52,11 +52,13 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
         String date = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_TIMESTAMP));
         String category = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_CATEGORY));
         String value = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_VALUE));
+        String note = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_NOTE));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
 
         holder.categoryText.setText(category);
         holder.dateText.setText(date);
         holder.value.setText(value);
+        holder.notes.setText(note);
         holder.itemView.setTag(id);
     }
 
@@ -69,12 +71,14 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
         public TextView dateText;
         public TextView categoryText;
         public TextView value;
+        public TextView notes;
 
         public ExpenseHistoryViewHolder(@NonNull View itemView, final MainAdapter.OnItemClickListener listener) {
             super(itemView);
             dateText = itemView.findViewById(R.id.transactionDateID);
             categoryText = itemView.findViewById(R.id.categoryID);
             value = itemView.findViewById(R.id.valueID);
+            notes = itemView.findViewById(R.id.noteID);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
