@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +39,7 @@ public class ExpenseHistoryFragment extends Fragment {
     LineChart lineChart;
     private RecyclerView recyclerView;
     private ExpenseHistoryAdapter expenseHistoryAdapter;
+    private ImageView statusImageView;
 
     @Nullable
     @Override
@@ -47,6 +49,7 @@ public class ExpenseHistoryFragment extends Fragment {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         mDatabase = dbHelper.getWritableDatabase();
 
+        statusImageView = view.findViewById(R.id.transactionStatusImageView);
         lineChart = view.findViewById(R.id.historyLineChart);
         recyclerView = view.findViewById(R.id.recyclerviewExpense);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -115,8 +118,6 @@ public class ExpenseHistoryFragment extends Fragment {
 
         String where = "IN";
         Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
-        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
-        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, where,null,null,null,null);
 
         for (int i = 0; i<cursor.getCount(); i++){
             cursor.moveToNext();
@@ -131,8 +132,6 @@ public class ExpenseHistoryFragment extends Fragment {
 
         String where = "OUT";
         Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
-        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
-        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, null,null,null,null,null);
 
         for (int i = 0; i<cursor.getCount(); i++){
             cursor.moveToNext();
