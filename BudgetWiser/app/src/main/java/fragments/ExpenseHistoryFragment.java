@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +39,7 @@ public class ExpenseHistoryFragment extends Fragment {
     LineChart lineChart;
     private RecyclerView recyclerView;
     private ExpenseHistoryAdapter expenseHistoryAdapter;
+    private ImageView statusImageView;
 
     @Nullable
     @Override
@@ -47,6 +49,7 @@ public class ExpenseHistoryFragment extends Fragment {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         mDatabase = dbHelper.getWritableDatabase();
 
+        statusImageView = view.findViewById(R.id.transactionStatusImageView);
         lineChart = view.findViewById(R.id.historyLineChart);
         recyclerView = view.findViewById(R.id.recyclerviewExpense);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
