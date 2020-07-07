@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -33,7 +34,9 @@ import com.mindscape.budgetwiser.R;
 
 import java.util.ArrayList;
 
+import adapters.ExpenseDisplayAdapter;
 import adapters.ExpenseHistoryAdapter;
+import adapters.MainAdapter;
 
 /**
  * Created by Hakimi on 2/7/2020.
@@ -53,6 +56,8 @@ public class ExpenseDisplayFragment extends Fragment {
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue;
     private TextView titleTextView;
+    private RecyclerView recyclerView;
+    private ExpenseDisplayAdapter adapter;
 
 
     @Nullable
@@ -63,6 +68,10 @@ public class ExpenseDisplayFragment extends Fragment {
         pieChart = view.findViewById(R.id.expensesPieChart);
         minusButton = view.findViewById(R.id.minusExpenseButton);
         plusButton = view.findViewById(R.id.plusExpenseButton);
+        recyclerView = view.findViewById(R.id.displayRecyclerView);
+
+        adapter = new ExpenseDisplayAdapter(getContext(), getAllItems());
+        recyclerView.setAdapter(adapter);
 
         dbHelper = new DatabaseHelper(getContext());
         sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -84,6 +93,10 @@ public class ExpenseDisplayFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private Cursor getAllItems() {
+        return null;
     }
 
     private void createPieChart() {

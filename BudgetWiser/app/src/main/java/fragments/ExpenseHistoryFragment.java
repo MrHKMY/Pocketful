@@ -118,8 +118,6 @@ public class ExpenseHistoryFragment extends Fragment {
 
         String where = "IN";
         Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
-        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
-        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, where,null,null,null,null);
 
         for (int i = 0; i<cursor.getCount(); i++){
             cursor.moveToNext();
@@ -134,8 +132,6 @@ public class ExpenseHistoryFragment extends Fragment {
 
         String where = "OUT";
         Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
-        //String[] columns = {DatabaseHelper.EXPENSE_VALUE};
-        //Cursor cursor = mDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, null,null,null,null,null);
 
         for (int i = 0; i<cursor.getCount(); i++){
             cursor.moveToNext();
