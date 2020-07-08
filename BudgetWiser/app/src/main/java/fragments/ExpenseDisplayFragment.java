@@ -1,6 +1,5 @@
 package fragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -33,10 +31,6 @@ import com.mindscape.budgetwiser.DatabaseHelper;
 import com.mindscape.budgetwiser.R;
 
 import java.util.ArrayList;
-
-import adapters.ExpenseDisplayAdapter;
-import adapters.ExpenseHistoryAdapter;
-import adapters.MainAdapter;
 
 /**
  * Created by Hakimi on 2/7/2020.
@@ -55,10 +49,8 @@ public class ExpenseDisplayFragment extends Fragment {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue;
-    private TextView titleTextView;
-    private RecyclerView recyclerView;
-    private ExpenseDisplayAdapter adapter;
-
+    private TextView titleTextView, value1TV;
+    int total;
 
     @Nullable
     @Override
@@ -68,13 +60,11 @@ public class ExpenseDisplayFragment extends Fragment {
         pieChart = view.findViewById(R.id.expensesPieChart);
         minusButton = view.findViewById(R.id.minusExpenseButton);
         plusButton = view.findViewById(R.id.plusExpenseButton);
-        recyclerView = view.findViewById(R.id.displayRecyclerView);
-
-        adapter = new ExpenseDisplayAdapter(getContext(), getAllItems());
-        recyclerView.setAdapter(adapter);
+        value1TV = view.findViewById(R.id.value1);
 
         dbHelper = new DatabaseHelper(getContext());
         sqLiteDatabase = dbHelper.getWritableDatabase();
+        //mDatabase = dbHelper.getWritableDatabase();
 
         createPieChart();
 
@@ -92,11 +82,9 @@ public class ExpenseDisplayFragment extends Fragment {
             }
         });
 
-        return view;
-    }
+        getCat1Value();
 
-    private Cursor getAllItems() {
-        return null;
+        return view;
     }
 
     private void createPieChart() {
@@ -205,5 +193,15 @@ public class ExpenseDisplayFragment extends Fragment {
         alertDialog.setView(view);
         alertDialog.show();
 
+    }
+
+    private void getCat1Value() {
+
+        String where2 = "Category_1";
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + where2 + "'",null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        value1TV.setText(String.valueOf(total));
     }
 }
