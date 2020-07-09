@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -37,20 +38,20 @@ import java.util.ArrayList;
  */
 public class ExpenseDisplayFragment extends Fragment {
 
-    private SQLiteDatabase mDatabase;
     PieChart pieChart;
     DatabaseHelper dbHelper;
     SQLiteDatabase sqLiteDatabase;
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
-    private Button minusButton, plusButton;
     private EditText expenseEditText, noteEditText;
     private ImageButton checkButton, crossButton;
     private int newExpense;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue;
-    private TextView titleTextView, value1TV;
+    private TextView titleTextView, value1TV, value2TV, value3TV, value4TV, value5TV, value6TV, value7TV, value8TV, value9TV, value10TV, value11TV, value12TV;
     int total;
+    private FloatingActionButton minusButton, plusButton;
+
 
     @Nullable
     @Override
@@ -61,17 +62,28 @@ public class ExpenseDisplayFragment extends Fragment {
         minusButton = view.findViewById(R.id.minusExpenseButton);
         plusButton = view.findViewById(R.id.plusExpenseButton);
         value1TV = view.findViewById(R.id.value1);
+        value2TV = view.findViewById(R.id.value2);
+        value3TV = view.findViewById(R.id.value3);
+        value4TV = view.findViewById(R.id.value4);
+        value5TV = view.findViewById(R.id.value5);
+        value6TV = view.findViewById(R.id.value6);
+        value7TV = view.findViewById(R.id.value7);
+        value8TV = view.findViewById(R.id.value8);
+        value9TV = view.findViewById(R.id.value9);
+        value10TV = view.findViewById(R.id.value10);
+        value11TV = view.findViewById(R.id.value11);
+        value12TV = view.findViewById(R.id.value12);
 
         dbHelper = new DatabaseHelper(getContext());
         sqLiteDatabase = dbHelper.getWritableDatabase();
-        //mDatabase = dbHelper.getWritableDatabase();
-
-        createPieChart();
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 expenseDialog("OUT", "Money OUT");
+                for (int i=1; i<=12; i++) {
+                    getCategoryValue(i);
+                }
             }
         });
 
@@ -79,10 +91,16 @@ public class ExpenseDisplayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 expenseDialog("IN", "Money IN");
+                for (int i=1; i<=12; i++) {
+                    getCategoryValue(i);
+                }
             }
         });
 
-        getCat1Value();
+        createPieChart();
+        for (int i=1; i<=12; i++) {
+            getCategoryValue(i);
+        }
 
         return view;
     }
@@ -90,7 +108,7 @@ public class ExpenseDisplayFragment extends Fragment {
     private void createPieChart() {
         pieChart.setUsePercentValues(false);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
+        pieChart.setExtraOffsets(0,0,0,0);
 
         pieChart.setDragDecelerationFrictionCoef(0.75f);
 
@@ -111,6 +129,11 @@ public class ExpenseDisplayFragment extends Fragment {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setValueLinePart1OffsetPercentage(100f); /** When valuePosition is OutsideSlice, indicates offset as percentage out of the slice size */
+        dataSet.setValueLinePart1Length(0.6f); /** When valuePosition is OutsideSlice, indicates length of first half of the line */
+        dataSet.setValueLinePart2Length(0.6f); /** When valuePosition is OutsideSlice, indicates length of second half of the line */
 
         PieData data = new PieData((dataSet));
         data.setValueTextSize(10f);
@@ -176,7 +199,10 @@ public class ExpenseDisplayFragment extends Fragment {
                         }
                     }
                     Toast.makeText(getContext(), "Data saved.", Toast.LENGTH_SHORT).show();
+                    int a = Integer.valueOf(spinnerValue);
+                    getCategoryValue(a);
                     alertDialog.cancel();
+                    createPieChart();
 
                 } else {
                     Toast.makeText(getContext(), "Value cannot be empty", Toast.LENGTH_SHORT).show();
@@ -189,19 +215,41 @@ public class ExpenseDisplayFragment extends Fragment {
                 alertDialog.cancel();
             }
         });
-
         alertDialog.setView(view);
         alertDialog.show();
-
     }
 
-    private void getCat1Value() {
+    private void getCategoryValue(int num) {
 
-        String where2 = "Category_1";
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + where2 + "'",null);
+        String nums = String.valueOf(num);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + nums + "'",null);
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-        value1TV.setText(String.valueOf(total));
+
+        if (num == 1) {
+            value1TV.setText(String.valueOf(total));
+        } else if (num == 2)
+            value2TV.setText(String.valueOf(total));
+        else if (num == 3)
+            value3TV.setText(String.valueOf(total));
+        else if (num == 4)
+            value4TV.setText(String.valueOf(total));
+        else if (num == 5)
+            value5TV.setText(String.valueOf(total));
+        else if (num == 6)
+            value6TV.setText(String.valueOf(total));
+        else if (num == 7)
+            value7TV.setText(String.valueOf(total));
+        else if (num == 8)
+            value8TV.setText(String.valueOf(total));
+        else if (num == 9)
+            value9TV.setText(String.valueOf(total));
+        else if (num == 10)
+            value10TV.setText(String.valueOf(total));
+        else if (num == 11)
+            value11TV.setText(String.valueOf(total));
+        else if (num == 12)
+            value12TV.setText(String.valueOf(total));
     }
 }

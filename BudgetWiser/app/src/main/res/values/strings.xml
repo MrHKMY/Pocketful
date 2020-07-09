@@ -13,17 +13,17 @@
     </string-array>
 
     <string-array name="expense_category">
-        <item>Category_1</item>
-        <item>Category_2</item>
-        <item>Category_3</item>
-        <item>Category_4</item>
-        <item>Category_5</item>
-        <item>Category_6</item>
-        <item>Category_7</item>
-        <item>Category_8</item>
-        <item>Category_9</item>
-        <item>Category_10</item>
-        <item>Category_11</item>
-        <item>Category_12</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
     </string-array>
 </resources>
