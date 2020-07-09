@@ -75,8 +75,8 @@ public class ExpensesFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         PageAdapter adapter = new PageAdapter(getChildFragmentManager());
 
-        adapter.addFragment(new ExpenseDisplayFragment(), "Quick display");
-        adapter.addFragment(new ExpenseHistoryFragment(), "History");
+        adapter.addFragment(new ExpenseDisplayFragment(), "Daily Display");
+        adapter.addFragment(new ExpenseHistoryFragment(), "Monthly History");
 
         viewPager.setAdapter(adapter);
         adapter.notifyDataSetChanged();
