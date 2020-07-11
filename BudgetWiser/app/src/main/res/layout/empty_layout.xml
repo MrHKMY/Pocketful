@@ -5,10 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_container2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"/>
+        android:layout_above="@id/bottom_navigation"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -16,10 +17,8 @@
         android:layout_height="wrap_content"
         app:menu="@menu/main_menu"
         android:background="@color/white"
-        android:outlineProvider="none"
         app:itemIconTint="@color/colorAccent"
         app:itemTextColor="@color/design_default_color_on_secondary"
         android:layout_alignParentBottom="true"
         />
-
 </RelativeLayout>
