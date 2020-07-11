@@ -9,4 +9,11 @@
     <color name="red">#D51A1A</color>
     <color name="green">#16A60B</color>
     <color name="black">#000000</color>
+    <color name="orange">#FF6F00</color>
+    <color name="yellow">#ECCE3C</color>
+    <color name="blue">#1124D3</color>
+    <color name="grey">#535353</color>
+    <color name="pink">#F520FB</color>
+    <color name="purple">#4A148C</color>
+    <color name="brown">#713030</color>
 </resources>

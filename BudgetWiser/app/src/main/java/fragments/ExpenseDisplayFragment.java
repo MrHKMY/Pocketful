@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -115,20 +116,14 @@ public class ExpenseDisplayFragment extends Fragment {
         pieChart.setDrawHoleEnabled(false);
         //pieChart.setHoleColor(getColor(R.color.white));
         pieChart.setTransparentCircleRadius(60f);
-
-        ArrayList<PieEntry> yValues = new ArrayList<>();
-        yValues.add(new PieEntry(30f, "Item1"));
-        yValues.add(new PieEntry(20f, "Item2"));
-        yValues.add(new PieEntry(15f, "Item3"));
-        yValues.add(new PieEntry(18f, "Item4"));
-        yValues.add(new PieEntry(17f, "Item5"));
-
         pieChart.animateY(1000, Easing.EaseInOutCubic);
 
         PieDataSet dataSet = new PieDataSet(getDataValue(), "Labels");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setColors(new int[] {R.color.black, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
+
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setValueLinePart1OffsetPercentage(100f); /** When valuePosition is OutsideSlice, indicates offset as percentage out of the slice size */
@@ -146,12 +141,12 @@ public class ExpenseDisplayFragment extends Fragment {
 
         dataValue.clear();
 
-        String[] columns = {DatabaseHelper.EXPENSE_VALUE};
-        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.EXPENSE_TABLE, columns, null,null,null,null,null);
-
-        for (int i = 0; i<cursor.getCount(); i++){
-            cursor.moveToNext();
-            dataValue.add(new PieEntry(cursor.getFloat(0)));
+        for (int nums = 1 ; nums<=12; nums++) {
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + nums + "'", null);
+            if (cursor.moveToFirst()) {
+                total = cursor.getInt(cursor.getColumnIndex("Total"));
+            }
+            dataValue.add(new PieEntry(total));
         }
         return dataValue;
     }
