@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -184,7 +185,9 @@ public class MainActivity extends AppCompatActivity {
 */
         BottomNavigationView bottomView = findViewById(R.id.bottom_navigation);
         bottomView.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new ExpensesFragment()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -195,19 +198,19 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
+                            selectedFragment = new ExpensesFragment();
                             break;
                         case R.id.nav_groceries:
                             selectedFragment = new GroceriesFragment();
                             break;
                         case R.id.nav_expenses:
-                            selectedFragment = new ExpensesFragment();
+                            selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new SettingFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, selectedFragment).commit();
 
                     return true;
                 }
