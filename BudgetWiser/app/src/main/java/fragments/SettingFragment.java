@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import com.mindscape.budgetwiser.MainActivity;
 import com.mindscape.budgetwiser.R;
 
 /**
@@ -37,13 +40,18 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (switchMode.isChecked()){
-                    mainLayout.setBackgroundColor(getResources().getColor(R.color.black));
+                    //mainLayout.setBackgroundColor(getResources().getColor(R.color.black));
                     switchMode.setTextColor(getResources().getColor(R.color.white));
-                    textView.setTextColor(getResources().getColor(R.color.white));
+                    //textView.setTextColor(getResources().getColor(R.color.white));
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    //startActivity(new Intent(getContext(), MainActivity.class));
                 } else {
-                    mainLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                    //mainLayout.setBackgroundColor(getResources().getColor(R.color.white));
                     switchMode.setTextColor(getResources().getColor(R.color.black));
-                    textView.setTextColor(getResources().getColor(R.color.black));
+                    //textView.setTextColor(getResources().getColor(R.color.black));
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    //startActivity(new Intent(getContext(), MainActivity.class));
                 }
             }
         });
