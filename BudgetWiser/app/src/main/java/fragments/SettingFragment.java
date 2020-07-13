@@ -6,6 +6,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,25 +37,24 @@ public class SettingFragment extends Fragment {
         mainLayout = view.findViewById(R.id.mainRelativeSetting);
         textView = view.findViewById(R.id.settingFragment);
 
-        switchMode.setOnClickListener(new View.OnClickListener() {
+        switchMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (switchMode.isChecked()){
                     //mainLayout.setBackgroundColor(getResources().getColor(R.color.black));
                     switchMode.setTextColor(getResources().getColor(R.color.white));
                     //textView.setTextColor(getResources().getColor(R.color.white));
-
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    //startActivity(new Intent(getContext(), MainActivity.class));
                 } else {
                     //mainLayout.setBackgroundColor(getResources().getColor(R.color.white));
                     switchMode.setTextColor(getResources().getColor(R.color.black));
                     //textView.setTextColor(getResources().getColor(R.color.black));
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    //startActivity(new Intent(getContext(), MainActivity.class));
                 }
             }
         });
+
+
 
         return view;
     }
