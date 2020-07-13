@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/design_default_color_primary_dark">
+    android:background="@color/white"
+    android:id="@+id/mainRelativeSetting">
 
     <TextView
+        android:id="@+id/settingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Settings"
+        android:text="Settings Fragment"
         android:textColor="@color/white"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchDarkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Dark Mode           "
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:thumb="@drawable/sw_thumb"
+        android:track="@drawable/sw_track"
+        android:showText="true"/>
 
 </RelativeLayout>
