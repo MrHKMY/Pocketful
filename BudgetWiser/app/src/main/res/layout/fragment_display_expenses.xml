@@ -8,14 +8,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/design_default_color_secondary_variant">
+        android:background="@color/colorForeground">
 
         <RelativeLayout
             android:id="@+id/categoryMainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/circular_box">
+            android:background="@color/colorBackground">
 
             <RelativeLayout
                 android:id="@+id/firstRelative"
@@ -405,20 +405,19 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/circular_box" />
+                    android:background="@color/colorBackground" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:background="@drawable/circular_box"
+                    android:background="@color/colorBackground"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Savings are recorded but not shown on this screen."
                         android:textAlignment="center"/>
 
                     <com.github.clans.fab.FloatingActionButton
