@@ -2,6 +2,7 @@ package com.mindscape.budgetwiser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,13 +46,13 @@ import fragments.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    int NightMode;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        checkNightMode();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.empty_layout);
 
@@ -221,5 +223,15 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    public void checkNightMode(){
+        if(sharedPreferences.getBoolean("THEME_KEY", false)){
+            //switchMode.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            //switchMode.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 
 }

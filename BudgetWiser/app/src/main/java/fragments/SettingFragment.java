@@ -1,7 +1,9 @@
 package fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ public class SettingFragment extends Fragment {
     SwitchCompat switchMode;
     RelativeLayout mainLayout;
     TextView textView;
+    SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -37,6 +40,9 @@ public class SettingFragment extends Fragment {
         mainLayout = view.findViewById(R.id.mainRelativeSetting);
         textView = view.findViewById(R.id.settingFragment);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        checkNightMode();
+
         switchMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -45,17 +51,33 @@ public class SettingFragment extends Fragment {
                     switchMode.setTextColor(getResources().getColor(R.color.white));
                     //textView.setTextColor(getResources().getColor(R.color.white));
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    saveNightModeState(true);
                 } else {
                     //mainLayout.setBackgroundColor(getResources().getColor(R.color.white));
                     switchMode.setTextColor(getResources().getColor(R.color.black));
                     //textView.setTextColor(getResources().getColor(R.color.black));
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    saveNightModeState(false);
                 }
             }
         });
 
-
-
         return view;
+    }
+
+    public void saveNightModeState(boolean nightmode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("THEME_KEY", nightmode);
+        editor.apply();
+    }
+
+    public void checkNightMode(){
+        if(sharedPreferences.getBoolean("THEME_KEY", false)){
+            switchMode.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            switchMode.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }
