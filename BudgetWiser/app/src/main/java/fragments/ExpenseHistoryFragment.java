@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.mindscape.budgetwiser.DatabaseHelper;
 import com.mindscape.budgetwiser.R;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,8 @@ public class ExpenseHistoryFragment extends Fragment {
     int total;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private Button previousButton, nextButton, currentButton;
+    int i = 1, x= 1;
 
     @Nullable
     @Override
@@ -73,16 +77,44 @@ public class ExpenseHistoryFragment extends Fragment {
         tabLayout = view.findViewById(R.id.chartTabLayout);
         tabLayout.setupWithViewPager(viewPager, true);
 
+        previousButton = view.findViewById(R.id.prevMonthButton);
+        nextButton = view.findViewById(R.id.nextMonthButton);
+        currentButton = view.findViewById(R.id.monthSelectorID);
+
         statusImageView = view.findViewById(R.id.transactionStatusImageView);
         //barChart = view.findViewById(R.id.historyBarChart);
         recyclerView = view.findViewById(R.id.recyclerviewExpense);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getAllItems());
+        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getCurrentMonth());
         recyclerView.setAdapter(expenseHistoryAdapter);
 
         expenseHistoryAdapter.notifyDataSetChanged();
-        expenseHistoryAdapter.swapCursor(getAllItems());
+        expenseHistoryAdapter.swapCursor(getCurrentMonth());
+
+        currentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getCurrentMonth());
+                recyclerView.setAdapter(expenseHistoryAdapter);
+                i = 1;
+                x = 1;
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadNextMonthData();
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadPreviousMonthData();
+            }
+        });
 
         //createBarChart();
         return view;
@@ -92,7 +124,7 @@ public class ExpenseHistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        expenseHistoryAdapter.swapCursor(getAllItems());
+        expenseHistoryAdapter.swapCursor(getCurrentMonth());
         //createBarChart();
     }
 
@@ -106,6 +138,14 @@ public class ExpenseHistoryFragment extends Fragment {
                 null,
                 DatabaseHelper.EXPENSE_TIMESTAMP + " DESC"
         );
+    }
+
+    private Cursor getCurrentMonth() {
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                + ") = strftime('%m',date('now')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+
+        return cursor;
     }
 
     private void createLineChart() {
@@ -229,5 +269,26 @@ public class ExpenseHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupViewPager(viewPager);
+    }
+
+    public void loadNextMonthData() {
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                + ") = strftime('%m',date('now', '+"+ x +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+        x++;
+
+        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), cursor);
+        recyclerView.setAdapter(expenseHistoryAdapter);
+    }
+
+    public void loadPreviousMonthData() {
+
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                + ") = strftime('%m',date('now', '-" + i +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+        i++;
+
+        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), cursor);
+        recyclerView.setAdapter(expenseHistoryAdapter);
     }
 }

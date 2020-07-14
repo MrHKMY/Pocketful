@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,6 @@ import adapters.PageAdapter;
 public class ExpensesFragment extends Fragment {
     ViewPager viewPager;
     TabLayout tabLayout;
-    View mIndicator;
     private int indicatorWidth;
 
     @Nullable
@@ -32,6 +32,7 @@ public class ExpensesFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout = view.findViewById(R.id.tabLayout);
+
 
         return view;
     }

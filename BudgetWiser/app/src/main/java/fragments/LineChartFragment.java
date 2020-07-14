@@ -15,6 +15,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.mindscape.budgetwiser.DatabaseHelper;
 import com.mindscape.budgetwiser.R;
@@ -98,12 +99,26 @@ public class LineChartFragment extends Fragment {
         dataValues.clear();
 
         String where = "OUT";
-        Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
+        /*Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             dataValues.add(new Entry(i + 1, cursor.getFloat(0)));
         }
+
+         */
+
+
+        Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE Status = '" + where
+                + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP +") = DATE('now')",null);
+
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        dataValues.add(new Entry(2,total));
+
         return dataValues;
     }
 }
