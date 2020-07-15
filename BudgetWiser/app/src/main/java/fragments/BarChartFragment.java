@@ -92,7 +92,10 @@ public class BarChartFragment extends Fragment {
         dataValues.clear();
 
         for (int nums = 1 ; nums<=12; nums++) {
-            Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + nums + "' AND Status = 'OUT'", null);
+            Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                    + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
+                    + " WHERE Category = '" + nums + "' AND Status = 'OUT' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                    + ") = strftime('%m',date('now'))", null);
             if (cursor.moveToFirst()) {
                 total = cursor.getInt(cursor.getColumnIndex("Total"));
             }

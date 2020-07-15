@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class LineChartFragment extends Fragment {
     private SQLiteDatabase mDatabase;
     LineChart lineChart;
     int total;
+    int dailyTotal, theDay;
 
     @Nullable
     @Override
@@ -85,11 +87,27 @@ public class LineChartFragment extends Fragment {
         dataValues.clear();
 
         String where = "IN";
-        Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
+        /*Cursor cursor = mDatabase.rawQuery("SELECT Value FROM " + DatabaseHelper.EXPENSE_TABLE + " where Status = '" + where + "'", null);
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
             dataValues.add(new Entry(i + 1, cursor.getFloat(0)));
+        }
+         */
+
+        Cursor cursor2 = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                + ") as DailyTotal, substr(" + DatabaseHelper.EXPENSE_TIMESTAMP + ",9,2) as TheDay FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE Status = '" + where
+                + "' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                + ") = strftime('%m',date('now')) GROUP BY substr(" + DatabaseHelper.EXPENSE_TIMESTAMP + ",9,2)", null);
+
+        if (cursor2.moveToFirst()) {
+            do {
+                Entry entry = new Entry();
+                entry.setY(cursor2.getInt(cursor2.getColumnIndex("DailyTotal")));
+                entry.setX(cursor2.getInt(cursor2.getColumnIndex("TheDay")));
+                dataValues.add(entry);
+            } while (cursor2.moveToNext());
         }
         return dataValues;
     }
@@ -106,19 +124,32 @@ public class LineChartFragment extends Fragment {
             dataValues.add(new Entry(i + 1, cursor.getFloat(0)));
         }
 
-         */
-
-
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
                 + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE Status = '" + where
                 + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP +") = DATE('now')",null);
 
+
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }
-        dataValues.add(new Entry(2,total));
+        dataValues.add(new Entry(theDay, dailyTotal));
+        */
 
+        Cursor cursor2 = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                + ") as DailyTotal, substr(" + DatabaseHelper.EXPENSE_TIMESTAMP + ",9,2) as TheDay FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE Status = '" + where
+                + "' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
+                + ") = strftime('%m',date('now')) GROUP BY substr(" + DatabaseHelper.EXPENSE_TIMESTAMP + ",9,2)", null);
+
+        if (cursor2.moveToFirst()) {
+            do {
+                Entry entry = new Entry();
+                entry.setY(cursor2.getInt(cursor2.getColumnIndex("DailyTotal")));
+                entry.setX(cursor2.getInt(cursor2.getColumnIndex("TheDay")));
+                dataValues.add(entry);
+            } while (cursor2.moveToNext());
+        }
         return dataValues;
     }
 }
