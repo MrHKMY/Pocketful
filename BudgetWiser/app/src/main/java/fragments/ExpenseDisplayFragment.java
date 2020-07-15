@@ -142,7 +142,10 @@ public class ExpenseDisplayFragment extends Fragment {
         dataValue.clear();
 
         for (int nums = 1 ; nums<=12; nums++) {
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + nums + "'", null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                    + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
+                    + " WHERE Category = '" + nums
+                    + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP +") = DATE('now') AND Status = 'OUT'",null);
             if (cursor.moveToFirst()) {
                 total = cursor.getInt(cursor.getColumnIndex("Total"));
             }
@@ -217,7 +220,11 @@ public class ExpenseDisplayFragment extends Fragment {
     private void getCategoryValue(int num) {
 
         String nums = String.valueOf(num);
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE + " WHERE Category = '" + nums + "'",null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE Category = '" + nums
+                + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP +") = DATE('now') AND Status = 'OUT'",null);
+
         if (cursor.moveToFirst()) {
             total = cursor.getInt(cursor.getColumnIndex("Total"));
         }

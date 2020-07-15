@@ -45,17 +45,33 @@
         android:layout_above="@id/monthSelectorID"
         />
 
-    <TextView
+    <Button
+        android:id="@+id/prevMonthButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous"
+        android:layout_toStartOf="@id/monthSelectorID"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
         android:layout_centerInParent="true"
         android:textAlignment="center"
         android:id="@+id/monthSelectorID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/circular_box"
-        android:text="Months"
+        android:text="Current"
         android:layout_marginHorizontal="10dp"
         android:layout_alignParentBottom="true"
         android:textColor="@color/black"
         />
+
+    <Button
+        android:id="@+id/nextMonthButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_toEndOf="@id/monthSelectorID"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
