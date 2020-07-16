@@ -4,44 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import adapters.LaterAdapter;
-import adapters.MainAdapter;
 import fragments.ExpensesFragment;
 import fragments.GroceriesFragment;
-import fragments.HomeFragment;
+import fragments.WishListFragment;
 import fragments.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -212,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new GroceriesFragment();
                             break;
                         case R.id.nav_expenses:
-                            selectedFragment = new HomeFragment();
+                            selectedFragment = new WishListFragment();
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new SettingFragment();
