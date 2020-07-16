@@ -118,7 +118,7 @@ public class ExpenseDisplayFragment extends Fragment {
         pieChart.setTransparentCircleRadius(60f);
         pieChart.animateY(1000, Easing.EaseInOutCubic);
 
-        PieDataSet dataSet = new PieDataSet(getDataValue(), "Labels");
+        PieDataSet dataSet = new PieDataSet(getDataValue(), "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -141,7 +141,7 @@ public class ExpenseDisplayFragment extends Fragment {
 
         dataValue.clear();
 
-        for (int nums = 1 ; nums<=12; nums++) {
+        /*for (int nums = 1 ; nums<=12; nums++) {
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
                     + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
                     + " WHERE Category = '" + nums
@@ -151,6 +151,22 @@ public class ExpenseDisplayFragment extends Fragment {
             }
             dataValue.add(new PieEntry(total));
         }
+
+         */
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                + ") as Total,"
+                + DatabaseHelper.EXPENSE_CATEGORY + " as theCategory FROM "
+                + DatabaseHelper.EXPENSE_TABLE
+                + " WHERE DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP +") = DATE('now') AND Status = 'OUT'"
+                + " GROUP BY " + DatabaseHelper.EXPENSE_CATEGORY
+                + "", null);
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToNext();
+            dataValue.add(new PieEntry(cursor.getInt(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
+        }
+
         return dataValue;
     }
 
