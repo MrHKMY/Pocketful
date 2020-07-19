@@ -60,6 +60,8 @@ public class ExpenseDisplayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_display_expenses, container,false);
 
         pieChart = view.findViewById(R.id.expensesPieChart);
+        pieChart.setNoDataText("NO DATAAA");
+
         minusButton = view.findViewById(R.id.minusExpenseButton);
         plusButton = view.findViewById(R.id.plusExpenseButton);
         value1TV = view.findViewById(R.id.value1);
@@ -110,15 +112,14 @@ public class ExpenseDisplayFragment extends Fragment {
         pieChart.setUsePercentValues(false);
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(0,0,0,0);
-
         pieChart.setDragDecelerationFrictionCoef(0.75f);
-
         pieChart.setDrawHoleEnabled(false);
         //pieChart.setHoleColor(getColor(R.color.white));
         pieChart.setTransparentCircleRadius(60f);
         pieChart.animateY(1000, Easing.EaseInOutCubic);
 
         PieDataSet dataSet = new PieDataSet(getDataValue(), "");
+        pieChart.setNoDataText("No data laaa");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
