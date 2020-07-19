@@ -96,7 +96,7 @@ public class WishListFragment extends Fragment {
         mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getActivity(), "Position : " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Position : " + position, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -187,8 +187,8 @@ public class WishListFragment extends Fragment {
             public void onClick(View view) {
                 laterRecyclerView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                wishlistTitle.setBackgroundResource(R.color.colorAccent);
-                laterTitle.setBackgroundResource(R.color.colorPrimaryDark);
+                wishlistTitle.setBackgroundResource(R.drawable.wishlist_selected);
+                laterTitle.setBackgroundResource(R.drawable.wishlist_default);
             }
         });
         laterTitle.setOnClickListener(new View.OnClickListener() {
@@ -196,8 +196,8 @@ public class WishListFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.GONE);
                 laterRecyclerView.setVisibility(View.VISIBLE);
-                laterTitle.setBackgroundResource(R.color.colorAccent);
-                wishlistTitle.setBackgroundResource(R.color.colorPrimaryDark);
+                laterTitle.setBackgroundResource(R.drawable.wishlist_selected);
+                wishlistTitle.setBackgroundResource(R.drawable.wishlist_default);
             }
         });
 
@@ -213,7 +213,7 @@ public class WishListFragment extends Fragment {
             goButton.setVisibility(View.GONE);
         } else if (newBudget - total < 0) {
             savingLayout.setBackgroundResource(R.color.red);
-            wishlistAnalysis.setText("Need a help to decide what really matter?");
+            wishlistAnalysis.setText("Need help to decide which really matter?");
             goButton.setVisibility(View.VISIBLE);
         }
     }
@@ -432,7 +432,7 @@ public class WishListFragment extends Fragment {
         mainAdapter2.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "delete or do something ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Swipe to move item into Maybe List", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -580,7 +580,7 @@ public class WishListFragment extends Fragment {
         }
         if (total == 0) {
             pieChart.setNoDataText("No Data");
-            pieChart.setBackgroundResource(R.color.colorPrimaryDark);
+            pieChart.setBackgroundResource(R.drawable.ic_launcher_foreground);
         } else
             pieChart.setBackgroundResource(R.color.white);
         return dataValue;
