@@ -181,11 +181,11 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             selectedFragment = new ExpensesFragment();
                             break;
-                        case R.id.nav_groceries:
-                            selectedFragment = new GroceriesFragment();
-                            break;
                         case R.id.nav_expenses:
                             selectedFragment = new WishListFragment();
+                            break;
+                        case R.id.nav_groceries:
+                            selectedFragment = new GroceriesFragment();
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new SettingFragment();
