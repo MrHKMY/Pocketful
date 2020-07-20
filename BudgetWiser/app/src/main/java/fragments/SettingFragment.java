@@ -37,8 +37,8 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container,false);
 
         switchMode = view.findViewById(R.id.switchDarkMode);
-        mainLayout = view.findViewById(R.id.mainRelativeSetting);
-        textView = view.findViewById(R.id.settingFragment);
+        //mainLayout = view.findViewById(R.id.mainRelativeSetting);
+        //textView = view.findViewById(R.id.settingFragment);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         checkNightMode();

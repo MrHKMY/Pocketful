@@ -429,6 +429,7 @@ public class WishListFragment extends Fragment {
         mainAdapter2 = new MainAdapter(getContext(), getAllItems());
         newRecyclerView.setAdapter(mainAdapter2);
 
+
         mainAdapter2.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -459,6 +460,8 @@ public class WishListFragment extends Fragment {
         alertDialog.show();
 
         final TextView questions = alertDialog.findViewById(R.id.questionsTextView);
+        randomIndex = new Random().nextInt(theQuestionString.length);
+        q = theQuestionString[randomIndex];
         questions.setText(q);
 
         ImageButton check = view.findViewById(R.id.checkButton);
