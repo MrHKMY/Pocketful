@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 1"
+                        android:text="Groceries"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 2"
+                        android:text="Clothing"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 3"
+                        android:text="Leisure"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -126,7 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 4"
+                        android:text="Transport"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 5"
+                        android:text="Food"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -191,7 +191,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 6"
+                        android:text="Health"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -220,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 7"
+                        android:text="Bills"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -249,7 +249,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 8"
+                        android:text="Family"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -285,7 +285,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 9"
+                        android:text="Electronics"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -314,7 +314,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 10"
+                        android:text="Sports"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -343,7 +343,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 11"
+                        android:text="Pet"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -372,7 +372,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Category 12"
+                        android:text="....."
                         android:textColor="@color/black" />
 
                     <TextView
@@ -415,10 +415,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
+                    <ImageButton
+                        android:id="@+id/infoButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"/>
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/info_icon"
+                        android:background="@null"/>
 
                     <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/plusExpenseButton"

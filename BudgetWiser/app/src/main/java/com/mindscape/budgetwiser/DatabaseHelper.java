@@ -37,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String EXPENSE_STATUS = "Status";
     public static final String EXPENSE_NOTE = "Note";
     public static final String EXPENSE_TIMESTAMP = "Date";
+    public static final String EXPENSE_NAME = "NAME";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -78,6 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + EXPENSE_CATEGORY + " TEXT, "
+                + EXPENSE_NAME + " TEXT, "
                 + EXPENSE_VALUE + " INTEGER, "
                 + EXPENSE_STATUS + " TEXT, "
                 + EXPENSE_NOTE + " TEXT, "
@@ -136,12 +138,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long createExpense(int value, String category, String note, String status) {
+    public long createExpense(int value, String category, String name, String note, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(EXPENSE_STATUS, status);
         cv.put(EXPENSE_CATEGORY, category);
+        cv.put(EXPENSE_NAME, name);
         cv.put(EXPENSE_NOTE, note);
         cv.put(EXPENSE_VALUE, value);
 

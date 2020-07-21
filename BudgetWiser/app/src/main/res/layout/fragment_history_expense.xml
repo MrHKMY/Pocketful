@@ -1,77 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorForeground">
 
     <RelativeLayout
         android:id="@+id/chartLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="@color/colorBackground">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/chartViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/chartViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/chartTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:layout_alignParentBottom="true"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"
-            app:tabBackground="@drawable/tab_selector"
-            android:background="@color/colorAccent2"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/chartTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorAccent2"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
         </LinearLayout>
 
     </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/monthSelectorID"
         android:layout_below="@id/chartLayout"
-        android:background="@color/colorBackground"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_above="@id/monthSelectorID"
-        />
+        android:background="@color/colorBackground" />
 
-    <Button
+    <ImageButton
         android:id="@+id/prevMonthButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previous"
+        android:layout_alignParentBottom="true"
         android:layout_toStartOf="@id/monthSelectorID"
-        android:layout_alignParentBottom="true"/>
+        android:background="@null"
+        android:src="@drawable/arrow_back"
+        android:layout_marginEnd="7dp"/>
 
-    <Button
-        android:layout_centerInParent="true"
-        android:textAlignment="center"
+    <ImageButton
         android:id="@+id/monthSelectorID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/circular_box"
-        android:text="Current"
-        android:layout_marginHorizontal="10dp"
         android:layout_alignParentBottom="true"
-        android:textColor="@color/black"
-        />
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="10dp"
+        android:background="@null"
+        android:src="@drawable/current_month_icon" />
 
-    <Button
+    <ImageButton
         android:id="@+id/nextMonthButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/monthSelectorID"
-        android:layout_alignParentBottom="true"/>
+        android:background="@null"
+        android:src="@drawable/arrow_forward" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +63,7 @@ public class ExpenseHistoryFragment extends Fragment {
     int total;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private Button previousButton, nextButton, currentButton;
+    private ImageButton previousButton, nextButton, currentButton;
     int i = 1, x= 1;
 
     @Nullable
