@@ -60,12 +60,19 @@ public class BarChartFragment extends Fragment {
 
         List<String> labels = new ArrayList<>();
 
-        labels.add("day1");
-        labels.add("day2");
-        labels.add("day3");
-        labels.add("day4");
-        labels.add("day5");
-        labels.add("day6");
+
+        labels.add("1");
+        labels.add("2");
+        labels.add("3");
+        labels.add("4");
+        labels.add("5");
+        labels.add("6");
+        labels.add("7");
+        labels.add("8");
+        labels.add("9");
+        labels.add("10");
+        labels.add("11");
+        labels.add("12");
 
         barChart.getAxisRight().setEnabled(true);
         XAxis xAxis = barChart.getXAxis();
@@ -76,12 +83,12 @@ public class BarChartFragment extends Fragment {
         barChart.getXAxis().setGranularityEnabled(true);
         barChart.getXAxis().setLabelCount(12);
         barChart.getLegend().setEnabled(false);
-
+        barChart.setFitBars(true);
         //set.setColors(ColorTemplate.JOYFUL_COLORS);
-        set.setColors(new int[] {R.color.black, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
+        set.setColors(new int[]{R.color.black, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
         set.setDrawValues(false);
         barChart.setFitBars(true);
-        barChart.setBackgroundResource(R.color.colorAccent2);
+        barChart.setBackgroundResource(R.color.white);
         barChart.setData(data);
         barChart.invalidate();
     }
@@ -91,7 +98,7 @@ public class BarChartFragment extends Fragment {
         List<BarEntry> dataValues = new ArrayList<>();
         dataValues.clear();
 
-        for (int nums = 1 ; nums<=12; nums++) {
+        for (int nums = 1; nums <= 12; nums++) {
             Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
                     + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
                     + " WHERE Category = '" + nums + "' AND Status = 'OUT' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP

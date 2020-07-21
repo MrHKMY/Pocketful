@@ -54,7 +54,7 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
             return;
         }
         String date = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_TIMESTAMP));
-        String category = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_CATEGORY));
+        String category = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_NAME));
         String value = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_VALUE));
         String note = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_NOTE));
         String status = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_STATUS));

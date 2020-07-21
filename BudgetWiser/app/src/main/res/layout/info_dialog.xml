@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg"
+    android:layout_margin="10dp"
+    android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/theTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Information"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/info1TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/theTitle"
+        android:gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="1. Tap the green button to save your incomes record."
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/info2TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info1TextView"
+        android:gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="2. Tap the red button to save your expenses record."
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/info3TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info2TextView"
+        android:gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="*The income data are saved but not shown in this screen. You may view it in the monthly history screen."
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layoutDirection="rtl"
+        android:layout_below="@id/info3TextView">
+
+        <ImageButton
+            android:id="@+id/infoCheckButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tick_icon"
+            android:background="@color/white"
+            android:layout_marginHorizontal="15dp"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

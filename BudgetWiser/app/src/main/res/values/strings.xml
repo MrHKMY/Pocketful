@@ -13,17 +13,17 @@
     </string-array>
 
     <string-array name="expense_category">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
+        <item>Groceries</item>
+        <item>Clothing</item>
+        <item>Leisure</item>
+        <item>Transport</item>
+        <item>Food</item>
+        <item>Health</item>
+        <item>Bills</item>
+        <item>Family</item>
+        <item>Electronics</item>
+        <item>Sports</item>
+        <item>Pet</item>
+        <item>Others</item>
     </string-array>
 </resources>
