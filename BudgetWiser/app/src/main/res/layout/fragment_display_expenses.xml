@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorForeground">
+        android:background="@color/colorBackground">
 
         <RelativeLayout
             android:id="@+id/categoryMainLayout"
@@ -31,9 +31,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/grocery_icon_new" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -60,9 +60,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/clothing_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -89,9 +89,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/leisure_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -118,9 +118,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/transport_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -154,9 +154,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/food_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -183,15 +183,15 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/health_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Health"
+                        android:text="Self-care"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -212,9 +212,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/bills_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -241,9 +241,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/family_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -277,9 +277,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/electronics_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -306,9 +306,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/sports_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -335,9 +335,9 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/pet_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -364,15 +364,15 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher_round" />
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/others_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="....."
+                        android:text="Others"
                         android:textColor="@color/black" />
 
                     <TextView
