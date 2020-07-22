@@ -34,6 +34,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mindscape.budgetwiser.DatabaseHelper;
 
+import adapters.ExpenseHistoryAdapter;
 import adapters.LaterAdapter;
 import adapters.MainAdapter;
 

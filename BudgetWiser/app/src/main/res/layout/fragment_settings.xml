@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/darkmodeTV"
@@ -37,19 +38,13 @@
             android:thumb="@drawable/sw_thumb"
             android:track="@drawable/sw_track" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/darkmodeBetaTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/notificationTV"
@@ -70,26 +65,20 @@
             android:gravity="center"
             android:text="PRO" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/notificationDetail"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/chartColorTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Chart colors"
+            android:text="Chart theme"
             android:textColor="@color/black" />
 
         <TextView
@@ -109,19 +98,13 @@
             android:gravity="center"
             android:text="PRO" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/chartColorDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/syncmodeTV"
@@ -148,19 +131,14 @@
             android:gravity="center"
             android:text="PRO" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/syncmodeDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/syncuserTV"
@@ -187,19 +165,13 @@
             android:gravity="center"
             android:text="PRO" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/syncuserDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/downloadTV"
@@ -226,19 +198,13 @@
             android:gravity="center"
             android:text="PRO" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/downloadDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/rateTV"
@@ -255,25 +221,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rateTV" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/rateDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/aboutTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:text="About"
             android:textColor="@color/black" />
@@ -283,13 +242,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/aboutTV" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/aboutDetailTV"
-            android:layout_marginTop="5dp"
-            android:background="#FF000000" />
 
     </RelativeLayout>
 

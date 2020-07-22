@@ -127,7 +127,7 @@ public class ExpenseDisplayFragment extends Fragment {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet.setColors(new int[]{R.color.black, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
+        dataSet.setColors(new int[]{R.color.darkGreen, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
 
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
