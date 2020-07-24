@@ -33,7 +33,7 @@
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/grocery_icon_new" />
+                        android:src="@drawable/groceries_icon" />
 
                     <TextView
                         android:layout_width="match_parent"

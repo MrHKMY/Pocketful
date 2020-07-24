@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Item"
+        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newWishlistTitle"
         android:layout_marginHorizontal="15dp"/>
 
@@ -29,7 +30,8 @@
         android:layout_below="@id/newWishlistEditText"
         android:layout_marginHorizontal="15dp"
         android:hint="Price"
-        android:inputType="number" />
+        android:textColorHint="@color/colorForeground"
+        android:inputType="numberDecimal" />
 
     <Spinner
         android:id="@+id/spinner_cats"

@@ -19,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="0"
+        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newBudgetTitle"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:layout_marginHorizontal="15dp"/>
 
     <LinearLayout
