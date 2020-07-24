@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,9 +56,9 @@ public class WishListFragment extends Fragment {
     private MainAdapter mainAdapter, mainAdapter2;
     private LaterAdapter laterAdapter;
     private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis;
-    public int newBudget;
+    public float newBudget;
     private EditText budgetEditText, wishlistEditText, priceEditText;
-    int total;
+    Float total;
     private RecyclerView recyclerView, laterRecyclerView;
     private String[] theQuestionString;
     private String q;
@@ -165,7 +166,7 @@ public class WishListFragment extends Fragment {
 
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(cursor.getColumnIndex("Total"));
+            total = cursor.getFloat(cursor.getColumnIndex("Total"));
         }
         updateSavingLayout();
 
@@ -257,7 +258,7 @@ public class WishListFragment extends Fragment {
         mainAdapter.swapCursor(getAllItems());
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(cursor.getColumnIndex("Total"));
+            total = cursor.getFloat(cursor.getColumnIndex("Total"));
         }
         updateSavingLayout();
         createPieChart();
@@ -294,6 +295,7 @@ public class WishListFragment extends Fragment {
 
         wishlistEditText = view.findViewById(R.id.newWishlistEditText);
         priceEditText = view.findViewById(R.id.newPriceEditText);
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         final Spinner spinner = view.findViewById(R.id.spinner_cats);
         spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.wishlist_category, android.R.layout.simple_spinner_dropdown_item);
@@ -308,7 +310,7 @@ public class WishListFragment extends Fragment {
                 if (wishlistEditText.getText().toString().trim().length() > 0 && priceEditText.getText().toString().trim().length() > 0) {
 
                     String name = wishlistEditText.getText().toString();
-                    String price = priceEditText.getText().toString();
+                    Float price = Float.parseFloat(priceEditText.getText().toString());
                     String spinnerValue = spinner.getSelectedItem().toString();
 
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
@@ -325,7 +327,7 @@ public class WishListFragment extends Fragment {
                     Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
 
                     if (cursor.moveToFirst()) {
-                        total = cursor.getInt(cursor.getColumnIndex("Total"));
+                        total = cursor.getFloat(cursor.getColumnIndex("Total"));
                     }
                     updateSavingLayout();
                     createPieChart();
@@ -354,6 +356,7 @@ public class WishListFragment extends Fragment {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         budgetEditText = view.findViewById(R.id.newBudgetEditText);
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         final ImageButton checkButton = view.findViewById(R.id.newBudgetCheckButton);
         ImageButton crossButton = view.findViewById(R.id.newBudgetCrossButton);
 
@@ -361,7 +364,7 @@ public class WishListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (budgetEditText.getText().toString().length() > 0) {
-                    newBudget = Integer.parseInt(budgetEditText.getText().toString());
+                    newBudget = Float.parseFloat(budgetEditText.getText().toString());
                     //store new budget into database
                     DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                     long result = dbHelper.createBudget(newBudget);
@@ -372,7 +375,7 @@ public class WishListFragment extends Fragment {
                     String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
                     Cursor cursor = mDatabase.rawQuery(selectQuery, null);
                     cursor.moveToLast();
-                    int theData = cursor.getInt(cursor.getColumnIndex("budget"));
+                    float theData = cursor.getFloat(cursor.getColumnIndex("budget"));
 
                     budgetValue.setText(String.valueOf(theData));
                     updateSavingLayout();
@@ -480,14 +483,14 @@ public class WishListFragment extends Fragment {
     private void addtoLater(long id) {
         String[] coloumns = new String[]{DatabaseHelper._ID, DatabaseHelper.WISHLIST_NAME, DatabaseHelper.WISHLIST_AMOUNT, DatabaseHelper.WISHLIST_CATEGORY, DatabaseHelper.WISHLIST_TIMESTAMP};
         String name;
-        String price;
+        Float price;
         String category;
         Cursor c = mDatabase.query(DatabaseHelper.WISHLIST_TABLE, coloumns, DatabaseHelper._ID + "=" + id, null, null, null, null);
 
         if (c != null) {
             c.moveToFirst();
             name = c.getString(1);
-            price = c.getString(2);
+            price = c.getFloat(2);
             category = c.getString(3);
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
             long result = dbHelper.createLater(name, price, category);
@@ -502,14 +505,14 @@ public class WishListFragment extends Fragment {
     private void moveToWishlist(long id) {
         String[] coloumns = new String[]{DatabaseHelper._ID, DatabaseHelper.LATER_NAME, DatabaseHelper.LATER_AMOUNT, DatabaseHelper.LATER_CATEGORY, DatabaseHelper.LATER_TIMESTAMP};
         String name;
-        String price;
+        Float price;
         String category;
         Cursor c = mDatabase.query(DatabaseHelper.LATER_TABLE, coloumns, DatabaseHelper._ID + "=" + id, null, null, null, null);
 
         if (c != null) {
             c.moveToFirst();
             name = c.getString(1);
-            price = c.getString(2);
+            price = c.getFloat(2);
             category = c.getString(3);
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
             long result = dbHelper.createWishList(name, price, category);
@@ -520,7 +523,7 @@ public class WishListFragment extends Fragment {
 
         Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(cursor.getColumnIndex("Total"));
+            total = cursor.getFloat(cursor.getColumnIndex("Total"));
         }
         updateSavingLayout();
         createPieChart();
@@ -575,12 +578,12 @@ public class WishListFragment extends Fragment {
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
-            dataValue.add(new PieEntry(cursor.getInt(cursor.getColumnIndex("categoryTotal")), cursor.getString(cursor.getColumnIndex("theCategory"))));
+            dataValue.add(new PieEntry(cursor.getFloat(cursor.getColumnIndex("categoryTotal")), cursor.getString(cursor.getColumnIndex("theCategory"))));
         }
 
         Cursor cursor2 = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.WISHLIST_AMOUNT + ") as Total FROM " + DatabaseHelper.WISHLIST_TABLE, null);
         if (cursor2.moveToFirst()) {
-            total = cursor2.getInt(cursor2.getColumnIndex("Total"));
+            total = cursor2.getFloat(cursor2.getColumnIndex("Total"));
         }
         if (total == 0) {
             pieChart.setNoDataText("No Data");

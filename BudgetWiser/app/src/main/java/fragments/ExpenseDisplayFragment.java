@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,12 +44,12 @@ public class ExpenseDisplayFragment extends Fragment {
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
     private EditText expenseEditText, noteEditText;
     private ImageButton checkButton, crossButton, infoButton;
-    private int newExpense;
+    private float newExpense;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue, newSpinnerValue;
     private TextView titleTextView, value1TV, value2TV, value3TV, value4TV, value5TV, value6TV, value7TV, value8TV, value9TV, value10TV, value11TV, value12TV;
-    int total;
+    float total;
     private FloatingActionButton minusButton, plusButton;
 
 
@@ -169,7 +171,7 @@ public class ExpenseDisplayFragment extends Fragment {
 
         for (int i = 0; i < cursor.getCount(); i++) {
             cursor.moveToNext();
-            dataValue.add(new PieEntry(cursor.getInt(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
+            dataValue.add(new PieEntry(cursor.getFloat(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
         }
 
         return dataValue;
@@ -182,6 +184,10 @@ public class ExpenseDisplayFragment extends Fragment {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         expenseEditText = view.findViewById(R.id.newExpenseEditText);
+
+        expenseEditText.requestFocus();
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
         noteEditText = view.findViewById(R.id.newExpenseNoteEditText);
         checkButton = view.findViewById(R.id.newExpenseCheckButton);
         crossButton = view.findViewById(R.id.newExpenseCrossButton);
@@ -197,7 +203,7 @@ public class ExpenseDisplayFragment extends Fragment {
             public void onClick(View view) {
                 if (expenseEditText.getText().toString().length() > 0) {
                     if (noteEditText.getText().toString().length() > 0) {
-                        newExpense = Integer.parseInt(expenseEditText.getText().toString());
+                        newExpense = Float.parseFloat(expenseEditText.getText().toString());
                         noteExpense = noteEditText.getText().toString();
                         spinnerValue = spinner.getSelectedItem().toString();
                         switchSpinnerValue(spinnerValue);
@@ -208,7 +214,7 @@ public class ExpenseDisplayFragment extends Fragment {
                             Toast.makeText(getContext(), "Nope", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        newExpense = Integer.parseInt(expenseEditText.getText().toString());
+                        newExpense = Float.parseFloat(expenseEditText.getText().toString());
                         noteExpense = "No detail provided";
                         spinnerValue = spinner.getSelectedItem().toString();
                         switchSpinnerValue(spinnerValue);
@@ -321,7 +327,7 @@ public class ExpenseDisplayFragment extends Fragment {
                 newSpinnerValue = "5";
                 //getCategoryValue(5);
                 break;
-            case "Health":
+            case "Self-care":
                 newSpinnerValue = "6";
                 //getCategoryValue(6);
                 break;
@@ -361,7 +367,7 @@ public class ExpenseDisplayFragment extends Fragment {
                 + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP + ") = DATE('now') AND Status = 'OUT'", null);
 
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(cursor.getColumnIndex("Total"));
+            total = cursor.getFloat(cursor.getColumnIndex("Total"));
         }
 
         if (num == 1) {
