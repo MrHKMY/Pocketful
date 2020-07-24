@@ -18,9 +18,10 @@
         android:id="@+id/newExpenseEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="0"
+        android:hint="Amount"
+        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newExpenseTitle"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:layout_marginHorizontal="15dp"/>
 
     <EditText
@@ -28,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Note (Optional)"
+        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newExpenseEditText"
         android:layout_marginHorizontal="15dp"/>
 
@@ -39,6 +41,7 @@
         android:autofillHints="Category"
         android:spinnerMode="dropdown"
         android:visibility="visible"
+        android:background="@color/colorForeground"
         android:layout_marginHorizontal="15dp"
         />
 

@@ -74,15 +74,6 @@
             android:background="@null"
             android:src="@drawable/current_month_icon" />
 
-        <ImageButton
-            android:id="@+id/nextMonthButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/monthSelectorID"
-            android:background="@null"
-            android:src="@drawable/arrow_forward" />
     </RelativeLayout>
 
 </RelativeLayout>

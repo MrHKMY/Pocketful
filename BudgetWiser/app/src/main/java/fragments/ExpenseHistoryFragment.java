@@ -63,7 +63,7 @@ public class ExpenseHistoryFragment extends Fragment {
     int total;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private ImageButton previousButton, nextButton, currentButton;
+    private ImageButton previousButton, currentButton;
     int i = 1, x= 1;
 
     @Nullable
@@ -79,7 +79,6 @@ public class ExpenseHistoryFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager, true);
 
         previousButton = view.findViewById(R.id.prevMonthButton);
-        nextButton = view.findViewById(R.id.nextMonthButton);
         currentButton = view.findViewById(R.id.monthSelectorID);
 
         statusImageView = view.findViewById(R.id.transactionStatusImageView);
@@ -100,13 +99,6 @@ public class ExpenseHistoryFragment extends Fragment {
                 recyclerView.setAdapter(expenseHistoryAdapter);
                 i = 1;
                 x = 1;
-            }
-        });
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadNextMonthData();
             }
         });
 
@@ -270,16 +262,6 @@ public class ExpenseHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupViewPager(viewPager);
-    }
-
-    public void loadNextMonthData() {
-        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
-                + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
-                + ") = strftime('%m',date('now', '+"+ x +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
-        x++;
-
-        expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), cursor);
-        recyclerView.setAdapter(expenseHistoryAdapter);
     }
 
     public void loadPreviousMonthData() {

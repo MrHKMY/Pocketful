@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + WISHLIST_NAME + " TEXT, "
-                + WISHLIST_AMOUNT + " TEXT, "
+                + WISHLIST_AMOUNT + " FLOAT, "
                 + WISHLIST_CATEGORY + " TEXT, "
                 + WISHLIST_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + BUDGET_TABLE
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + BUDGET_AMOUNT + " INTEGER, "
+                + BUDGET_AMOUNT + " FLOAT, "
                 + BUDGET_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
 
@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + LATER_NAME + " TEXT, "
-                + LATER_AMOUNT + " TEXT, "
+                + LATER_AMOUNT + " FLOAT, "
                 + LATER_CATEGORY + " TEXT, "
                 + LATER_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + EXPENSE_CATEGORY + " TEXT, "
                 + EXPENSE_NAME + " TEXT, "
-                + EXPENSE_VALUE + " INTEGER, "
+                + EXPENSE_VALUE + " FLOAT, "
                 + EXPENSE_STATUS + " TEXT, "
                 + EXPENSE_NOTE + " TEXT, "
                 + EXPENSE_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
-    public long createWishList(String item, String price, String category) {
+    public long createWishList(String item, float price, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(WISHLIST_NAME, item);
@@ -117,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long createBudget(int budget){
+    public long createBudget(float budget){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(BUDGET_AMOUNT, budget);
@@ -127,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     }
 
-    public long createLater(String item, String price, String category) {
+    public long createLater(String item, float price, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LATER_NAME, item);
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long createExpense(int value, String category, String name, String note, String status) {
+    public long createExpense(float value, String category, String name, String note, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
