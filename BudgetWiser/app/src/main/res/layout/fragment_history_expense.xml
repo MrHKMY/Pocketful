@@ -44,6 +44,25 @@
         android:layout_marginHorizontal="10dp"
         android:background="@color/colorBackground" />
 
+    <ImageView
+        android:id="@+id/emptyImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_image"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/chartLayout"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/emptyStatementTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emptyImageView"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:text="Ooops! No data recorded yet \n Swipe left to add new data" />
+
     <RelativeLayout
         android:id="@+id/selectorLayout"
         android:layout_width="match_parent"

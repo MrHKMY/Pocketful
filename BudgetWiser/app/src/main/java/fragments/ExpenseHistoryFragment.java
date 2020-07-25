@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,12 +60,13 @@ public class ExpenseHistoryFragment extends Fragment {
     BarChart barChart;
     private RecyclerView recyclerView;
     private ExpenseHistoryAdapter expenseHistoryAdapter;
-    private ImageView statusImageView;
+    private ImageView statusImageView, emptyImage;
     int total;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ImageButton previousButton, currentButton;
-    int i = 1, x= 1;
+    private TextView emptyTextTV;
+    int x = 1;
 
     @Nullable
     @Override
@@ -80,6 +82,8 @@ public class ExpenseHistoryFragment extends Fragment {
 
         previousButton = view.findViewById(R.id.prevMonthButton);
         currentButton = view.findViewById(R.id.monthSelectorID);
+        emptyImage = view.findViewById(R.id.emptyImageView);
+        emptyTextTV = view.findViewById(R.id.emptyStatementTextView);
 
         statusImageView = view.findViewById(R.id.transactionStatusImageView);
         //barChart = view.findViewById(R.id.historyBarChart);
@@ -97,7 +101,6 @@ public class ExpenseHistoryFragment extends Fragment {
             public void onClick(View view) {
                 expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), getCurrentMonth());
                 recyclerView.setAdapter(expenseHistoryAdapter);
-                i = 1;
                 x = 1;
             }
         });
@@ -105,7 +108,7 @@ public class ExpenseHistoryFragment extends Fragment {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadPreviousMonthData();
+                loadPreviousMonthData(x);
             }
         });
 
@@ -137,6 +140,14 @@ public class ExpenseHistoryFragment extends Fragment {
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                 + ") = strftime('%m',date('now')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+
+        if (cursor.getCount() == 0){
+            emptyImage.setVisibility(View.VISIBLE);
+            emptyTextTV.setVisibility(View.VISIBLE);
+        } else {
+            emptyImage.setVisibility(View.GONE);
+            emptyTextTV.setVisibility(View.GONE);
+        }
 
         return cursor;
     }
@@ -264,14 +275,23 @@ public class ExpenseHistoryFragment extends Fragment {
         setupViewPager(viewPager);
     }
 
-    public void loadPreviousMonthData() {
+    public void loadPreviousMonthData(int i) {
 
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                 + ") = strftime('%m',date('now', '-" + i +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
-        i++;
+        x++;
 
         expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), cursor);
+        if (cursor.getCount() == 0){
+            emptyImage.setVisibility(View.VISIBLE);
+            emptyTextTV.setText("No data recorded in the last months");
+            emptyTextTV.setVisibility(View.VISIBLE);
+        } else {
+            emptyImage.setVisibility(View.GONE);
+            emptyTextTV.setVisibility(View.GONE);
+        }
+
         recyclerView.setAdapter(expenseHistoryAdapter);
     }
 }
