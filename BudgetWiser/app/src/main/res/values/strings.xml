@@ -2,14 +2,19 @@
     <string name="app_name">BudgetWiser</string>
 
     <string-array name="wishlist_category">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Select Platform</item>
+        <item>Alibaba</item>
+        <item>Amazon</item>
+        <item>Asos</item>
+        <item>Ebay</item>
+        <item>Flipkart</item>
+        <item>Hermo</item>
+        <item>Lazada</item>
+        <item>Sephora</item>
+        <item>Shopee</item>
+        <item>Taobao</item>
+        <item>Zalora</item>
+        <item>PhysicalStore</item>
     </string-array>
 
     <string-array name="expense_category">

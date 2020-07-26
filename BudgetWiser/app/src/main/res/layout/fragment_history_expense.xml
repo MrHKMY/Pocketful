@@ -61,7 +61,7 @@
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         android:textAlignment="center"
-        android:text="Ooops! No data recorded yet \n Swipe left to add new data" />
+        android:text="Ooops! No data recorded yet \n Swipe left to add some new data" />
 
     <RelativeLayout
         android:id="@+id/selectorLayout"

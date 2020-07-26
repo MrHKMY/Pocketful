@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,7 +56,7 @@ public class WishListFragment extends Fragment {
     private SQLiteDatabase mDatabase;
     private MainAdapter mainAdapter, mainAdapter2;
     private LaterAdapter laterAdapter;
-    private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis;
+    private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis, emptyText;
     public float newBudget;
     private EditText budgetEditText, wishlistEditText, priceEditText;
     Float total;
@@ -67,7 +68,8 @@ public class WishListFragment extends Fragment {
     private PieChart pieChart;
     public ArrayList<PieEntry> dataValue = new ArrayList<>();
     private ArrayAdapter<CharSequence> spinnerAdapter;
-    private  Button goButton;
+    private Button goButton;
+    private ImageView emptyImage;
 
     @Nullable
     @Override
@@ -153,6 +155,8 @@ public class WishListFragment extends Fragment {
         pieChart = view.findViewById(R.id.pieChartID);
         budgetBox = view.findViewById(R.id.budget_box);
         wishlistAnalysis = view.findViewById(R.id.wishlistAnalysis);
+        emptyImage = view.findViewById(R.id.emptyWishListImage);
+        emptyText = view.findViewById(R.id.emptyWishListText);
 
         budgetBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,7 +252,7 @@ public class WishListFragment extends Fragment {
         String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
         Cursor cursor = mDatabase.rawQuery(selectQuery, null);
         cursor.moveToLast();
-        int theData = cursor.getInt(cursor.getColumnIndex("budget"));
+        float theData = cursor.getFloat(cursor.getColumnIndex("budget"));
         budgetValue.setText(String.valueOf(theData));
         newBudget = theData;
     }
@@ -375,7 +379,7 @@ public class WishListFragment extends Fragment {
                     String selectQuery = "SELECT * FROM " + DatabaseHelper.BUDGET_TABLE;
                     Cursor cursor = mDatabase.rawQuery(selectQuery, null);
                     cursor.moveToLast();
-                    float theData = cursor.getFloat(cursor.getColumnIndex("budget"));
+                    String theData = cursor.getString(cursor.getColumnIndex("budget"));
 
                     budgetValue.setText(String.valueOf(theData));
                     updateSavingLayout();
@@ -586,10 +590,16 @@ public class WishListFragment extends Fragment {
             total = cursor2.getFloat(cursor2.getColumnIndex("Total"));
         }
         if (total == 0) {
-            pieChart.setNoDataText("No Data");
-            pieChart.setBackgroundResource(R.drawable.ic_launcher_foreground);
-        } else
+            //pieChart.setNoDataText("No Data");
+            pieChart.setVisibility(View.INVISIBLE);
+            emptyImage.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
             pieChart.setBackgroundResource(R.color.white);
+            pieChart.setVisibility(View.VISIBLE);
+            emptyImage.setVisibility(View.GONE);
+            emptyText.setVisibility(View.GONE);
+        }
         return dataValue;
     }
 }

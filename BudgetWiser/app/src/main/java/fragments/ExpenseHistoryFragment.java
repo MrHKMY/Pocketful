@@ -143,6 +143,7 @@ public class ExpenseHistoryFragment extends Fragment {
 
         if (cursor.getCount() == 0){
             emptyImage.setVisibility(View.VISIBLE);
+            emptyTextTV.setText("Ooops! No data recorded yet \n Swipe left to add some new data");
             emptyTextTV.setVisibility(View.VISIBLE);
         } else {
             emptyImage.setVisibility(View.GONE);
