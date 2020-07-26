@@ -53,16 +53,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + WISHLIST_NAME + " TEXT, "
                 + WISHLIST_AMOUNT + " FLOAT, "
                 + WISHLIST_CATEGORY + " TEXT, "
-                + WISHLIST_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-                + ");";
+                + WISHLIST_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
 
         String createBudgetTable = "CREATE TABLE "
                 + BUDGET_TABLE
                 + " ("
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + BUDGET_AMOUNT + " FLOAT, "
-                + BUDGET_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-                + ");";
+                + BUDGET_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
 
         String createLaterTable = "CREATE TABLE "
                 + LATER_TABLE
@@ -71,8 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + LATER_NAME + " TEXT, "
                 + LATER_AMOUNT + " FLOAT, "
                 + LATER_CATEGORY + " TEXT, "
-                + LATER_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-                + ");";
+                + LATER_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
 
         String createExpenseTable = "CREATE TABLE "
                 + EXPENSE_TABLE
@@ -83,8 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + EXPENSE_VALUE + " FLOAT, "
                 + EXPENSE_STATUS + " TEXT, "
                 + EXPENSE_NOTE + " TEXT, "
-                + EXPENSE_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-                + ");";
+                + EXPENSE_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
 
         sqLiteDatabase.execSQL(createWishTable);
         sqLiteDatabase.execSQL(createBudgetTable);

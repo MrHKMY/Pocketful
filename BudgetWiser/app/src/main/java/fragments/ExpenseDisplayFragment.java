@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,9 +49,10 @@ public class ExpenseDisplayFragment extends Fragment {
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private String noteExpense, spinnerValue, newSpinnerValue;
-    private TextView titleTextView, value1TV, value2TV, value3TV, value4TV, value5TV, value6TV, value7TV, value8TV, value9TV, value10TV, value11TV, value12TV;
+    private TextView titleTextView, value1TV, value2TV, value3TV, value4TV, value5TV, value6TV, value7TV, value8TV, value9TV, value10TV, value11TV, value12TV, emptyText;
     float total;
     private FloatingActionButton minusButton, plusButton;
+    private ImageView emptyTree;
 
 
     @Nullable
@@ -59,7 +61,7 @@ public class ExpenseDisplayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_display_expenses, container, false);
 
         pieChart = view.findViewById(R.id.expensesPieChart);
-        pieChart.setNoDataText("NO DATAAA");
+        //pieChart.setNoDataText("NO DATAAA");
 
         minusButton = view.findViewById(R.id.minusExpenseButton);
         plusButton = view.findViewById(R.id.plusExpenseButton);
@@ -76,6 +78,8 @@ public class ExpenseDisplayFragment extends Fragment {
         value10TV = view.findViewById(R.id.value10);
         value11TV = view.findViewById(R.id.value11);
         value12TV = view.findViewById(R.id.value12);
+        emptyTree = view.findViewById(R.id.emptyChart);
+        emptyText = view.findViewById(R.id.emptyTextTV);
 
         dbHelper = new DatabaseHelper(getContext());
         sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -129,7 +133,7 @@ public class ExpenseDisplayFragment extends Fragment {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
         //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet.setColors(new int[]{R.color.darkGreen, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
+        dataSet.setColors(new int[]{R.color.darkGreen, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimaryDark}, getContext());
 
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
@@ -169,10 +173,20 @@ public class ExpenseDisplayFragment extends Fragment {
                 + " GROUP BY " + DatabaseHelper.EXPENSE_CATEGORY
                 + "", null);
 
-        for (int i = 0; i < cursor.getCount(); i++) {
-            cursor.moveToNext();
-            dataValue.add(new PieEntry(cursor.getFloat(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
+        if (cursor.getCount() == 0){
+            emptyTree.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyTree.setVisibility(View.GONE);
+            emptyText.setVisibility(View.GONE);
+
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                dataValue.add(new PieEntry(cursor.getFloat(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
+            }
         }
+
+
 
         return dataValue;
     }

@@ -60,7 +60,46 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
         String status = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.EXPENSE_STATUS));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
 
-        holder.categoryText.setText(category);
+        switch (category){
+            case "Groceries":
+                holder.iconImageView.setImageResource(R.drawable.groceries_icon);
+                break;
+            case "Clothing":
+                holder.iconImageView.setImageResource(R.drawable.clothing_icon);
+                break;
+            case "Leisure":
+                holder.iconImageView.setImageResource(R.drawable.leisure_icon);
+                break;
+            case "Transport":
+                holder.iconImageView.setImageResource(R.drawable.transport_icon);
+                break;
+            case "Food":
+                holder.iconImageView.setImageResource(R.drawable.food_icon);
+                break;
+            case "Self-care":
+                holder.iconImageView.setImageResource(R.drawable.health_icon);
+                break;
+            case "Bills":
+                holder.iconImageView.setImageResource(R.drawable.bills_icon);
+                break;
+            case "Family":
+                holder.iconImageView.setImageResource(R.drawable.family_icon);
+                break;
+            case "Electronics":
+                holder.iconImageView.setImageResource(R.drawable.electronics_icon);
+                break;
+            case "Sports":
+                holder.iconImageView.setImageResource(R.drawable.sports_icon);
+                break;
+            case "Pet":
+                holder.iconImageView.setImageResource(R.drawable.pet_icon);
+                break;
+            case "Others":
+                holder.iconImageView.setImageResource(R.drawable.others_icon);
+                break;
+        }
+
+        //holder.categoryText.setText(category);
         holder.dateText.setText(date);
         holder.value.setText(value);
         holder.notes.setText(note);
@@ -80,18 +119,19 @@ public class ExpenseHistoryAdapter extends RecyclerView.Adapter<ExpenseHistoryAd
 
     public static class ExpenseHistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView dateText;
-        public TextView categoryText;
+        //public TextView categoryText;
         public TextView value;
         public TextView notes;
-        public ImageView statusImageView;
+        public ImageView statusImageView, iconImageView;
 
         public ExpenseHistoryViewHolder(@NonNull View itemView, final MainAdapter.OnItemClickListener listener) {
             super(itemView);
             dateText = itemView.findViewById(R.id.transactionDateID);
-            categoryText = itemView.findViewById(R.id.categoryID);
+            //categoryText = itemView.findViewById(R.id.categoryID);
             value = itemView.findViewById(R.id.valueID);
             notes = itemView.findViewById(R.id.noteID);
             statusImageView = itemView.findViewById(R.id.transactionStatusImageView);
+            iconImageView = itemView.findViewById(R.id.iconImageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

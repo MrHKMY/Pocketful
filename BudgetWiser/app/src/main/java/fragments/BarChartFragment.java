@@ -85,7 +85,7 @@ public class BarChartFragment extends Fragment {
         barChart.getLegend().setEnabled(false);
         barChart.setFitBars(true);
         //set.setColors(ColorTemplate.JOYFUL_COLORS);
-        set.setColors(new int[]{R.color.darkGreen, R.color.green, R.color.orange, R.color.yellow, R.color.blue, R.color.grey, R.color.pink, R.color.purple, R.color.brown, R.color.red, R.color.colorAccent, R.color.colorPrimary}, getContext());
+        set.setColors(new int[]{R.color.bar1, R.color.bar2, R.color.bar3, R.color.bar4, R.color.bar5, R.color.bar6, R.color.bar7, R.color.bar8, R.color.bar9, R.color.bar10, R.color.bar11, R.color.bar12}, getContext());
         set.setDrawValues(false);
         barChart.setFitBars(true);
         barChart.setBackgroundResource(R.color.white);

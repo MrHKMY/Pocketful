@@ -114,7 +114,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_below="@id/savingLinearLayout"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_margin="10dp" />
+
+                <ImageView
+                    android:id="@+id/emptyWishListImage"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/wishlist"
+                    android:layout_below="@id/savingLinearLayout"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/emptyWishListText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add your wish list item to generate chart."
+                    android:layout_below="@id/emptyWishListImage"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerInParent="true"/>
 
                 <LinearLayout
                     android:id="@+id/buttonLinearLayout"

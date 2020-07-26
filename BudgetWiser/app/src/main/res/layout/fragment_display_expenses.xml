@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -393,24 +393,47 @@
             android:layout_below="@+id/categoryMainLayout"
             android:layout_marginHorizontal="10dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/expensesPieChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorBackground" />
+                <RelativeLayout
+                    android:layout_width="280dp"
+                    android:layout_height="match_parent">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/expensesPieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/colorBackground" />
+
+                    <ImageView
+                        android:id="@+id/emptyChart"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/piechart2" />
+
+                    <TextView
+                        android:id="@+id/emptyTextTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/emptyChart"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:text="No data yet to populate a chart. \n Tap the button to start." />
+                </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="30dp"
                     android:background="@color/colorBackground"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -420,31 +443,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/info_icon"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:src="@drawable/info_icon" />
 
                     <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/plusExpenseButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:fab_size="mini"
                         android:src="@drawable/green_expense_icon"
-                        app:fab_colorNormal="@color/colorPrimary"
-                        app:fab_colorPressed="@color/white"/>
+                        app:fab_colorNormal="@color/colorPrimaryDark"
+                        app:fab_colorPressed="@color/white"
+                        app:fab_size="mini" />
 
                     <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/minusExpenseButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:fab_size="normal"
                         android:src="@drawable/red_expense_icon"
                         app:fab_colorNormal="@color/design_default_color_error"
-                        app:fab_colorPressed="@color/white"/>
-
+                        app:fab_colorPressed="@color/white"
+                        app:fab_size="normal" />
 
 
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 
