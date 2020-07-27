@@ -5,7 +5,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorForeground"
+    android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
@@ -181,7 +181,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/wishlist_selected"
-                        android:gravity="center_horizontal"
+                        android:gravity="center"
                         android:text="My Wishlist"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
@@ -193,7 +193,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/wishlist_default"
-                        android:gravity="center_horizontal"
+                        android:gravity="center"
                         android:text="Maybe list"
                         android:textColor="@color/white"
                         android:textSize="18sp" />

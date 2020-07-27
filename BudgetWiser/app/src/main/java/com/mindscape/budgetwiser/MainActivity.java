@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,14 +13,19 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
+import fragments.BarChartFragment;
+import fragments.ExpenseHistoryFragment;
 import fragments.ExpensesFragment;
 import fragments.GroceriesFragment;
 import fragments.WishListFragment;
 import fragments.SettingFragment;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements ExpenseHistoryFragment.FragmentAListener {
+    private BarChartFragment barChartFragment;
     SharedPreferences sharedPreferences;
+    String x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
         bottomView.setOnNavigationItemSelectedListener(navListener);
 
 
+        barChartFragment = new BarChartFragment();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, new ExpensesFragment()).commit();
     }
 
@@ -207,4 +215,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onInputASent(int input) {
+        barChartFragment.updateData(input);
+    }
 }

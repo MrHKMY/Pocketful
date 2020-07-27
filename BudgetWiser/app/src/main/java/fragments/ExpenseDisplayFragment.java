@@ -48,11 +48,12 @@ public class ExpenseDisplayFragment extends Fragment {
     private float newExpense;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
-    private String noteExpense, spinnerValue, newSpinnerValue;
+    private String noteExpense, spinnerValue;
     private TextView titleTextView, value1TV, value2TV, value3TV, value4TV, value5TV, value6TV, value7TV, value8TV, value9TV, value10TV, value11TV, value12TV, emptyText;
     float total;
     private FloatingActionButton minusButton, plusButton;
     private ImageView emptyTree;
+    private int newSpinnerValue, x;
 
 
     @Nullable
@@ -169,7 +170,7 @@ public class ExpenseDisplayFragment extends Fragment {
                 + ") as Total,"
                 + DatabaseHelper.EXPENSE_NAME + " as theCategory FROM "
                 + DatabaseHelper.EXPENSE_TABLE
-                + " WHERE DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP + ") = DATE('now') AND Status = 'OUT'"
+                + " WHERE DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP + ") = DATE('now', 'localtime') AND Status = 'OUT'"
                 + " GROUP BY " + DatabaseHelper.EXPENSE_CATEGORY
                 + "", null);
 
@@ -177,16 +178,13 @@ public class ExpenseDisplayFragment extends Fragment {
             emptyTree.setVisibility(View.VISIBLE);
             emptyText.setVisibility(View.VISIBLE);
         } else {
-            emptyTree.setVisibility(View.GONE);
-            emptyText.setVisibility(View.GONE);
-
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
                 dataValue.add(new PieEntry(cursor.getFloat(cursor.getColumnIndex("Total")), cursor.getString(cursor.getColumnIndex("theCategory"))));
             }
+            emptyTree.setVisibility(View.GONE);
+            emptyText.setVisibility(View.GONE);
         }
-
-
 
         return dataValue;
     }
@@ -241,8 +239,6 @@ public class ExpenseDisplayFragment extends Fragment {
                     }
                     Toast.makeText(getContext(), "Data saved.", Toast.LENGTH_SHORT).show();
 
-                    int a;
-
                     /*switch (spinnerValue) {
                         case "Groceries":
                             a = 1;
@@ -296,8 +292,8 @@ public class ExpenseDisplayFragment extends Fragment {
 
                      */
 
-                    int x = Integer.valueOf(newSpinnerValue);
-                    getCategoryValue(x);
+                    //Toast.makeText(getContext(), x, Toast.LENGTH_SHORT).show();
+                    getCategoryValue(newSpinnerValue);
 
 
                     alertDialog.cancel();
@@ -318,58 +314,60 @@ public class ExpenseDisplayFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void switchSpinnerValue(String value) {
+    private int switchSpinnerValue(String value) {
 
         switch (value) {
             case "Groceries":
-                newSpinnerValue = "1";
+                newSpinnerValue = 1;
                 //getCategoryValue(1);
                 break;
             case "Clothing":
-                newSpinnerValue = "2";
+                newSpinnerValue = 2;
                 //getCategoryValue(2);
                 break;
             case "Leisure":
-                newSpinnerValue = "3";
+                newSpinnerValue = 3;
                 //getCategoryValue(3);
                 break;
             case "Transport":
-                newSpinnerValue = "4";
+                newSpinnerValue = 4;
                 //getCategoryValue(4);
                 break;
             case "Food":
-                newSpinnerValue = "5";
+                newSpinnerValue = 5;
                 //getCategoryValue(5);
                 break;
             case "Self-care":
-                newSpinnerValue = "6";
+                newSpinnerValue = 6;
                 //getCategoryValue(6);
                 break;
             case "Bills":
-                newSpinnerValue = "7";
+                newSpinnerValue = 7;
                 //getCategoryValue(7);
                 break;
             case "Family":
-                newSpinnerValue = "8";
+                newSpinnerValue = 8;
                 //getCategoryValue(8);
                 break;
             case "Electronics":
-                newSpinnerValue = "9";
+                newSpinnerValue = 9;
                 //getCategoryValue(9);
                 break;
             case "Sports":
-                newSpinnerValue = "10";
+                newSpinnerValue = 10;
                 //getCategoryValue(10);
                 break;
             case "Pet":
-                newSpinnerValue = "11";
+                newSpinnerValue = 11;
                 //getCategoryValue(11);
                 break;
             case "Others":
-                newSpinnerValue = "12";
+                newSpinnerValue = 12;
                 //getCategoryValue(12);
                 break;
         }
+
+    return newSpinnerValue;
     }
 
     private void getCategoryValue(int num) {
@@ -378,7 +376,7 @@ public class ExpenseDisplayFragment extends Fragment {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
                 + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE Category = '" + nums
-                + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP + ") = DATE('now') AND Status = 'OUT'", null);
+                + "' AND DATE(" + DatabaseHelper.EXPENSE_TIMESTAMP + ") = DATE('now', 'localtime') AND Status = 'OUT'", null);
 
         if (cursor.moveToFirst()) {
             total = cursor.getFloat(cursor.getColumnIndex("Total"));
