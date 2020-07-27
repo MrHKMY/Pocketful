@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,12 +55,54 @@ public class LaterAdapter extends RecyclerView.Adapter<LaterAdapter.LaterViewHol
         String item = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LATER_NAME));
         String price = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LATER_AMOUNT));
         long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper._ID));
+        String logo = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.LATER_CATEGORY));
         //int abc = mCursor.getInt(position);
-
 
         holder.itemText.setText(item);
         holder.priceText.setText(price);
         holder.itemView.setTag(id);
+
+        switch (logo) {
+            case "Select Platform":
+                holder.logoImage.setImageResource(R.drawable.others_icon);
+                break;
+            case "Alibaba":
+                holder.logoImage.setImageResource(R.drawable.alibaba_icon);
+                break;
+            case "Amazon":
+                holder.logoImage.setImageResource(R.drawable.amazon_icon2);
+                break;
+            case "Asos":
+                holder.logoImage.setImageResource(R.drawable.asos_icon);
+                break;
+            case "Ebay":
+                holder.logoImage.setImageResource(R.drawable.ebay_icon);
+                break;
+            case "Flipkart":
+                holder.logoImage.setImageResource(R.drawable.flipkart_icon);
+                break;
+            case "Hermo":
+                holder.logoImage.setImageResource(R.drawable.hermo_icon);
+                break;
+            case "Lazada":
+                holder.logoImage.setImageResource(R.drawable.lazada_icon);
+                break;
+            case "Sephora":
+                holder.logoImage.setImageResource(R.drawable.sephora_icon);
+                break;
+            case "Shopee":
+                holder.logoImage.setImageResource(R.drawable.shopee_icon);
+                break;
+            case "Taobao":
+                holder.logoImage.setImageResource(R.drawable.taobao_icon);
+                break;
+            case "Zalora":
+                holder.logoImage.setImageResource(R.drawable.zalora_icon);
+                break;
+            case "PhysicalStore":
+                holder.logoImage.setImageResource(R.drawable.shop_icon);
+                break;
+        }
         //holder.checkBox.setChecked(abc);
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +123,15 @@ public class LaterAdapter extends RecyclerView.Adapter<LaterAdapter.LaterViewHol
         public TextView itemText;
         public TextView priceText;
         public CheckBox checkBox;
+        public ImageView logoImage;
 
         public LaterViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             itemText = itemView.findViewById(R.id.itemAdapter);
             priceText = itemView.findViewById(R.id.priceAdapter);
             checkBox = itemView.findViewById(R.id.checkbox);
+            logoImage = itemView.findViewById(R.id.hyperlinkLogo);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

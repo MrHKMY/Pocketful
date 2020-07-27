@@ -59,7 +59,7 @@ public class WishListFragment extends Fragment {
     private TextView budgetValue, wishListValue, savingValue, wishlistTitle, laterTitle, wishlistAnalysis, emptyText;
     public float newBudget;
     private EditText budgetEditText, wishlistEditText, priceEditText;
-    Float total;
+    float total;
     private RecyclerView recyclerView, laterRecyclerView;
     private String[] theQuestionString;
     private String q;
@@ -212,7 +212,7 @@ public class WishListFragment extends Fragment {
 
     private void updateSavingLayout() {
         wishListValue.setText(String.valueOf(total));
-        savingValue.setText(String.valueOf(newBudget - total));
+        savingValue.setText(String.format("%.2f", newBudget - total));
         if (newBudget - total > 0) {
             savingLayout.setBackgroundResource(R.color.green);
             wishlistAnalysis.setText("Your got some saving. Great job!");
@@ -290,8 +290,6 @@ public class WishListFragment extends Fragment {
         /*InputDialog inputDialog = new InputDialog();
         inputDialog.show(getSupportFragmentManager(), "Input Dialog");
          */
-
-
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         View view = layoutInflater.inflate(R.layout.wishlist_input_layout, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
@@ -299,6 +297,7 @@ public class WishListFragment extends Fragment {
 
         wishlistEditText = view.findViewById(R.id.newWishlistEditText);
         priceEditText = view.findViewById(R.id.newPriceEditText);
+        wishlistEditText.requestFocus();
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         final Spinner spinner = view.findViewById(R.id.spinner_cats);
@@ -360,6 +359,7 @@ public class WishListFragment extends Fragment {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         budgetEditText = view.findViewById(R.id.newBudgetEditText);
+        budgetEditText.requestFocus();
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         final ImageButton checkButton = view.findViewById(R.id.newBudgetCheckButton);
         ImageButton crossButton = view.findViewById(R.id.newBudgetCrossButton);

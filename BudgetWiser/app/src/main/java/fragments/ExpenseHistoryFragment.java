@@ -1,6 +1,6 @@
 package fragments;
 
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -45,6 +48,7 @@ import com.mindscape.budgetwiser.R;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import adapters.ExpenseHistoryAdapter;
 import adapters.MainAdapter;
@@ -54,6 +58,12 @@ import adapters.PageAdapter;
  * Created by Hakimi on 2/7/2020.
  */
 public class ExpenseHistoryFragment extends Fragment {
+
+    private FragmentAListener listener;
+
+    public interface FragmentAListener {
+        void onInputASent(int input);
+    }
 
     private SQLiteDatabase mDatabase;
     LineChart lineChart;
@@ -66,7 +76,7 @@ public class ExpenseHistoryFragment extends Fragment {
     private TabLayout tabLayout;
     private ImageButton previousButton, currentButton;
     private TextView emptyTextTV;
-    int x = 1;
+    public int x = 1;
 
     @Nullable
     @Override
@@ -109,6 +119,8 @@ public class ExpenseHistoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 loadPreviousMonthData(x);
+
+
             }
         });
 
@@ -121,7 +133,25 @@ public class ExpenseHistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         expenseHistoryAdapter.swapCursor(getCurrentMonth());
+
         //createBarChart();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof  FragmentAListener) {
+            listener = (FragmentAListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+            + " must implement FragmentAListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     private Cursor getAllItems() {
@@ -139,11 +169,11 @@ public class ExpenseHistoryFragment extends Fragment {
     private Cursor getCurrentMonth() {
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
-                + ") = strftime('%m',date('now')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+                + ") = strftime('%m',date('now','localtime')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
 
         if (cursor.getCount() == 0){
             emptyImage.setVisibility(View.VISIBLE);
-            emptyTextTV.setText("Ooops! No data recorded yet \n Swipe left to add some new data");
+            emptyTextTV.setText("Oops! No data recorded yet \n Swipe left to add some new data");
             emptyTextTV.setVisibility(View.VISIBLE);
         } else {
             emptyImage.setVisibility(View.GONE);
@@ -281,6 +311,9 @@ public class ExpenseHistoryFragment extends Fragment {
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.EXPENSE_TABLE
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                 + ") = strftime('%m',date('now', '-" + i +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
+
+        listener.onInputASent(i);
+
         x++;
 
         expenseHistoryAdapter = new ExpenseHistoryAdapter(getContext(), cursor);

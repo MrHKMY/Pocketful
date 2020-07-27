@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long createExpense(float value, String category, String name, String note, String status) {
+    public long createExpense(float value, int category, String name, String note, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
