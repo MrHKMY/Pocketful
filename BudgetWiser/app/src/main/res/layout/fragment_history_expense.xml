@@ -13,6 +13,7 @@
         android:background="@color/colorBackground">
 
         <LinearLayout
+            android:id="@+id/layoutForCharts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -61,24 +62,25 @@
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         android:textAlignment="center"
-        android:text="Ooops! No data recorded yet \n Swipe left to add some new data" />
+        android:text="Oops! No data recorded yet \n Swipe left to add some new data" />
 
     <RelativeLayout
         android:id="@+id/selectorLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:background="@color/colorBackground"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="10dp"
+        >
 
         <ImageButton
             android:id="@+id/prevMonthButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="7dp"
+            android:layout_marginEnd="15dp"
             android:layout_toStartOf="@id/monthSelectorID"
             android:background="@null"
             android:src="@drawable/arrow_back" />
@@ -88,9 +90,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
             android:layout_marginHorizontal="10dp"
             android:background="@null"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/current_month_icon" />
 
     </RelativeLayout>
