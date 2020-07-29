@@ -38,8 +38,8 @@ public class LineChartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.line_chart_fragment, container, false);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        mDatabase = dbHelper.getWritableDatabase();
+        //DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        mDatabase = DatabaseHelper.getInstance(getContext()).getWritableDatabase();
 
         lineChart = view.findViewById(R.id.lineChart);
 
