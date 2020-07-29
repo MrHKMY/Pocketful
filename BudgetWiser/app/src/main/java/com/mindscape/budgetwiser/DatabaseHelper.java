@@ -39,8 +39,18 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String EXPENSE_TIMESTAMP = "Date";
     public static final String EXPENSE_NAME = "NAME";
 
+    private static DatabaseHelper mInstance;
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
+    }
+
+    public static synchronized DatabaseHelper getInstance(Context context) {
+
+        if (mInstance == null) {
+            mInstance = new DatabaseHelper(context.getApplicationContext());
+        }
+        return mInstance;
     }
 
 

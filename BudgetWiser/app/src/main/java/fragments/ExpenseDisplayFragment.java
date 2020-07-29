@@ -83,7 +83,8 @@ public class ExpenseDisplayFragment extends Fragment {
         emptyText = view.findViewById(R.id.emptyTextTV);
 
         dbHelper = new DatabaseHelper(getContext());
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        //sqLiteDatabase = dbHelper.getWritableDatabase();
+        sqLiteDatabase = DatabaseHelper.getInstance(getContext()).getWritableDatabase();
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override

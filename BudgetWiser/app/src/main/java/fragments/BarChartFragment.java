@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,8 @@ public class BarChartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bar_chart_fragment, container, false);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        mDatabase = dbHelper.getWritableDatabase();
+        //DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        mDatabase = DatabaseHelper.getInstance(getContext()).getWritableDatabase();
         barChart = view.findViewById(R.id.barchart);
         createBarChart();
 
@@ -102,34 +103,23 @@ public class BarChartFragment extends Fragment {
         List<BarEntry> dataValues = new ArrayList<>();
         dataValues.clear();
 
-        if (data == 0) {
             for (int nums = 1; nums <= 12; nums++) {
-                Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
+                Cursor cursor2 = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
                         + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
                         + " WHERE Category = '" + nums + "' AND Status = 'OUT' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                         + ") = strftime('%m',date('now'))", null);
-                if (cursor.moveToFirst()) {
-                    total = cursor.getInt(cursor.getColumnIndex("Total"));
+                if (cursor2.moveToFirst()) {
+                    total = cursor2.getInt(cursor2.getColumnIndex("Total"));
                 }
                 dataValues.add(new BarEntry(nums, total));
+                cursor2.close();
             }
-        } else {
-            for (int nums = 1; nums <= 12; nums++) {
-                Cursor cursor = mDatabase.rawQuery("SELECT SUM(" + DatabaseHelper.EXPENSE_VALUE
-                        + ") as Total FROM " + DatabaseHelper.EXPENSE_TABLE
-                        + " WHERE Category = '" + nums + "' AND Status = 'OUT' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
-                        + ") = strftime('%m',date('now', '-" + data + " month'))", null);
-                if (cursor.moveToFirst()) {
-                    total = 0;
-                    //cursor.getInt(cursor.getColumnIndex("Total"));
-                }
-                dataValues.add(new BarEntry(nums, total));
-            }
-        }
+
         return dataValues;
     }
 
     public void updateData(int x) {
         data = x;
+        Log.d("THE VALUE OF DATA: ", "value: " + data);
     }
 }

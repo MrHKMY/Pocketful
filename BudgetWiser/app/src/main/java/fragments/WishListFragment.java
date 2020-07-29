@@ -78,9 +78,8 @@ public class WishListFragment extends Fragment {
 
         FloatingActionButton fab = view.findViewById(R.id.floatButton);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        mDatabase = dbHelper.getWritableDatabase();
-
+        //DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        mDatabase = DatabaseHelper.getInstance(getContext()).getWritableDatabase();
         theQuestionString = getResources().getStringArray(R.array.theQuestions);
         randomIndex = new Random().nextInt(theQuestionString.length);
         q = theQuestionString[randomIndex];
@@ -595,7 +594,6 @@ public class WishListFragment extends Fragment {
             emptyImage.setVisibility(View.VISIBLE);
             emptyText.setVisibility(View.VISIBLE);
         } else {
-            pieChart.setBackgroundResource(R.color.white);
             pieChart.setVisibility(View.VISIBLE);
             emptyImage.setVisibility(View.GONE);
             emptyText.setVisibility(View.GONE);

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,7 @@ public class ExpenseHistoryFragment extends Fragment {
         void onInputASent(int input);
     }
 
+    private LinearLayout chartsLayout;
     private SQLiteDatabase mDatabase;
     LineChart lineChart;
     BarChart barChart;
@@ -83,8 +85,8 @@ public class ExpenseHistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_expense, container, false);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        mDatabase = dbHelper.getWritableDatabase();
+        //DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        mDatabase = DatabaseHelper.getInstance(getContext()).getWritableDatabase();
 
         viewPager = view.findViewById(R.id.chartViewPager);
         tabLayout = view.findViewById(R.id.chartTabLayout);
@@ -97,6 +99,7 @@ public class ExpenseHistoryFragment extends Fragment {
 
         statusImageView = view.findViewById(R.id.transactionStatusImageView);
         //barChart = view.findViewById(R.id.historyBarChart);
+        chartsLayout = view.findViewById(R.id.layoutForCharts);
         recyclerView = view.findViewById(R.id.recyclerviewExpense);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -126,6 +129,7 @@ public class ExpenseHistoryFragment extends Fragment {
 
         //createBarChart();
         return view;
+
 
     }
 
@@ -171,6 +175,8 @@ public class ExpenseHistoryFragment extends Fragment {
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                 + ") = strftime('%m',date('now','localtime')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
 
+        chartsLayout.setVisibility(View.VISIBLE);
+
         if (cursor.getCount() == 0){
             emptyImage.setVisibility(View.VISIBLE);
             emptyTextTV.setText("Oops! No data recorded yet \n Swipe left to add some new data");
@@ -179,7 +185,6 @@ public class ExpenseHistoryFragment extends Fragment {
             emptyImage.setVisibility(View.GONE);
             emptyTextTV.setVisibility(View.GONE);
         }
-
         return cursor;
     }
 
@@ -312,7 +317,8 @@ public class ExpenseHistoryFragment extends Fragment {
                 + " WHERE strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                 + ") = strftime('%m',date('now', '-" + i +" month')) ORDER BY "+ DatabaseHelper.EXPENSE_TIMESTAMP + " DESC", null);
 
-        listener.onInputASent(i);
+        //listener.onInputASent(i);
+        chartsLayout.setVisibility(View.GONE);
 
         x++;
 
