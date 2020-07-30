@@ -32,7 +32,8 @@
                     android:background="@drawable/circular_box"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:elevation="6dp">
 
                     <LinearLayout
                         android:id="@+id/budget_box"
@@ -45,7 +46,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="Budget" />
+                            android:text="Budget"
+                            android:textColor="@color/textColor"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/budgetAmountTextView"
@@ -53,7 +56,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="0"
-                            android:textColor="#000000"
+                            android:textColor="@color/textColor"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -67,7 +70,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="Wishlist" />
+                            android:text="Wishlist"
+                            android:textColor="@color/textColor"
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/wishlistAmountTextView"
@@ -75,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="0"
-                            android:textColor="#000000"
+                            android:textColor="@color/textColor"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -91,12 +96,14 @@
                     android:background="@drawable/circular_box"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:elevation="6dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total saved" />
+                        android:text="Total saved"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/savingTextView"
@@ -115,7 +122,8 @@
                     android:layout_below="@id/savingLinearLayout"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/colorBackground"/>
+                    android:background="@drawable/circular_box"
+                    android:elevation="6dp"/>
 
                 <ImageView
                     android:id="@+id/emptyWishListImage"
@@ -133,7 +141,8 @@
                     android:text="Add your wish list item to generate chart."
                     android:layout_below="@id/emptyWishListImage"
                     android:layout_marginTop="20dp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/textColor"/>
 
                 <LinearLayout
                     android:id="@+id/buttonLinearLayout"
@@ -145,7 +154,8 @@
                     android:background="@drawable/circular_box"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:elevation="6dp">
 
                     <TextView
                         android:id="@+id/wishlistAnalysis"
@@ -153,7 +163,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Start adding your wishlist by tapping the + button."
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
                         android:layout_marginHorizontal="10dp"/>
 
                     <Button
@@ -161,9 +171,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Yes"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:background="@drawable/wishlist_default"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -172,8 +182,9 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/buttonLinearLayout"
                     android:layout_marginHorizontal="10dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:background="@drawable/circular_box"
+                    android:orientation="horizontal"
+                    android:elevation="6dp">
 
                     <TextView
                         android:id="@+id/wishlistText"
@@ -184,7 +195,7 @@
                         android:background="@drawable/wishlist_selected"
                         android:gravity="center"
                         android:text="My Wishlist"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                     <TextView
@@ -196,7 +207,7 @@
                         android:background="@drawable/wishlist_default"
                         android:gravity="center"
                         android:text="Maybe list"
-                        android:textColor="@color/white"
+                        android:textColor="@color/textColor"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -206,12 +217,14 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/recyclerviewLinearLayout"
                     android:layout_marginHorizontal="10dp"
-                    android:background="@color/white">
+                    android:elevation="6dp"
+                    android:layout_marginTop="5dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:elevation="6dp"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/laterRecyclerview"
@@ -232,7 +245,7 @@
         android:layout_marginRight="10dp"
         android:foregroundGravity="bottom"
         android:src="@drawable/fab_add"
-        app:fab_colorNormal="@color/colorAccent2"
+        app:fab_colorNormal="@color/fabColor"
         app:fab_colorPressed="@color/colorAccent" />
 
 </RelativeLayout>

@@ -18,14 +18,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Dark Mode"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/darkmodeBetaTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/darkmodeTV"
-            android:text="(Beta)" />
+            android:text="(Beta)"
+            android:textColor="@color/textHint"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchDarkMode"
@@ -53,7 +54,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:text="Notification"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/notificationDetail"
@@ -79,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Chart theme"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/chartColorDetailTV"
@@ -112,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Sync with cloud storage"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/syncmodeDetailTV"
@@ -146,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Sync with other user/device"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/syncuserDetailTV"
@@ -179,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Download all data"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/downloadDetailTV"
@@ -213,7 +214,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:text="Rate and review the app"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/rateDetailTV"
@@ -235,7 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="About"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/aboutDetailTV"

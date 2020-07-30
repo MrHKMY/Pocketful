@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +11,6 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Objects;
 
 import fragments.BarChartFragment;
 import fragments.ExpenseHistoryFragment;
@@ -33,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements ExpenseHistoryFra
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         checkNightMode();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.empty_layout);
+        setContentView(R.layout.bottom_navigation_view);
 
         /*FloatingActionButton fab = findViewById(R.id.floatButton);
 

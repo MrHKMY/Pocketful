@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Notes here"
                 android:textSize="14sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:id="@+id/transactionDateID"
@@ -45,7 +45,8 @@
                 android:text="Transaction date"
                 android:layout_alignParentBottom="true"
                 android:textSize="10sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:textColor="@color/textHint"/>
         </RelativeLayout>
 
         <TextView
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="999"
-            android:textColor="#000000"
+            android:textColor="@color/textColor"
             android:textSize="18sp"
             android:layout_toStartOf="@id/transactionStatusImageView"/>
 
@@ -72,5 +73,5 @@
         android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#BFBFBF" />
+        android:background="@color/expensesDivider" />
 </LinearLayout>

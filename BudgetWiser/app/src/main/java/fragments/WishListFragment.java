@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -213,13 +214,16 @@ public class WishListFragment extends Fragment {
         wishListValue.setText(String.valueOf(total));
         savingValue.setText(String.format("%.2f", newBudget - total));
         if (newBudget - total > 0) {
-            savingLayout.setBackgroundResource(R.color.green);
+            savingLayout.setBackgroundResource(R.drawable.circular_box_green);
             wishlistAnalysis.setText("Your got some saving. Great job!");
             goButton.setVisibility(View.GONE);
         } else if (newBudget - total < 0) {
-            savingLayout.setBackgroundResource(R.color.red);
+            savingLayout.setBackgroundResource(R.drawable.circular_box_red);
             wishlistAnalysis.setText("Need help to decide which really matter?");
             goButton.setVisibility(View.VISIBLE);
+        } else {
+            savingLayout.setBackgroundResource(R.drawable.circular_box);
+            wishlistAnalysis.setText("Seems like the Budget and total Wishlist amount is the same");
         }
     }
 
@@ -552,16 +556,17 @@ public class WishListFragment extends Fragment {
         PieDataSet dataSet = new PieDataSet(getDataValue(), "");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(15f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setColors(new int[]{R.color.bar1, R.color.bar2, R.color.bar3, R.color.bar4, R.color.bar5, R.color.bar6, R.color.bar7, R.color.bar8, R.color.bar9, R.color.bar10, R.color.bar11, R.color.bar12}, getContext());
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setValueLinePart1OffsetPercentage(100f); /** When valuePosition is OutsideSlice, indicates offset as percentage out of the slice size */
         dataSet.setValueLinePart1Length(0.5f); /** When valuePosition is OutsideSlice, indicates length of first half of the line */
         dataSet.setValueLinePart2Length(0.5f); /** When valuePosition is OutsideSlice, indicates length of second half of the line */
 
+
         PieData data = new PieData((dataSet));
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.BLUE);
+        data.setValueTextSize(12);
+        data.setValueTextColor(ContextCompat.getColor(getContext(), R.color.textColor));
 
         pieChart.setData(data);
     }

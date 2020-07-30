@@ -31,5 +31,12 @@
     <color name="bar12">#040404</color>
 
     <color name="colorBackground">#FFFFFF</color>
-    <color name="colorForeground">#018786</color>
+    <color name="colorForeground">#FFFFFF</color>
+    <color name="textColor">#000000</color>
+    <color name="textHint">#B1B1B1</color>
+    <color name="expensesDivider">#BFBFBF</color>
+    <color name="chartSelected">#03DAC5</color>
+    <color name="fabColor">#00AFEA</color>
+    <color name="expenseRed">#B00020</color>
+
 </resources>

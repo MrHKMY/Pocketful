@@ -2,74 +2,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@drawable/circular_box">
 
     <TextView
         android:id="@+id/newExpenseTitle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_margin="15dp"
         android:text="Expense/Income"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:layout_margin="15dp"/>
+        android:textColor="@color/textColor"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/newExpenseEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Amount"
-        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newExpenseTitle"
+        android:layout_marginHorizontal="15dp"
+        android:hint="Amount"
         android:inputType="numberDecimal"
-        android:layout_marginHorizontal="15dp"/>
+        android:textColorHint="@color/textHint" />
 
     <EditText
         android:id="@+id/newExpenseNoteEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Note (Optional)"
-        android:textColorHint="@color/colorForeground"
         android:layout_below="@id/newExpenseEditText"
-        android:layout_marginHorizontal="15dp"/>
+        android:layout_marginHorizontal="15dp"
+        android:hint="Note (optional)"
+        android:textColorHint="@color/textHint" />
 
     <Spinner
         android:id="@+id/expense_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/newExpenseNoteEditText"
-        android:autofillHints="Category"
-        android:spinnerMode="dropdown"
-        android:visibility="visible"
-        android:background="@color/colorForeground"
         android:layout_marginHorizontal="15dp"
-        />
+        android:spinnerMode="dropdown"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/expense_spinner"
         android:layout_alignParentEnd="true"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/newExpenseCheckButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tick_icon"
-            android:background="@color/white"
             android:layout_margin="15dp"
-            />
+            android:background="@null"
+            android:src="@drawable/tick_icon" />
 
         <ImageButton
             android:id="@+id/newExpenseCrossButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cross_icon"
-            android:background="@color/white"
             android:layout_margin="15dp"
-            />
+            android:background="@null"
+            android:src="@drawable/cross_icon" />
     </LinearLayout>
 
 </RelativeLayout>
