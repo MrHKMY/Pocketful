@@ -10,13 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorBackground">
+        android:background="@drawable/circular_box"
+        android:elevation="6dp">
 
         <LinearLayout
             android:id="@+id/layoutForCharts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/chartViewPager"
@@ -43,7 +45,8 @@
         android:layout_above="@id/selectorLayout"
         android:layout_below="@id/chartLayout"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/colorBackground" />
+        android:background="@color/colorForeground"
+        android:elevation="6dp"/>
 
     <ImageView
         android:id="@+id/emptyImageView"
@@ -52,7 +55,8 @@
         android:src="@drawable/empty_image"
         android:layout_centerInParent="true"
         android:layout_below="@id/chartLayout"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:elevation="8dp"/>
 
     <TextView
         android:id="@+id/emptyStatementTextView"
@@ -62,7 +66,8 @@
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         android:textAlignment="center"
-        android:text="Oops! No data recorded yet \n Swipe left to add some new data" />
+        android:text="Oops! No data recorded yet \n Swipe left to add some new data"
+        android:elevation="8dp"/>
 
     <RelativeLayout
         android:id="@+id/selectorLayout"
@@ -72,6 +77,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginHorizontal="10dp"
         >
 

@@ -17,6 +17,10 @@
     <color name="purple">#4A148C</color>
     <color name="brown">#713030</color>
 
-    <color name="colorBackground">#505050</color>
-    <color name="colorForeground">#1C1C1C</color>
+    <color name="colorBackground">#000000</color>
+    <color name="colorForeground">#121212</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="expensesDivider">#373737</color>
+    <color name="chartSelected">#03DAC5</color>
+    <color name="expenseRed">#404040</color>
 </resources>
