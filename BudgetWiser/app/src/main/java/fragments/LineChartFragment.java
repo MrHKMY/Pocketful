@@ -69,7 +69,7 @@ public class LineChartFragment extends Fragment {
         lineDataSet2.setDrawCircleHole(false);
         lineDataSet2.setLineWidth(2);
 
-        lineChart.setBackgroundColor(getResources().getColor(R.color.colorAccent2));
+        lineChart.setBackgroundColor(getResources().getColor(R.color.white));
         lineChart.setDrawBorders(true);
         lineChart.setDescription(null);
         lineChart.setNoDataText("No Data");
