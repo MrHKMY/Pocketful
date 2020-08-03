@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg"
+    android:background="@drawable/circular_box"
     android:layout_margin="10dp"
    android:paddingLeft="10dp">
 
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:textColor="#000000"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         android:layout_margin="10dp"/>
 
@@ -24,7 +24,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="20dp"
         android:text="The Question will be displayed here"
-        android:textColor="#000000"
+        android:textColor="@color/textColor"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/tick_icon"
-            android:background="@color/white"
+            android:background="@null"
             android:layout_margin="15dp"
             />
 
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cross_icon"
-            android:background="@color/white"
+            android:background="@null"
             android:layout_margin="15dp"
             />
     </LinearLayout>
