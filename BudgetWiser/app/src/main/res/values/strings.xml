@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BudgetWiser</string>
+    <string name="app_name">Pocketful</string>
 
     <string-array name="wishlist_category">
         <item>Select Platform</item>

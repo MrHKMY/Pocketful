@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg"
+    android:background="@drawable/circular_box"
     android:layout_margin="10dp">
 
     <TextView
@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="Add New Wishlist"
-        android:textColor="#000000"
+        android:textColor="@color/textColor"
         android:textSize="20sp"
         android:layout_margin="15dp"/>
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Item"
-        android:textColorHint="@color/colorForeground"
+        android:textColorHint="@color/textHint"
         android:layout_below="@id/newWishlistTitle"
         android:layout_marginHorizontal="15dp"/>
 
@@ -30,7 +30,7 @@
         android:layout_below="@id/newWishlistEditText"
         android:layout_marginHorizontal="15dp"
         android:hint="Price"
-        android:textColorHint="@color/colorForeground"
+        android:textColorHint="@color/textHint"
         android:inputType="numberDecimal" />
 
     <Spinner
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/tick_icon"
-            android:background="@color/white"
+            android:background="@null"
             android:layout_margin="15dp"
             />
 
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cross_icon"
-            android:background="@color/white"
+            android:background="@null"
             android:layout_margin="15dp"
             />
     </LinearLayout>
