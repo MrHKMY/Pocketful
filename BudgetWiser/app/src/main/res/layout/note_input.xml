@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="@drawable/circular_box">
+
+    <ImageButton
+        android:id="@+id/newNoteCheckButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:src="@drawable/tick_icon" />
+
+    <EditText
+        android:id="@+id/noteTitleID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@id/newNoteCheckButton"
+        android:background="@null"
+        android:hint="Title"
+        android:inputType="textCapSentences"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/noteContentID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/noteTitleID"
+        android:layout_margin="15dp"
+        android:background="@null"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="top|left"
+        android:hint="Note"
+        android:inputType="textCapSentences|textMultiLine"
+        android:scrollbars="vertical"
+        tools:ignore='RtlHardcoded,RtlSymmetry' />
+
+</RelativeLayout>
