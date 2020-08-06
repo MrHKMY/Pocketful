@@ -34,14 +34,12 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.mindscape.budgetwiser.DatabaseHelper;
+import com.mindscape.pocketful.DatabaseHelper;
 
-import adapters.ExpenseHistoryAdapter;
 import adapters.LaterAdapter;
 import adapters.MainAdapter;
 
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.R;
 
 import java.util.ArrayList;
 import java.util.Random;

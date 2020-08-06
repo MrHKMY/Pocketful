@@ -1,6 +1,5 @@
 package fragments;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +18,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.mindscape.budgetwiser.DatabaseHelper;
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.DatabaseHelper;
+import com.mindscape.pocketful.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,6 @@ package adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mindscape.budgetwiser.DatabaseHelper;
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.DatabaseHelper;
+import com.mindscape.pocketful.R;
 
 /**
  * Created by Hakimi on 16/5/2020.

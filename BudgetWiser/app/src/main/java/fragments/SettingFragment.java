@@ -1,10 +1,8 @@
 package fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.mindscape.budgetwiser.MainActivity;
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.R;
 
 /**
  * Created by Hakimi on 25/6/2020.

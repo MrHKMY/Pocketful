@@ -2,21 +2,17 @@ package adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.mikephil.charting.data.Entry;
-import com.mindscape.budgetwiser.DatabaseHelper;
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.DatabaseHelper;
+import com.mindscape.pocketful.R;
 
 /**
  * Created by Hakimi on 3/7/2020.

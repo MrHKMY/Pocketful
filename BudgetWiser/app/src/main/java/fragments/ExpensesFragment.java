@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.mindscape.budgetwiser.R;
+import com.mindscape.pocketful.R;
 
 import adapters.PageAdapter;
 
