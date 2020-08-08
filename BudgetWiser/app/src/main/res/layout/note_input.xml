@@ -16,7 +16,7 @@
         android:src="@drawable/tick_icon" />
 
     <EditText
-        android:id="@+id/noteTitleID"
+        android:id="@+id/noteTitleET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -24,20 +24,22 @@
         android:layout_toStartOf="@id/newNoteCheckButton"
         android:background="@null"
         android:hint="Title"
+        android:textColorHint="@color/textHint"
         android:inputType="textCapSentences"
         android:maxLines="1" />
 
     <EditText
-        android:id="@+id/noteContentID"
+        android:id="@+id/noteContentET"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/noteTitleID"
+        android:layout_below="@id/noteTitleET"
         android:layout_margin="15dp"
         android:background="@null"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="top|left"
         android:hint="Note"
+        android:textColorHint="@color/textHint"
         android:inputType="textCapSentences|textMultiLine"
         android:scrollbars="vertical"
         tools:ignore='RtlHardcoded,RtlSymmetry' />
