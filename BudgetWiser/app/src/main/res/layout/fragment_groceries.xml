@@ -5,14 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="An update will be release real soon. \n Stay tune."
-        android:textAlignment="center"
-        android:layout_marginHorizontal="20dp"
-        android:textColor="@color/textColor"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/noteRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+    </ScrollView>
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/newNoteFAB"

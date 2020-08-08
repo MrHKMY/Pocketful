@@ -38,6 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String EXPENSE_TIMESTAMP = "Date";
     public static final String EXPENSE_NAME = "NAME";
 
+    public static final String NOTE_TABLE = "NoteTable";
+    public static final String NOTE_TITLE = "Title";
+    public static final String NOTE_CONTENT = "Content";
+    public static final String NOTE_TIMESTAMP = "Time";
+
     private static DatabaseHelper mInstance;
 
     public DatabaseHelper(@Nullable Context context) {
@@ -91,10 +96,19 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + EXPENSE_NOTE + " TEXT, "
                 + EXPENSE_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
 
+        String createNoteTable = "CREATE TABLE "
+                + NOTE_TABLE
+                + " ("
+                + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NOTE_TITLE + " TEXT, "
+                + NOTE_CONTENT + " TEXT, "
+                + NOTE_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
+
         sqLiteDatabase.execSQL(createWishTable);
         sqLiteDatabase.execSQL(createBudgetTable);
         sqLiteDatabase.execSQL(createLaterTable);
         sqLiteDatabase.execSQL(createExpenseTable);
+        sqLiteDatabase.execSQL(createNoteTable);
         String sql = "INSERT INTO " + BUDGET_TABLE + "(" + _ID + ", " + BUDGET_AMOUNT + ", " + BUDGET_TIMESTAMP + ") VALUES('1', '0', CURRENT_TIMESTAMP)";
         sqLiteDatabase.execSQL(sql);
     }
@@ -154,6 +168,17 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         cv.put(EXPENSE_VALUE, value);
 
         long result = db.insert(EXPENSE_TABLE, null, cv);
+        return result;
+    }
+
+    public long createNote(String title, String content){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(NOTE_TITLE, title);
+        cv.put(NOTE_CONTENT, content);
+
+        long result = db.insert(NOTE_TABLE, null, cv);
         return result;
     }
 
