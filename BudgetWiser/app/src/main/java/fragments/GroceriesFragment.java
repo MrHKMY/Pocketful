@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -38,6 +39,7 @@ public class GroceriesFragment extends Fragment {
     RecyclerView recyclerView;
     NoteAdapter adapter;
     private EditText noteTitleEditText, noteContentEditText;
+    int numberEntered = 0;
 
     @Nullable
     @Override
@@ -62,6 +64,7 @@ public class GroceriesFragment extends Fragment {
         }
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(column, 1);
+        staggeredGridLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
 
@@ -71,6 +74,34 @@ public class GroceriesFragment extends Fragment {
 
         adapter = new NoteAdapter(getContext(), getAllNote());
         recyclerView.setAdapter(adapter);
+
+        Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
+        if (cursor == null || cursor.getCount() == 0){
+            cursor.close();
+        } else {
+            cursor.moveToLast();
+            numberEntered = cursor.getInt(cursor.getColumnIndex("theNumber"));
+        }
+
+        adapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //Toast.makeText(getContext(), "Position : " + position, Toast.LENGTH_SHORT).show();
+                viewNote(position);
+            }
+        });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                removeNote((long) viewHolder.itemView.getTag());
+            }
+        }).attachToRecyclerView(recyclerView);
 
         return view;
     }
@@ -83,7 +114,7 @@ public class GroceriesFragment extends Fragment {
                 null,
                 null,
                 null,
-                DatabaseHelper.NOTE_TIMESTAMP + " DESC"
+                DatabaseHelper.NOTE_TIMESTAMP + " ASC"
         );
     }
 
@@ -105,9 +136,10 @@ public class GroceriesFragment extends Fragment {
                 if (noteContentEditText.getText().toString().trim().length() > 0) {
                     String content = noteContentEditText.getText().toString();
                     String title = noteTitleEditText.getText().toString();
+                    numberEntered ++;
 
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
-                    long result = dbHelper.createNote(title, content);
+                    long result = dbHelper.createNote(title, content, numberEntered);
                     adapter.swapCursor(getAllNote());
 
                     noteContentEditText.getText().clear();
@@ -119,13 +151,52 @@ public class GroceriesFragment extends Fragment {
 
                     alertDialog.cancel();
                 } else {
-                    Toast.makeText(getContext(), "Cannot save empty note.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Empty note discarded.", Toast.LENGTH_SHORT).show();
+                    alertDialog.cancel();
                 }
             }
         });
 
         alertDialog.setView(view);
         alertDialog.show();
+    }
+
+    public void viewNote(int position) {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View view = layoutInflater.inflate(R.layout.note_input, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        position ++;
+
+        noteTitleEditText = view.findViewById(R.id.noteTitleET);
+        noteContentEditText = view.findViewById(R.id.noteContentET);
+        Cursor cursor;
+
+        cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_TITLE + " as Title, "
+                + DatabaseHelper.NOTE_CONTENT + " as Content FROM " + DatabaseHelper.NOTE_TABLE
+                + " WHERE " + DatabaseHelper.NOTE_INDEX
+                + " = "+ position, null);
+        if (cursor.moveToFirst()) {
+            noteTitleEditText.setText(cursor.getString(cursor.getColumnIndex("Title")));
+            noteContentEditText.setText(cursor.getString(cursor.getColumnIndex("Content")));
+        }
+        alertDialog.setView(view);
+        alertDialog.show();
+
+    }
+
+    public void removeNote(long id){
+        mDatabase.delete(DatabaseHelper.NOTE_TABLE, DatabaseHelper._ID + "=" + id, null);
+        mDatabase.execSQL("UPDATE " + DatabaseHelper.NOTE_TABLE + " SET " + DatabaseHelper.NOTE_INDEX + " = " + DatabaseHelper.NOTE_INDEX + " -1 WHERE " + DatabaseHelper.NOTE_INDEX + " > " + id);
+        Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
+        if (cursor == null || cursor.getCount() == 0){
+            cursor.close();
+        } else {
+            cursor.moveToLast();
+            numberEntered = cursor.getInt(cursor.getColumnIndex("theNumber"));
+        }
+
+        adapter.swapCursor(getAllNote());
     }
 }
 
