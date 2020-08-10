@@ -13,7 +13,8 @@
             android:id="@+id/noteRecyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:layout_margin="10dp" />
 
     </ScrollView>
 
@@ -26,7 +27,19 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:foregroundGravity="bottom"
-        android:src="@drawable/add_icon"
+        android:src="@drawable/add_new_note_icon"
         app:fab_colorNormal="@color/fabColor"/>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/deleteNoteFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_size="normal"
+        android:src="@drawable/delete_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"/>
+
 
 </RelativeLayout>
