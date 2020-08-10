@@ -42,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String NOTE_TITLE = "Title";
     public static final String NOTE_CONTENT = "Content";
     public static final String NOTE_TIMESTAMP = "Time";
+    public static final String NOTE_INDEX = "Index_Num";
 
     private static DatabaseHelper mInstance;
 
@@ -102,7 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NOTE_TITLE + " TEXT, "
                 + NOTE_CONTENT + " TEXT, "
-                + NOTE_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')));";
+                + NOTE_TIMESTAMP + " TIMESTAMP DEFAULT (datetime('now','localtime')), "
+                + NOTE_INDEX + " INTEGER);";
 
         sqLiteDatabase.execSQL(createWishTable);
         sqLiteDatabase.execSQL(createBudgetTable);
@@ -119,6 +121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BUDGET_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LATER_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EXPENSE_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + NOTE_TABLE);
 
         onCreate(sqLiteDatabase);
 
@@ -171,12 +174,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return result;
     }
 
-    public long createNote(String title, String content){
+    public long createNote(String title, String content, int num){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(NOTE_TITLE, title);
         cv.put(NOTE_CONTENT, content);
+        cv.put(NOTE_INDEX, num);
 
         long result = db.insert(NOTE_TABLE, null, cv);
         return result;
