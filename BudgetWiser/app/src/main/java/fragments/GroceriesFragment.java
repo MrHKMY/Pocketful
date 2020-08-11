@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.mikephil.charting.data.PieEntry;
 import com.mindscape.pocketful.DatabaseHelper;
 import com.mindscape.pocketful.R;
 
@@ -40,6 +44,8 @@ public class GroceriesFragment extends Fragment {
     NoteAdapter adapter;
     private EditText noteTitleEditText, noteContentEditText;
     int numberEntered = 0;
+    private ImageView emptyNoteIV;
+    private TextView emptyNoteTV;
 
     @Nullable
     @Override
@@ -57,6 +63,8 @@ public class GroceriesFragment extends Fragment {
         });
         recyclerView = view.findViewById(R.id.noteRecyclerview);
         recyclerView.setHasFixedSize(true);
+        emptyNoteIV = view.findViewById(R.id.emptyNoteImageView);
+        emptyNoteTV = view.findViewById(R.id.emptyNoteStatementTextView);
 
         int column = 2;
         if (getResources().getConfiguration().orientation == 2) {
@@ -69,14 +77,15 @@ public class GroceriesFragment extends Fragment {
         recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
 
         final float scale = getResources().getDisplayMetrics().density;
-        int spacing = (int) (1 * scale + 0.5f);
+        int spacing = (int) (1 * scale + 0.1f);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spacing));
 
         adapter = new NoteAdapter(getContext(), getAllNote());
         recyclerView.setAdapter(adapter);
 
         Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
-        if (cursor == null || cursor.getCount() == 0){
+        if (cursor.getCount() == 0){
+            numberEntered = 0;
             cursor.close();
         } else {
             cursor.moveToLast();
@@ -99,7 +108,7 @@ public class GroceriesFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                removeNote((long) viewHolder.itemView.getTag());
+                removeNote((long) viewHolder.itemView.getTag(R.id.key1), (int) viewHolder.itemView.getTag(R.id.key2));
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -107,15 +116,17 @@ public class GroceriesFragment extends Fragment {
     }
 
     private Cursor getAllNote() {
-        return mDatabase.query(
-                DatabaseHelper.NOTE_TABLE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DatabaseHelper.NOTE_TIMESTAMP + " ASC"
-        );
+        Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.NOTE_TABLE
+                + " ORDER BY "+ DatabaseHelper.NOTE_TIMESTAMP + " ASC", null);
+
+        if (cursor.getCount() == 0){
+            emptyNoteIV.setVisibility(View.VISIBLE);
+            emptyNoteTV.setVisibility(View.VISIBLE);
+        } else {
+            emptyNoteIV.setVisibility(View.GONE);
+            emptyNoteTV.setVisibility(View.GONE);
+        }
+        return cursor;
     }
 
     public void addNewNote() {
@@ -148,7 +159,17 @@ public class GroceriesFragment extends Fragment {
                     if (result == -1) {
                         Toast.makeText(getContext(), "Failed storing new note.", Toast.LENGTH_SHORT).show();
                     }
+                    //int theIndex = 0;
+                    //Cursor cursor2 = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
 
+
+                    /*for (int i = 0; i < cursor2.getCount(); i++) {
+                        cursor2.moveToNext();
+                        theIndex = cursor2.getInt(cursor2.getColumnIndex("theNumber"));
+                        Log.d("TAG", "NumberEntered : " + theIndex);
+                    }
+
+                     */
                     alertDialog.cancel();
                 } else {
                     Toast.makeText(getContext(), "Empty note discarded.", Toast.LENGTH_SHORT).show();
@@ -170,6 +191,7 @@ public class GroceriesFragment extends Fragment {
 
         noteTitleEditText = view.findViewById(R.id.noteTitleET);
         noteContentEditText = view.findViewById(R.id.noteContentET);
+        noteContentEditText.requestFocus();
         Cursor cursor;
 
         cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_TITLE + " as Title, "
@@ -185,11 +207,13 @@ public class GroceriesFragment extends Fragment {
 
     }
 
-    public void removeNote(long id){
+    public void removeNote(long id, int position){
         mDatabase.delete(DatabaseHelper.NOTE_TABLE, DatabaseHelper._ID + "=" + id, null);
-        mDatabase.execSQL("UPDATE " + DatabaseHelper.NOTE_TABLE + " SET " + DatabaseHelper.NOTE_INDEX + " = " + DatabaseHelper.NOTE_INDEX + " -1 WHERE " + DatabaseHelper.NOTE_INDEX + " > " + id);
+        mDatabase.execSQL("UPDATE " + DatabaseHelper.NOTE_TABLE + " SET " + DatabaseHelper.NOTE_INDEX + " = " + DatabaseHelper.NOTE_INDEX + " -1 WHERE " + position + " < " + DatabaseHelper.NOTE_INDEX);
+
         Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
         if (cursor == null || cursor.getCount() == 0){
+            numberEntered = 0;
             cursor.close();
         } else {
             cursor.moveToLast();
@@ -197,6 +221,19 @@ public class GroceriesFragment extends Fragment {
         }
 
         adapter.swapCursor(getAllNote());
+        //int theIndex = 0;
+        //Cursor cursor2 = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
+
+
+        /*for (int i = 0; i < cursor2.getCount(); i++) {
+            cursor2.moveToNext();
+            theIndex = cursor2.getInt(cursor2.getColumnIndex("theNumber"));
+            Log.d("TAG", "NumberEntered : " + theIndex);
+            Log.d("TAG", "the ID : " + id);
+        }
+
+         */
+
     }
 }
 

@@ -61,7 +61,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         holder.title.setText(title);
         holder.content.setText(content);
-        holder.itemView.setTag(id);
+        holder.itemView.setTag(R.id.key1, id);
+        holder.itemView.setTag(R.id.key2, position);
 
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
