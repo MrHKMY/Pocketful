@@ -38,5 +38,6 @@
     <color name="chartSelected">#03DAC5</color>
     <color name="fabColor">#00AFEA</color>
     <color name="expenseRed">#B00020</color>
+    <color name="noteBackground">#BDBDBD</color>
 
 </resources>

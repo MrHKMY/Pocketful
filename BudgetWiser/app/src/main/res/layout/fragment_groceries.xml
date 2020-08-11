@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorBackground">
+    android:background="@color/noteBackground">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,6 +18,25 @@
 
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/emptyNoteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_note"
+        android:layout_centerInParent="true"
+        android:elevation="8dp"/>
+
+    <TextView
+        android:id="@+id/emptyNoteStatementTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emptyNoteImageView"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:text="Notes you add will appear here"
+        android:elevation="8dp"/>
+
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/newNoteFAB"
         android:layout_width="wrap_content"
@@ -29,17 +48,5 @@
         android:foregroundGravity="bottom"
         android:src="@drawable/add_new_note_icon"
         app:fab_colorNormal="@color/fabColor"/>
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/deleteNoteFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fab_size="normal"
-        android:src="@drawable/delete_icon"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:visibility="gone"/>
-
 
 </RelativeLayout>
