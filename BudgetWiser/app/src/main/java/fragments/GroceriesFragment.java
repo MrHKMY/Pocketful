@@ -84,7 +84,7 @@ public class GroceriesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
-        if (cursor.getCount() == 0){
+        if (cursor.getCount() == 0) {
             numberEntered = 0;
             cursor.close();
         } else {
@@ -117,9 +117,9 @@ public class GroceriesFragment extends Fragment {
 
     private Cursor getAllNote() {
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM " + DatabaseHelper.NOTE_TABLE
-                + " ORDER BY "+ DatabaseHelper.NOTE_TIMESTAMP + " ASC", null);
+                + " ORDER BY " + DatabaseHelper.NOTE_TIMESTAMP + " ASC", null);
 
-        if (cursor.getCount() == 0){
+        if (cursor.getCount() == 0) {
             emptyNoteIV.setVisibility(View.VISIBLE);
             emptyNoteTV.setVisibility(View.VISIBLE);
         } else {
@@ -147,7 +147,7 @@ public class GroceriesFragment extends Fragment {
                 if (noteContentEditText.getText().toString().trim().length() > 0) {
                     String content = noteContentEditText.getText().toString();
                     String title = noteTitleEditText.getText().toString();
-                    numberEntered ++;
+                    numberEntered++;
 
                     DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
                     long result = dbHelper.createNote(title, content, numberEntered);
@@ -187,32 +187,53 @@ public class GroceriesFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.note_input, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        position ++;
+        position++;
 
         noteTitleEditText = view.findViewById(R.id.noteTitleET);
         noteContentEditText = view.findViewById(R.id.noteContentET);
         noteContentEditText.requestFocus();
+        final ImageButton noteImageButton = view.findViewById(R.id.newNoteCheckButton);
+
         Cursor cursor;
 
         cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_TITLE + " as Title, "
                 + DatabaseHelper.NOTE_CONTENT + " as Content FROM " + DatabaseHelper.NOTE_TABLE
                 + " WHERE " + DatabaseHelper.NOTE_INDEX
-                + " = "+ position, null);
+                + " = " + position, null);
         if (cursor.moveToFirst()) {
             noteTitleEditText.setText(cursor.getString(cursor.getColumnIndex("Title")));
             noteContentEditText.setText(cursor.getString(cursor.getColumnIndex("Content")));
         }
+
+        final int finalPosition = position;
+        noteImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (noteContentEditText.getText().toString().trim().length() > 0) {
+                    String content = noteContentEditText.getText().toString();
+                    String title = noteTitleEditText.getText().toString();
+
+                    mDatabase.execSQL("UPDATE " + DatabaseHelper.NOTE_TABLE + " SET " + DatabaseHelper.NOTE_TITLE + " = '" + title + "', " + DatabaseHelper.NOTE_CONTENT + " = '" + content + "' WHERE " + DatabaseHelper.NOTE_INDEX + " = " + finalPosition);
+                    adapter.swapCursor(getAllNote());
+
+                    alertDialog.cancel();
+                } else {
+                    Toast.makeText(getContext(), "Can't save empty note.\nSlide the note to delete.", Toast.LENGTH_SHORT).show();
+                    alertDialog.cancel();
+                }
+            }
+        });
+
         alertDialog.setView(view);
         alertDialog.show();
-
     }
 
-    public void removeNote(long id, int position){
+    public void removeNote(long id, int position) {
         mDatabase.delete(DatabaseHelper.NOTE_TABLE, DatabaseHelper._ID + "=" + id, null);
         mDatabase.execSQL("UPDATE " + DatabaseHelper.NOTE_TABLE + " SET " + DatabaseHelper.NOTE_INDEX + " = " + DatabaseHelper.NOTE_INDEX + " -1 WHERE " + position + " < " + DatabaseHelper.NOTE_INDEX);
 
         Cursor cursor = mDatabase.rawQuery("SELECT " + DatabaseHelper.NOTE_INDEX + " as theNumber FROM " + DatabaseHelper.NOTE_TABLE, null);
-        if (cursor == null || cursor.getCount() == 0){
+        if (cursor == null || cursor.getCount() == 0) {
             numberEntered = 0;
             cursor.close();
         } else {
@@ -235,5 +256,6 @@ public class GroceriesFragment extends Fragment {
          */
 
     }
+
 }
 
