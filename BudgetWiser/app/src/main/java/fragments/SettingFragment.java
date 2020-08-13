@@ -1,6 +1,8 @@
 package fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ public class SettingFragment extends Fragment {
     RelativeLayout mainLayout;
     TextView textView;
     SharedPreferences sharedPreferences;
+    RelativeLayout rateLayout;
 
     @Nullable
     @Override
@@ -34,8 +37,10 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container,false);
 
         switchMode = view.findViewById(R.id.switchDarkMode);
+        rateLayout = view.findViewById(R.id.rateAppLayout);
         //mainLayout = view.findViewById(R.id.mainRelativeSetting);
         //textView = view.findViewById(R.id.settingFragment);
+        final String appId = getContext().getPackageName();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         checkNightMode();
@@ -58,6 +63,20 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
+
+        rateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.mindscape.pocketful"));
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
