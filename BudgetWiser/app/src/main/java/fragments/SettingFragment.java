@@ -29,7 +29,7 @@ public class SettingFragment extends Fragment {
     RelativeLayout mainLayout;
     TextView textView;
     SharedPreferences sharedPreferences;
-    RelativeLayout rateLayout;
+    RelativeLayout rateLayout, aboutLayout;
 
     @Nullable
     @Override
@@ -38,6 +38,7 @@ public class SettingFragment extends Fragment {
 
         switchMode = view.findViewById(R.id.switchDarkMode);
         rateLayout = view.findViewById(R.id.rateAppLayout);
+        aboutLayout = view.findViewById(R.id.aboutLayout);
         //mainLayout = view.findViewById(R.id.mainRelativeSetting);
         //textView = view.findViewById(R.id.settingFragment);
         final String appId = getContext().getPackageName();
@@ -74,6 +75,14 @@ public class SettingFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 startActivity(intent);
+            }
+        });
+
+        aboutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new AboutFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, fragment).addToBackStack(null).commit();
             }
         });
 

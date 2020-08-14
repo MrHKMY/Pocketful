@@ -102,7 +102,7 @@ public class LineChartFragment extends Fragment {
         if (cursor2.moveToFirst()) {
             do {
                 Entry entry = new Entry();
-                entry.setY(cursor2.getInt(cursor2.getColumnIndex("DailyTotal")));
+                entry.setY(cursor2.getFloat(cursor2.getColumnIndex("DailyTotal")));
                 entry.setX(cursor2.getInt(cursor2.getColumnIndex("TheDay")));
                 dataValues.add(entry);
             } while (cursor2.moveToNext());
@@ -143,7 +143,7 @@ public class LineChartFragment extends Fragment {
         if (cursor2.moveToFirst()) {
             do {
                 Entry entry = new Entry();
-                entry.setY(cursor2.getInt(cursor2.getColumnIndex("DailyTotal")));
+                entry.setY(cursor2.getFloat(cursor2.getColumnIndex("DailyTotal")));
                 entry.setX(cursor2.getInt(cursor2.getColumnIndex("TheDay")));
                 dataValues.add(entry);
             } while (cursor2.moveToNext());
