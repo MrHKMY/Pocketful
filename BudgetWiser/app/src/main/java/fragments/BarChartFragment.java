@@ -31,7 +31,7 @@ public class BarChartFragment extends Fragment {
 
     private SQLiteDatabase mDatabase;
     BarChart barChart;
-    int total;
+    float total;
     int data;
 
     public BarChartFragment() {
@@ -107,7 +107,7 @@ public class BarChartFragment extends Fragment {
                         + " WHERE Category = '" + nums + "' AND Status = 'OUT' AND strftime('%m'," + DatabaseHelper.EXPENSE_TIMESTAMP
                         + ") = strftime('%m',date('now'))", null);
                 if (cursor2.moveToFirst()) {
-                    total = cursor2.getInt(cursor2.getColumnIndex("Total"));
+                    total = cursor2.getFloat(cursor2.getColumnIndex("Total"));
                 }
                 dataValues.add(new BarEntry(nums, total));
                 cursor2.close();
